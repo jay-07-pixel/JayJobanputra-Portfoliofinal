@@ -48,7 +48,7 @@ const About: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-lg blur-md opacity-70 -m-2 z-0"></div>
                 <div className="w-40 h-40 xs:w-56 xs:h-56 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-lg bg-gray-800 overflow-hidden relative z-10 mx-auto">
                   <img 
-                    src="/WhatsApp Image 2025-07-25 at 20.11.44_a4d0af5a.jpg" 
+                    src="/profile-photo.jpg" 
                     alt="Jay Jobanputra" 
                     className="w-full h-full object-cover object-top" 
                     loading="lazy"
