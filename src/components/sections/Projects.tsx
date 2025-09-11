@@ -34,8 +34,8 @@ const Projects: React.FC = () => {
       description: 'A modern attendance management system for Government Offices in Hingoli sub-division using facial recognition and location verification.',
       techStack: ['Java', 'Firebase', 'ML Kit', 'Android SDK', 'Google Play Services'],
       github: 'https://github.com/jay-07-pixel/FACEATTEND--FINAL-PUSH.git',
-      demo: '/videos/FACEATTEND LIVE DEMO.mp4', // Updated path for deployment
-      demoType: 'video',
+      demo: 'https://drive.google.com/file/d/1K26cBzgWWWqtkoj3sV_yshhWkGXbVgE7/view?usp=sharing', // FaceAttend demo video
+      demoType: 'link',
       image: 'bg-gradient-to-br from-primary/20 to-secondary/20',
       longDescription: 'FaceAttend is a sophisticated attendance management system designed specifically for Government Offices in the Hingoli sub-division. The application leverages facial recognition and GPS-based location verification to ensure accurate attendance tracking and prevent proxy attendance. Key features include face-based authentication, location verification with geofencing, multiple office support, comprehensive reporting, and taluka-based organization for Hingoli and Sengaon regions.',
       codeSnippet: {
@@ -131,8 +131,8 @@ public class FaceRecognitionManager {
       description: 'A comprehensive React Native application for managing 3D printing learning centers, built with Expo and Firebase.',
       techStack: ['React Native', 'Expo', 'Firebase', 'TypeScript', 'Razorpay'],
       github: 'https://github.com/jay-07-pixel/3D-LAST-2ND-PUSH.git',
-      demo: '/videos/WhatsApp Video 2025-07-29 at 14.02.34_36112038.mp4', // Updated to local video
-      demoType: 'video',
+      demo: 'https://drive.google.com/file/d/1MNL9XJJiXcRYjI6uEQZqwCXr0aoYELSw/view?usp=sharing', // 3D Learning Centre Management System demo video
+      demoType: 'link',
       image: 'bg-gradient-to-br from-secondary/20 to-primary/20',
       longDescription: 'A sophisticated management system for 3D printing learning centers featuring role-based access for Directors, Coordinators, and Students. Directors can manage centers, coordinators, and track finances. Coordinators handle student management, documents, and support tickets. Students can track their learning journey, attendance, and raise support tickets. The system includes real-time notifications, payment integration via Razorpay, and comprehensive reporting.',
       codeSnippet: {
@@ -240,8 +240,8 @@ export const AppNavigator: React.FC = () => {
       description: 'An Android application connecting farmers with agricultural laborers through real-time location-based matching.',
       techStack: ['Android', 'Java', 'Firebase', 'Google Maps API', 'Material Design'],
       github: 'https://github.com/jay-07-pixel/Laberlink', // Updated GitHub repo link
-      demo: '/videos/WhatsApp Video 2025-07-29 at 14.28.24_e00770b3.mp4', // Updated to local video
-      demoType: 'video',
+      demo: 'https://drive.google.com/file/d/15IuLNaftfGVC6piJFnUfayKACzrXZojn/view?usp=sharing', // Laberlink demo video
+      demoType: 'link',
       image: 'bg-gradient-to-br from-[#4CAF50]/30 to-[#81C784]/20',
       longDescription: 'LaberLink is an innovative Android application designed to bridge the gap between farmers and agricultural laborers. It features real-time location-based matching, comprehensive job management, weather information integration, and a knowledge base for agricultural practices. The app includes features for both farmers (finding laborers, job posting, weather updates) and laborers (profile management, job applications, work scheduling). Additional features include government scheme access, agricultural knowledge base, and multi-language chatbot support.',
       codeSnippet: {
@@ -349,8 +349,8 @@ public class NearbyLaborersManager {
       description: 'A modern web platform for managing and participating in university competitions, built with Firebase and modern web technologies.',
       techStack: ['HTML5', 'Tailwind CSS', 'JavaScript', 'Firebase', 'Font Awesome'],
       github: 'https://github.com/jay-07-pixel/webcompsu', // Updated GitHub repo link
-      demo: '/videos/Screen Recording 2025-06-17 200117.mp4', // Updated to local video
-      demoType: 'video',
+      demo: 'https://drive.google.com/file/d/1MNL9XJJiXcRYjI6uEQZqwCXr0aoYELSw/view?usp=sharing', // Sanjivani University Competition Platform demo video
+      demoType: 'link',
       image: 'bg-gradient-to-br from-blue-500/30 to-purple-500/20',
       longDescription: 'A comprehensive platform for Sanjivani University\'s competition management. Students can register for various competitions (Technical, Cultural, Sports, Academic), track their progress, and view results. Administrators can create and manage competitions, track registrations, and announce results. The platform features secure authentication, role-based access control, responsive design, and real-time updates through Firebase.',
       codeSnippet: {
@@ -624,17 +624,16 @@ class CompetitionManager {
                   <p>Error loading video. Please try again later.</p>
                 </div>
               ) : (
-                <video
-                  controls
-                  className="w-full h-full bg-black"
-                  autoPlay
-                  playsInline
+                <iframe
+                  src={selectedProject.demo}
+                  title={selectedProject.title}
+                  className="w-full h-full"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
                   onError={() => setVideoError(true)}
-                  onLoadedData={() => setVideoError(false)}
-                >
-                  <source src={selectedProject.demo} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+                  onLoad={() => setVideoError(false)}
+                />
               )}
             </motion.div>
           </motion.div>
