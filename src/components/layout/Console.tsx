@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-scroll';
 
 interface ConsoleProps {
   isVisible: boolean;

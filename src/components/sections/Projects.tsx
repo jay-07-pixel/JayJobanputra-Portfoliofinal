@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt, FaTimesCircle } from 'react-icons/fa';
-import CodeSnippet from '../layout/CodeSnippet';
 
 interface Project {
   id: number;

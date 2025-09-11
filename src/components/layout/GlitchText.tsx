@@ -52,14 +52,14 @@ const GlitchText = ({
 
   const config = getGlitchConfig();
 
-  // Generate a random glitched character
-  const getGlitchChar = () => {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-={}[]|;:,.<>?/';
-    return chars.charAt(Math.floor(Math.random() * chars.length));
-  };
-
   // Create a glitched version of the text
   const createGlitchedText = React.useCallback(() => {
+    // Generate a random glitched character
+    const getGlitchChar = () => {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-={}[]|;:,.<>?/';
+      return chars.charAt(Math.floor(Math.random() * chars.length));
+    };
+
     const textArray = text.split('');
     // Number of characters to glitch (random, up to maxGlitchChars)
     const numGlitchChars = Math.floor(Math.random() * config.maxGlitchChars) + 1;
@@ -78,7 +78,7 @@ const GlitchText = ({
     });
 
     return textArray.join('');
-  }, [text, config.maxGlitchChars, getGlitchChar]);
+  }, [text, config.maxGlitchChars]);
 
   // Create periodic glitch effect
   useEffect(() => {

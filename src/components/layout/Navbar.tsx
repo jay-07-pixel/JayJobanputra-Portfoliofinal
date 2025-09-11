@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-scroll';
-import { FaSun, FaMoon, FaBars, FaTimes } from 'react-icons/fa';
-import { useTheme } from '../../context/ThemeContext';
+import { FaBars, FaTimes } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import GlitchText from './GlitchText';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { darkMode, toggleDarkMode } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {

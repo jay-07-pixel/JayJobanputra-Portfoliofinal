@@ -13,24 +13,7 @@ import TechBackground from './components/layout/TechBackground';
 import CircuitPattern from './components/layout/CircuitPattern';
 import Console from './components/layout/Console';
 import KeyboardShortcuts from './components/layout/KeyboardShortcuts';
-import { motion, AnimatePresence, MotionProps } from 'framer-motion';
-import { Theme, Project, Skill } from './types/custom';
-
-// Define types for state
-interface AppState {
-  isLoading: boolean;
-  loadingProgress: number;
-  showScannerEffect: boolean;
-  contentVisible: boolean;
-  showConsole: boolean;
-}
-
-// Define types for motion components
-interface MotionDivProps extends MotionProps {
-  className?: string;
-  style?: React.CSSProperties;
-  children?: React.ReactNode;
-}
+import { motion, AnimatePresence } from 'framer-motion';
 
 const App: React.FC = () => {
   // Add states for loading and transitions
