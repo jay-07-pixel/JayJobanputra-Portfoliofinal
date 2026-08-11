@@ -5,7 +5,19 @@
     <meta name="google-site-verification" content="biWifGJ2I9fC4XWJwv-WhtUBXTsUXtXsyncNF5Olz5Y" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#0F0F0F" />
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('darkMode');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var isDark = saved === null ? prefersDark : saved === 'true';
+          document.documentElement.classList.toggle('dark', isDark);
+          document.documentElement.classList.toggle('light', !isDark);
+          document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script>
     <meta
       name="description"
       content="Jay Jobanputra's portfolio - AI & Data Science professional showcasing projects, skills, and experience in machine learning, software development, and modern web technologies."

@@ -59,7 +59,7 @@ const Footer: React.FC = () => {
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-glow-effect text-light-text rounded-full flex items-center justify-center hover:bg-primary hover:text-dark-bg transition-colors"
+                className="w-10 h-10 bg-glow-effect text-light-text rounded-full flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors"
                 aria-label="GitHub"
               >
                 <FaGithub size={18} />
@@ -68,7 +68,7 @@ const Footer: React.FC = () => {
                 href="https://www.linkedin.com/in/jay-jobanputra-1b442931b"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-glow-effect text-light-text rounded-full flex items-center justify-center hover:bg-primary hover:text-dark-bg transition-colors"
+                className="w-10 h-10 bg-glow-effect text-light-text rounded-full flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors"
                 aria-label="LinkedIn"
               >
                 <FaLinkedin size={18} />
@@ -77,7 +77,7 @@ const Footer: React.FC = () => {
                 href="https://www.instagram.com/jay_jobanputra07/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-glow-effect text-light-text rounded-full flex items-center justify-center hover:bg-primary hover:text-dark-bg transition-colors"
+                className="w-10 h-10 bg-glow-effect text-light-text rounded-full flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors"
                 aria-label="Instagram"
               >
                 <FaInstagram size={18} />

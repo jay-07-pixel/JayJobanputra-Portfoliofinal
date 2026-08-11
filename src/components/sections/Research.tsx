@@ -96,7 +96,7 @@ const Research: React.FC = () => {
           <motion.article
             variants={item}
             whileHover={{ borderColor: 'rgba(0, 255, 231, 0.4)' }}
-            className="bg-dark-bg border border-primary/30 rounded-lg px-5 py-4 md:px-6 md:py-5 transition-colors duration-300"
+            className="bg-surface border border-primary/30 rounded-lg px-5 py-4 md:px-6 md:py-5 transition-colors duration-300"
           >
             <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
               <div className="flex items-center gap-2.5">
@@ -122,10 +122,10 @@ const Research: React.FC = () => {
               <span className="px-2.5 py-1 text-xs text-primary bg-glow-effect border border-primary/25 rounded-md">
                 {publication.venue}
               </span>
-              <span className="px-2.5 py-1 text-xs text-light-text/75 bg-dark-bg border border-glow-effect rounded-md">
+              <span className="px-2.5 py-1 text-xs text-light-text/75 bg-surface border border-glow-effect rounded-md">
                 {publication.location}
               </span>
-              <span className="px-2.5 py-1 text-xs text-light-text/75 bg-dark-bg border border-glow-effect rounded-md">
+              <span className="px-2.5 py-1 text-xs text-light-text/75 bg-surface border border-glow-effect rounded-md">
                 {publication.status}
               </span>
             </div>
@@ -140,7 +140,7 @@ const Research: React.FC = () => {
               <motion.div
                 key={metric.label}
                 whileHover={{ borderColor: 'rgba(0, 255, 231, 0.4)', y: -1 }}
-                className="bg-dark-bg border border-glow-effect rounded-lg px-3 py-2.5 md:py-3 text-center transition-colors duration-300"
+                className="bg-surface border border-glow-effect rounded-lg px-3 py-2.5 md:py-3 text-center transition-colors duration-300"
               >
                 <p className="text-xl md:text-2xl font-bold text-primary leading-none mb-1">
                   {metric.value}
@@ -156,7 +156,7 @@ const Research: React.FC = () => {
           <motion.article
             variants={item}
             whileHover={{ borderColor: 'rgba(0, 255, 231, 0.35)' }}
-            className="bg-dark-bg border border-glow-effect rounded-lg px-5 py-4 md:px-6 md:py-5 transition-colors duration-300"
+            className="bg-surface border border-glow-effect rounded-lg px-5 py-4 md:px-6 md:py-5 transition-colors duration-300"
           >
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 lg:gap-6 items-start">
               <div className="lg:col-span-3">

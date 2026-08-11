@@ -8,11 +8,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'dark-bg': '#0F0F0F',
-        'primary': '#00FFE7',
-        'secondary': '#FF3CAC',
-        'light-text': '#F5F5F5',
-        'glow-effect': 'rgba(0, 255, 231, 0.1)',
+        // Theme-aware tokens (auto-switch with .dark / day mode)
+        'dark-bg': 'rgb(var(--color-bg) / <alpha-value>)',
+        'light-text': 'rgb(var(--color-text) / <alpha-value>)',
+        'primary': 'rgb(var(--color-primary) / <alpha-value>)',
+        'secondary': 'rgb(var(--color-secondary) / <alpha-value>)',
+        'glow-effect': 'rgb(var(--color-primary) / 0.12)',
+        'on-primary': 'rgb(var(--color-on-primary) / <alpha-value>)',
+        'surface': 'rgb(var(--color-surface) / <alpha-value>)',
       },
       animation: {
         cursor: 'cursor 1s infinite',
@@ -47,4 +50,3 @@ module.exports = {
   },
   plugins: [],
 }
-

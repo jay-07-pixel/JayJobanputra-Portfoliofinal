@@ -247,7 +247,7 @@ const ProjectCard: React.FC<{
       transition={{ duration: 0.45, delay }}
       viewport={{ once: true, amount: 0.2 }}
       whileHover={{ y: -4, borderColor: 'rgba(0, 255, 231, 0.4)' }}
-      className="bg-dark-bg border border-glow-effect rounded-lg p-5 md:p-6 h-full flex flex-col transition-colors duration-300"
+      className="bg-surface border border-glow-effect rounded-lg p-5 md:p-6 h-full flex flex-col transition-colors duration-300"
     >
       <div className="flex items-start justify-between gap-3 mb-3">
         <span className="text-sm font-mono text-primary/80">{project.number}</span>
@@ -454,7 +454,7 @@ const Projects: React.FC = () => {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 16 }}
               transition={{ duration: 0.25 }}
-              className="bg-dark-bg border border-glow-effect rounded-lg overflow-hidden max-w-4xl w-full aspect-video relative"
+              className="bg-surface border border-glow-effect rounded-lg overflow-hidden max-w-4xl w-full aspect-video relative"
               onClick={(e) => e.stopPropagation()}
             >
               <button
@@ -493,7 +493,7 @@ const Projects: React.FC = () => {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 16 }}
               transition={{ duration: 0.25 }}
-              className="bg-dark-bg border border-glow-effect rounded-lg p-5 md:p-7 max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+              className="bg-surface border border-glow-effect rounded-lg p-5 md:p-7 max-w-3xl w-full max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-start gap-4 mb-5">

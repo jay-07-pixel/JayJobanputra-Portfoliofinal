@@ -4,10 +4,44 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+/* Day (light) mode — default */
+:root {
+  --color-bg: 243 246 248;
+  --color-surface: 255 255 255;
+  --color-text: 17 24 28;
+  --color-primary: 0 140 132;
+  --color-secondary: 196 48 130;
+  --color-on-primary: 255 255 255;
+  --grid-line: rgba(0, 140, 132, 0.08);
+  --glow-shadow: 0 0 12px rgba(0, 140, 132, 0.22);
+  --scanner: rgba(0, 140, 132, 0.45);
+  --cursor-ring: rgba(0, 140, 132, 0.45);
+  --cursor-dot: #008C84;
+}
+
+/* Night (dark) mode */
+html.dark {
+  --color-bg: 15 15 15;
+  --color-surface: 22 22 22;
+  --color-text: 245 245 245;
+  --color-primary: 0 255 231;
+  --color-secondary: 255 60 172;
+  --color-on-primary: 15 15 15;
+  --grid-line: rgba(0, 255, 231, 0.05);
+  --glow-shadow: 0 0 10px rgba(0, 255, 231, 0.3);
+  --scanner: rgba(0, 255, 231, 0.5);
+  --cursor-ring: rgba(0, 255, 231, 0.5);
+  --cursor-dot: #00FFE7;
+}
+
 @layer base {
+  html {
+    @apply antialiased;
+  }
+
   body {
     @apply font-['Poppins'] bg-dark-bg text-light-text m-0 p-0;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
@@ -17,11 +51,11 @@
   }
   
   .btn-primary {
-    @apply px-6 py-2 bg-transparent border border-primary text-primary hover:bg-primary hover:text-dark-bg transition-all duration-300 rounded-md font-medium;
+    @apply px-6 py-2 bg-transparent border border-primary text-primary hover:bg-primary hover:text-on-primary transition-all duration-300 rounded-md font-medium;
   }
   
   .section-title {
-    @apply text-3xl md:text-4xl font-bold mb-10 text-center relative;
+    @apply text-3xl md:text-4xl font-bold mb-10 text-center relative text-light-text;
   }
   
   .section-title::after {
@@ -53,10 +87,10 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: rgba(0, 255, 231, 0.5);
+  background-color: var(--cursor-ring);
   transform: translate(-50%, -50%);
   z-index: 9999;
-  transition: transform 0.1s ease;
+  transition: transform 0.1s ease, background-color 0.3s ease;
 }
 
 .cursor-dot {
@@ -65,16 +99,17 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #00FFE7;
+  background-color: var(--cursor-dot);
   transform: translate(-50%, -50%);
   z-index: 9999;
+  transition: background-color 0.3s ease;
 }
 
 /* Tech background grid pattern */
 .bg-grid-pattern {
   background-image: 
-    linear-gradient(to right, rgba(0, 255, 231, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 255, 231, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
@@ -127,7 +162,7 @@
 
 /* Tech glow effect */
 .tech-glow {
-  box-shadow: 0 0 10px rgba(0, 255, 231, 0.3);
+  box-shadow: var(--glow-shadow);
 }
 
 /* Scanner line effect */
@@ -142,7 +177,7 @@
 
 .scanner-line {
   animation: scan 3s linear infinite;
-  background: linear-gradient(to bottom, transparent, rgba(0, 255, 231, 0.5), transparent);
+  background: linear-gradient(to bottom, transparent, var(--scanner), transparent);
   height: 100px;
   width: 100%;
   position: absolute;

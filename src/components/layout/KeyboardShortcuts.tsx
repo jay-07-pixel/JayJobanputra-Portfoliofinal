@@ -121,7 +121,7 @@ const KeyboardShortcuts: React.FC = () => {
     <>
       <button
         onClick={() => setShowHelp((prev) => !prev)}
-        className="fixed bottom-20 right-6 z-30 w-10 h-10 rounded-full bg-dark-bg border border-primary/50 flex items-center justify-center tech-glow"
+        className="fixed bottom-20 right-6 z-30 w-10 h-10 rounded-full bg-surface border border-primary/50 flex items-center justify-center tech-glow"
         aria-label="Keyboard shortcuts"
         title="Press / for keyboard shortcuts"
       >
@@ -139,7 +139,7 @@ const KeyboardShortcuts: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ type: 'spring', bounce: 0.3 }}
-              className="relative w-96 bg-dark-bg border border-primary/40 rounded-lg p-4 shadow-lg tech-glow z-50"
+              className="relative w-96 bg-surface border border-primary/40 rounded-lg p-4 shadow-lg tech-glow z-50"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center mb-3">

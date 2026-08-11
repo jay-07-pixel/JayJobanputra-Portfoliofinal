@@ -231,7 +231,7 @@ const Contact: React.FC = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className={`w-full bg-dark-bg border ${
+                    className={`w-full bg-surface border ${
                       errors.name ? 'border-red-500' : 'border-glow-effect'
                     } rounded-md px-4 py-3 text-light-text focus:outline-none focus:border-primary transition-colors`}
                     placeholder="Your Name"
@@ -251,7 +251,7 @@ const Contact: React.FC = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`w-full bg-dark-bg border ${
+                    className={`w-full bg-surface border ${
                       errors.email ? 'border-red-500' : 'border-glow-effect'
                     } rounded-md px-4 py-3 text-light-text focus:outline-none focus:border-primary transition-colors`}
                     placeholder="Your Email"
@@ -271,7 +271,7 @@ const Contact: React.FC = () => {
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    className={`w-full bg-dark-bg border ${
+                    className={`w-full bg-surface border ${
                       errors.subject ? 'border-red-500' : 'border-glow-effect'
                     } rounded-md px-4 py-3 text-light-text focus:outline-none focus:border-primary transition-colors`}
                     placeholder="Subject"
@@ -291,7 +291,7 @@ const Contact: React.FC = () => {
                     value={formData.message}
                     onChange={handleChange}
                     rows={5}
-                    className={`w-full bg-dark-bg border ${
+                    className={`w-full bg-surface border ${
                       errors.message ? 'border-red-500' : 'border-glow-effect'
                     } rounded-md px-4 py-3 text-light-text focus:outline-none focus:border-primary transition-colors`}
                     placeholder="Your Message"

@@ -356,7 +356,7 @@ const Console: React.FC<ConsoleProps> = ({ isVisible, onClose }) => {
 
   return (
     <motion.div
-      className="fixed bottom-0 left-0 right-0 z-50 mx-auto w-full md:w-3/4 lg:w-1/2 bg-dark-bg border border-primary/40 rounded-t-lg shadow-lg overflow-hidden"
+      className="fixed bottom-0 left-0 right-0 z-50 mx-auto w-full md:w-3/4 lg:w-1/2 bg-surface border border-primary/40 rounded-t-lg shadow-lg overflow-hidden"
       initial={{ y: '100%' }}
       animate={{ y: 0 }}
       exit={{ y: '100%' }}

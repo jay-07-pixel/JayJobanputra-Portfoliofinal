@@ -60,7 +60,7 @@ const Education: React.FC = () => {
           <motion.article
             variants={item}
             whileHover={{ borderColor: 'rgba(0, 255, 231, 0.4)' }}
-            className="bg-dark-bg border border-primary/30 rounded-lg p-6 md:p-8 hover:border-primary/50 transition-colors duration-300 group"
+            className="bg-surface border border-primary/30 rounded-lg p-6 md:p-8 hover:border-primary/50 transition-colors duration-300 group"
           >
             <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
               <span className="text-sm text-primary font-medium tracking-wide">
@@ -84,7 +84,7 @@ const Education: React.FC = () => {
             <motion.article
               variants={item}
               whileHover={{ borderColor: 'rgba(0, 255, 231, 0.35)' }}
-              className="bg-dark-bg border border-glow-effect rounded-lg p-5 md:p-6 hover:border-primary/40 transition-colors duration-300 h-full"
+              className="bg-surface border border-glow-effect rounded-lg p-5 md:p-6 hover:border-primary/40 transition-colors duration-300 h-full"
             >
               <span className="text-sm text-primary font-medium tracking-wide">
                 2024
@@ -103,7 +103,7 @@ const Education: React.FC = () => {
             <motion.article
               variants={item}
               whileHover={{ borderColor: 'rgba(0, 255, 231, 0.35)' }}
-              className="bg-dark-bg border border-glow-effect rounded-lg p-5 md:p-6 hover:border-primary/40 transition-colors duration-300 h-full"
+              className="bg-surface border border-glow-effect rounded-lg p-5 md:p-6 hover:border-primary/40 transition-colors duration-300 h-full"
             >
               <span className="text-sm text-primary font-medium tracking-wide">
                 2022

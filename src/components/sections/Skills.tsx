@@ -123,7 +123,7 @@ const Skills: React.FC = () => {
             <motion.article
               key={category.title}
               variants={card}
-              className="flex flex-col min-h-[200px] lg:min-h-[220px] bg-dark-bg border border-glow-effect rounded-lg p-5 md:p-6 hover:border-primary/40 transition-colors duration-300 group h-full"
+              className="flex flex-col min-h-[200px] lg:min-h-[220px] bg-surface border border-glow-effect rounded-lg p-5 md:p-6 hover:border-primary/40 transition-colors duration-300 group h-full"
             >
               <div className="flex items-center gap-3 mb-4">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0 group-hover:shadow-[0_0_8px_rgba(0,255,231,0.6)] transition-shadow duration-300" />

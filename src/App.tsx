@@ -211,7 +211,7 @@ const App: React.FC = () => {
             {/* Console toggle button */}
             <button
               onClick={toggleConsole}
-              className="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-dark-bg border border-primary flex items-center justify-center shadow-lg hover:bg-gray-900 transition-colors duration-300 tech-glow"
+              className="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-dark-bg border border-primary flex items-center justify-center shadow-lg hover:bg-surface transition-colors duration-300 tech-glow"
               aria-label="Toggle terminal console"
               title="Press Ctrl+` to toggle terminal"
             >
