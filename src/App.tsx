@@ -173,7 +173,7 @@ const App: React.FC = () => {
           >
             {/* Tech-themed background elements */}
             <TechBackground density={35} />
-            <CircuitPattern opacity={0.15} />
+            <CircuitPattern />
             
             {/* Scanner line effect that appears briefly after loading */}
             {showScannerEffect && (

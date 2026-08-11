@@ -11,9 +11,8 @@ const Hero: React.FC = () => {
     <section id="hero" className="h-screen flex items-center justify-center relative overflow-hidden">
       {/* Tech-themed background elements */}
       <div className="absolute w-full h-full">
-        {/* Code blocks floating in background */}
-        <FloatingAnimation x={15} y={20} duration={10} className="absolute top-40 left-20 opacity-10">
-          <div className="p-4 border border-primary/30 rounded bg-dark-bg/50 font-mono text-xs md:text-sm">
+        <FloatingAnimation x={15} y={20} duration={10} className="absolute top-40 left-20 opacity-30 dark:opacity-10">
+          <div className="p-4 border border-primary/40 dark:border-primary/30 rounded bg-surface/70 dark:bg-dark-bg/50 font-mono text-xs md:text-sm">
             <pre className="text-primary">
               {`function init() {
   return {
@@ -25,8 +24,8 @@ const Hero: React.FC = () => {
           </div>
         </FloatingAnimation>
         
-        <FloatingAnimation x={20} y={15} duration={12} delay={1} className="absolute top-40 right-20 opacity-10">
-          <div className="p-4 border border-primary/30 rounded bg-dark-bg/50 font-mono text-xs md:text-sm">
+        <FloatingAnimation x={20} y={15} duration={12} delay={1} className="absolute top-40 right-20 opacity-30 dark:opacity-10">
+          <div className="p-4 border border-primary/40 dark:border-primary/30 rounded bg-surface/70 dark:bg-dark-bg/50 font-mono text-xs md:text-sm">
             <pre className="text-primary">
               {`import React from 'react';
 const App = () => {
@@ -37,29 +36,29 @@ const App = () => {
         </FloatingAnimation>
         
         {/* Tech grid patterns */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
+        <div className="absolute inset-0 bg-grid-pattern opacity-35 dark:opacity-20"></div>
         
         {/* Tech decorative elements */}
-        <FloatingAnimation x={8} y={8} rotate={10} duration={6} className="absolute top-32 left-32 hidden md:block">
-          <div className="w-12 h-12 border-2 border-primary/30 rounded-sm grid grid-cols-2 grid-rows-2">
-            <div className="border-r border-b border-primary/30"></div>
-            <div className="border-b border-primary/30"></div>
-            <div className="border-r border-primary/30"></div>
+        <FloatingAnimation x={8} y={8} rotate={10} duration={6} className="absolute top-32 left-32 hidden md:block opacity-70 dark:opacity-100">
+          <div className="w-12 h-12 border-2 border-primary/50 dark:border-primary/30 rounded-sm grid grid-cols-2 grid-rows-2">
+            <div className="border-r border-b border-primary/40 dark:border-primary/30"></div>
+            <div className="border-b border-primary/40 dark:border-primary/30"></div>
+            <div className="border-r border-primary/40 dark:border-primary/30"></div>
             <div></div>
           </div>
         </FloatingAnimation>
         
-        <FloatingAnimation x={10} y={10} rotate={15} duration={7} delay={0.3} className="absolute bottom-32 right-32 hidden md:block">
-          <div className="w-16 h-16 border-2 border-primary/30">
+        <FloatingAnimation x={10} y={10} rotate={15} duration={7} delay={0.3} className="absolute bottom-32 right-32 hidden md:block opacity-70 dark:opacity-100">
+          <div className="w-16 h-16 border-2 border-primary/50 dark:border-primary/30">
             <div className="w-full h-full relative">
-              <div className="absolute top-2 left-2 w-3 h-3 bg-primary/40"></div>
-              <div className="absolute bottom-2 right-2 w-5 h-1 bg-primary/40"></div>
+              <div className="absolute top-2 left-2 w-3 h-3 bg-primary/50 dark:bg-primary/40"></div>
+              <div className="absolute bottom-2 right-2 w-5 h-1 bg-primary/50 dark:bg-primary/40"></div>
             </div>
           </div>
         </FloatingAnimation>
         
         {/* Binary code */}
-        <div className="absolute bottom-10 left-10 opacity-10 font-mono text-xs whitespace-nowrap overflow-hidden text-primary/30">
+        <div className="absolute bottom-10 left-10 opacity-25 dark:opacity-10 font-mono text-xs whitespace-nowrap overflow-hidden text-primary/60 dark:text-primary/30">
           01001100 01101111 01110010 01100101 01101101 00100000 01001001 01110000 01110011 01110101 01101101
         </div>
       </div>

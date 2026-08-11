@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { useTheme } from '../../context/ThemeContext';
 
 interface CircuitPatternProps {
   opacity?: number;
@@ -7,34 +8,37 @@ interface CircuitPatternProps {
 }
 
 const CircuitPattern: React.FC<CircuitPatternProps> = ({
-  opacity = 0.15,
-  color = '#00FFE7'
+  opacity,
+  color,
 }) => {
-  // Generate random connection points - memoized to avoid recalculations
+  const { darkMode } = useTheme();
+  const patternColor = color || (darkMode ? '#00FFE7' : '#007870');
+  const patternOpacity = opacity ?? (darkMode ? 0.15 : 0.32);
+
   const { nodes, connections } = useMemo(() => {
-    // Generate nodes
-    const nodeCount = 10; // Reduced from 15
+    const nodeCount = 10;
     const generatedNodes = [];
-    
+
     for (let i = 0; i < nodeCount; i++) {
       generatedNodes.push({
         id: i,
         x: Math.random() * 100,
         y: Math.random() * 100,
-        size: Math.random() * 3 + 1.5, // Slightly larger sizes
+        size: Math.random() * 3 + 1.5,
         pulseDelay: Math.random() * 5,
       });
     }
-    
-    // Generate connections - using fewer connections
-    const connectionCount = Math.floor(nodeCount * 1.2); // Reduced from 1.5x
+
+    const connectionCount = Math.floor(nodeCount * 1.2);
     const generatedConnections = [];
-    
+
     for (let i = 0; i < connectionCount; i++) {
-      const startNode = generatedNodes[Math.floor(Math.random() * generatedNodes.length)];
-      const possibleEndNodes = generatedNodes.filter(n => n.id !== startNode.id);
-      const endNode = possibleEndNodes[Math.floor(Math.random() * possibleEndNodes.length)];
-      
+      const startNode =
+        generatedNodes[Math.floor(Math.random() * generatedNodes.length)];
+      const possibleEndNodes = generatedNodes.filter((n) => n.id !== startNode.id);
+      const endNode =
+        possibleEndNodes[Math.floor(Math.random() * possibleEndNodes.length)];
+
       generatedConnections.push({
         id: `c-${i}`,
         startX: startNode.x,
@@ -44,14 +48,16 @@ const CircuitPattern: React.FC<CircuitPatternProps> = ({
         animDelay: Math.random() * 5,
       });
     }
-    
+
     return { nodes: generatedNodes, connections: generatedConnections };
   }, []);
-  
+
   return (
-    <div className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none" style={{ opacity }}>
+    <div
+      className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none"
+      style={{ opacity: patternOpacity }}
+    >
       <svg width="100%" height="100%" style={{ willChange: 'transform' }}>
-        {/* Lines/connections */}
         {connections.map((conn) => (
           <g key={conn.id}>
             <line
@@ -59,36 +65,34 @@ const CircuitPattern: React.FC<CircuitPatternProps> = ({
               y1={`${conn.startY}%`}
               x2={`${conn.endX}%`}
               y2={`${conn.endY}%`}
-              stroke={color}
-              strokeWidth="0.5"
-              strokeOpacity="0.3"
+              stroke={patternColor}
+              strokeWidth={darkMode ? 0.5 : 0.8}
+              strokeOpacity={darkMode ? 0.35 : 0.55}
             />
-            
-            {/* Animated pulse along line - optimized with simpler animation */}
+
             <motion.circle
               cx="0"
               cy="0"
               r="2"
-              fill={color}
+              fill={patternColor}
               animate={{
                 cx: [`${conn.startX}%`, `${conn.endX}%`],
                 cy: [`${conn.startY}%`, `${conn.endY}%`],
-                opacity: [0, 0.8, 0],
+                opacity: [0, darkMode ? 0.8 : 0.95, 0],
               }}
               transition={{
-                duration: 4, // Longer duration for smoother motion
-                ease: "linear",
+                duration: 4,
+                ease: 'linear',
                 times: [0, 0.5, 1],
                 repeat: Infinity,
                 delay: conn.animDelay,
-                repeatDelay: Math.random() * 7 + 7, // Longer delay between pulses
+                repeatDelay: Math.random() * 7 + 7,
               }}
               style={{ willChange: 'transform, opacity' }}
             />
           </g>
         ))}
-        
-        {/* Nodes */}
+
         {nodes.map((node) => (
           <g key={node.id}>
             <circle
@@ -96,24 +100,23 @@ const CircuitPattern: React.FC<CircuitPatternProps> = ({
               cy={`${node.y}%`}
               r={node.size}
               fill="none"
-              stroke={color}
-              strokeWidth="0.5"
-              strokeOpacity="0.3"
+              stroke={patternColor}
+              strokeWidth={darkMode ? 0.5 : 0.9}
+              strokeOpacity={darkMode ? 0.35 : 0.55}
             />
-            
-            {/* Pulsing effect - optimized with simpler animation */}
+
             <motion.circle
               cx={`${node.x}%`}
               cy={`${node.y}%`}
               r={node.size}
-              fill={color}
+              fill={patternColor}
               animate={{
-                r: [node.size, node.size * 1.5, node.size], // Reduced scale change
-                opacity: [0.1, 0.3, 0.1], // Reduced opacity change
+                r: [node.size, node.size * 1.5, node.size],
+                opacity: darkMode ? [0.1, 0.3, 0.1] : [0.2, 0.45, 0.2],
               }}
               transition={{
-                duration: 6, // Longer duration for smoother effect
-                ease: "easeInOut",
+                duration: 6,
+                ease: 'easeInOut',
                 times: [0, 0.5, 1],
                 repeat: Infinity,
                 delay: node.pulseDelay,
@@ -127,4 +130,4 @@ const CircuitPattern: React.FC<CircuitPatternProps> = ({
   );
 };
 
-export default CircuitPattern; 
+export default CircuitPattern;

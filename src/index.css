@@ -12,7 +12,7 @@
   --color-primary: 0 140 132;
   --color-secondary: 196 48 130;
   --color-on-primary: 255 255 255;
-  --grid-line: rgba(0, 140, 132, 0.08);
+  --grid-line: rgba(0, 140, 132, 0.16);
   --glow-shadow: 0 0 12px rgba(0, 140, 132, 0.22);
   --scanner: rgba(0, 140, 132, 0.45);
   --cursor-ring: rgba(0, 140, 132, 0.45);

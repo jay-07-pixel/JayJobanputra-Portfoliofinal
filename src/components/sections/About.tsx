@@ -14,7 +14,7 @@ const About: React.FC = () => {
         y={20} 
         rotate={10} 
         duration={15} 
-        className="absolute top-10 right-10 opacity-20 hidden lg:block"
+        className="absolute top-10 right-10 opacity-35 dark:opacity-20 hidden lg:block"
       >
         <div className="w-40 h-40 border-2 border-primary rounded-full"></div>
       </FloatingAnimation>
@@ -25,7 +25,7 @@ const About: React.FC = () => {
         rotate={5} 
         duration={18} 
         delay={2} 
-        className="absolute bottom-10 left-10 opacity-20 hidden lg:block"
+        className="absolute bottom-10 left-10 opacity-35 dark:opacity-20 hidden lg:block"
       >
         <div className="w-60 h-60 border-2 border-secondary rounded-full"></div>
       </FloatingAnimation>
