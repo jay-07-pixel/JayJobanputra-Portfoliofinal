@@ -44,16 +44,13 @@ const About: React.FC = () => {
               threshold={0.3}
               className="flex justify-center"
             >
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-lg blur-md opacity-70 -m-2 z-0"></div>
-                <div className="w-40 h-40 xs:w-56 xs:h-56 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-lg bg-gray-800 overflow-hidden relative z-10 mx-auto">
-                  <img 
-                    src="/profile-photo.jpg" 
-                    alt="Jay Jobanputra" 
-                    className="w-full h-full object-cover object-top" 
-                    loading="lazy"
-                  />
-                </div>
+              <div className="w-48 h-60 xs:w-56 xs:h-72 sm:w-64 sm:h-80 md:w-72 md:h-96 rounded-lg bg-gray-800 overflow-hidden mx-auto border border-white/10">
+                <img 
+                  src="/profile-photo.jpg" 
+                  alt="Jay Jobanputra" 
+                  className="w-full h-full object-cover object-[center_20%]" 
+                  loading="lazy"
+                />
               </div>
             </ScrollAnimationWrapper>
           </ParallaxEffect>
@@ -67,59 +64,59 @@ const About: React.FC = () => {
               threshold={0.3}
             >
               <TextReveal 
-                text={`Hi, I'm Jay Jobanputra`} 
+                text="Hi, I'm Jay." 
                 tag="h3" 
-                className="text-2xl md:text-3xl font-bold mb-4 text-light-text" 
+                className="text-2xl md:text-3xl font-bold mb-2 text-light-text" 
                 staggerChildren={0.05}
               />
+
+              <motion.p
+                className="text-lg md:text-xl font-semibold text-primary mb-6"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                viewport={{ once: false, threshold: 0.3 }}
+              >
+                Think it. Build it. Make it real.
+              </motion.p>
               
               <motion.div
+                className="space-y-4 text-light-text/80"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
                 viewport={{ once: false, threshold: 0.3 }}
               >
-                <p className="mb-4 text-light-text/80">
-                I am a passionate and driven second-year student pursuing B.Tech in Artificial Intelligence & Data Science, with a solid foundation in programming, leadership, and effective communication. I actively take on responsibilities in student organizations and have led multiple initiatives focused on innovation, entrepreneurship, and team building. My experiences have shaped me into a confident individual who thrives in collaborative environments and enjoys solving complex problems through technology.
+                <p>
+                  I'm a <span className="font-semibold text-light-text">B.Tech AI &amp; Data Science student</span>,{' '}
+                  <span className="font-semibold text-light-text">developer</span>, and{' '}
+                  <span className="font-semibold text-light-text">entrepreneur</span> who enjoys building
+                  technology that solves real-world problems. Through{' '}
+                  <span className="font-semibold text-light-text">freelancing and my own work</span>, I've built
+                  web applications, Android apps, AI-powered systems, and solutions for businesses.
                 </p>
                 
-                <p className="mb-6 text-light-text/80">
-                My long-term goal is to become a Data Scientist and eventually an Entrepreneur committed to creating meaningful social impact. I aspire to build scalable tech-driven ventures that address real-world challenges, empower communities, and contribute to the nation's economic and digital growth. By combining analytical thinking with empathy and vision, I aim to drive change, motivate others, and build a future where technology serves humanity with purpose.
-
-
+                <p>
+                  I enjoy taking an idea from{' '}
+                  <span className="font-semibold text-light-text">"what if?"</span> to{' '}
+                  <span className="font-semibold text-light-text">something people can actually use</span>.
+                  Whether I'm <span className="font-semibold text-light-text">building a product</span>,{' '}
+                  exploring an <span className="font-semibold text-light-text">AI solution</span>, or{' '}
+                  experimenting with a new idea, I{' '}
+                  <span className="font-semibold text-light-text">learn by building</span> and figuring things out
+                  along the way.
                 </p>
-              </motion.div>
-              
-              <motion.div 
-                className="grid grid-cols-2 gap-4"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                viewport={{ once: false, threshold: 0.3 }}
-              >
-                <div>
-                  <h4 className="font-bold text-primary mb-2">Education</h4>
-                  <p className="text-light-text/80">B.Tech in AI & Data Science</p>
-                  <p className="text-light-text/70 text-sm">Sanjivani University</p>
-                  <p className="text-light-text/70 text-sm">2024 - 2028</p>
-                </div>
-                
-                <div>
-                  <h4 className="font-bold text-primary mb-2">Interests</h4>
-                  <ul className="list-disc list-inside text-light-text/80">
-                    {['Full-Stack Development', 'Multi-Platform Apps','Data Analysis & Visualization', 'Startups & Innovation', 'Leadership & Team Building'].map((item, i) => (
-                      <motion.li
-                        key={i}
-                        initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.3, delay: 0.7 + (i * 0.1) }}
-                        viewport={{ once: false }}
-                      >
-                        {item}
-                      </motion.li>
-                    ))}
-                  </ul>
-                </div>
+
+                <p>
+                  I'm also passionate about{' '}
+                  <span className="font-semibold text-light-text">startups, innovation and leadership</span>, and
+                  enjoy working with people who are curious, ambitious, and willing to build something
+                  meaningful.
+                </p>
+
+                <p className="pt-2 font-semibold text-primary">
+                  Every idea starts with a problem. Every solution starts with an idea.
+                </p>
               </motion.div>
             </ScrollAnimationWrapper>
           </ParallaxEffect>

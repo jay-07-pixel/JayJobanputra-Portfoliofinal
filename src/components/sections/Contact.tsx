@@ -1,7 +1,6 @@
 import React, { useState, FormEvent, ChangeEvent } from 'react';
 import { motion } from 'framer-motion';
 import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from 'react-icons/fa';
-import emailjs from 'emailjs-com'; // Uncomment when ready to implement email functionality
 
 interface FormState {
   name: string;
@@ -17,14 +16,20 @@ interface FormErrors {
   message?: string;
 }
 
+const CONTACT_EMAIL = 'jayjobanputra007@gmail.com';
+const CONTACT_API_URL =
+  process.env.REACT_APP_API_URL
+    ? `${process.env.REACT_APP_API_URL.replace(/\/$/, '')}/api/contact`
+    : '/api/contact';
+
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState<FormState>({
     name: '',
     email: '',
     subject: '',
-    message: ''
+    message: '',
   });
-  
+
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -65,50 +70,65 @@ const Contact: React.FC = () => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
-    
-    // Clear error when user types
+
     if (errors[name as keyof FormErrors]) {
       setErrors({
         ...errors,
-        [name]: undefined
+        [name]: undefined,
       });
     }
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    
-    if (validateForm()) {
-      setIsSubmitting(true);
-      setError('');
-      
-      try {
-        await emailjs.send(
-          'service_6y4cnlj', // Service ID
-          'template_yd428nr', // Template ID
-          {
-            from_name: formData.name,
-            from_email: formData.email,
-            subject: formData.subject,
-            message: formData.message
-          },
-          'aPvP-8MkWE_Y2MqTP' // Public Key
+
+    if (!validateForm()) return;
+
+    setIsSubmitting(true);
+    setError('');
+
+    try {
+      const response = await fetch(CONTACT_API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          subject: formData.subject.trim(),
+          message: formData.message.trim(),
+        }),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok || data.success === false) {
+        throw new Error(
+          data.message || 'Failed to send message. Please try again later.'
         );
-        
-        setSubmitted(true);
-        setFormData({
-          name: '',
-          email: '',
-          subject: '',
-          message: ''
-        });
-      } catch (err) {
-        setError('Failed to send message. Please try again later.');
-      } finally {
-        setIsSubmitting(false);
       }
+
+      setSubmitted(true);
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+      });
+    } catch (err) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : 'Failed to send message. Please try again later.';
+      setError(
+        `${message} You can also email me directly at ${CONTACT_EMAIL}.`
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -116,9 +136,8 @@ const Contact: React.FC = () => {
     <section id="contact" className="py-20 bg-dark-bg/50">
       <div className="container-section">
         <h2 className="section-title">Contact Me</h2>
-        
+
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-10">
-          {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -127,9 +146,11 @@ const Contact: React.FC = () => {
           >
             <h3 className="text-2xl font-bold mb-6 text-primary">Get In Touch</h3>
             <p className="text-light-text/80 mb-8">
-              Every connection begins with a conversation. If you have an idea, opportunity, or just want to say hello — feel free to reach out. I'm always happy to connect and explore what we can build together.
+              Every connection begins with a conversation. If you have an idea,
+              opportunity, or just want to say hello — feel free to reach out.
+              I'm always happy to connect and explore what we can build together.
             </p>
-            
+
             <div className="space-y-6">
               <div className="flex items-center">
                 <div className="bg-glow-effect p-3 rounded-full mr-4">
@@ -137,10 +158,15 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-light-text font-semibold">Email</h4>
-                  <p className="text-light-text/70">jayjobanputra007@gmail.com</p>
+                  <a
+                    href={`mailto:${CONTACT_EMAIL}`}
+                    className="text-light-text/70 hover:text-primary transition-colors"
+                  >
+                    {CONTACT_EMAIL}
+                  </a>
                 </div>
               </div>
-              
+
               <div className="flex items-center">
                 <div className="bg-glow-effect p-3 rounded-full mr-4">
                   <FaPhoneAlt className="text-primary text-xl" />
@@ -150,20 +176,19 @@ const Contact: React.FC = () => {
                   <p className="text-light-text/70">+91 9822961688</p>
                 </div>
               </div>
-              
+
               <div className="flex items-center">
                 <div className="bg-glow-effect p-3 rounded-full mr-4">
                   <FaMapMarkerAlt className="text-primary text-xl" />
                 </div>
                 <div>
                   <h4 className="text-light-text font-semibold">Location</h4>
-                  <p className="text-light-text/70">Kopargoan, Maharashtra, India</p>
+                  <p className="text-light-text/70">Kopargaon, Maharashtra, India</p>
                 </div>
               </div>
             </div>
           </motion.div>
-          
-          {/* Contact Form */}
+
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -174,8 +199,11 @@ const Contact: React.FC = () => {
               <div className="h-full flex flex-col items-center justify-center text-center p-8 bg-glow-effect rounded-lg">
                 <div className="text-5xl mb-4">✉️</div>
                 <h3 className="text-2xl font-bold text-primary mb-2">Thank You!</h3>
-                <p className="text-light-text">Your message has been sent successfully. I'll get back to you soon!</p>
-                <button 
+                <p className="text-light-text">
+                  Your message has been sent successfully. I'll get back to you
+                  soon!
+                </p>
+                <button
                   onClick={() => setSubmitted(false)}
                   className="mt-6 btn-primary"
                 >
@@ -183,83 +211,136 @@ const Contact: React.FC = () => {
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                <input
+                  type="text"
+                  name="_honey"
+                  className="hidden"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                />
+
                 <div>
-                  <label htmlFor="name" className="block text-light-text mb-2">Name</label>
+                  <label htmlFor="name" className="block text-light-text mb-2">
+                    Name
+                  </label>
                   <input
                     type="text"
                     id="name"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className={`w-full bg-dark-bg border ${errors.name ? 'border-red-500' : 'border-glow-effect'} rounded-md px-4 py-3 text-light-text focus:outline-none focus:border-primary transition-colors`}
+                    className={`w-full bg-dark-bg border ${
+                      errors.name ? 'border-red-500' : 'border-glow-effect'
+                    } rounded-md px-4 py-3 text-light-text focus:outline-none focus:border-primary transition-colors`}
                     placeholder="Your Name"
                   />
-                  {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+                  {errors.name && (
+                    <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+                  )}
                 </div>
-                
+
                 <div>
-                  <label htmlFor="email" className="block text-light-text mb-2">Email</label>
+                  <label htmlFor="email" className="block text-light-text mb-2">
+                    Email
+                  </label>
                   <input
                     type="email"
                     id="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`w-full bg-dark-bg border ${errors.email ? 'border-red-500' : 'border-glow-effect'} rounded-md px-4 py-3 text-light-text focus:outline-none focus:border-primary transition-colors`}
+                    className={`w-full bg-dark-bg border ${
+                      errors.email ? 'border-red-500' : 'border-glow-effect'
+                    } rounded-md px-4 py-3 text-light-text focus:outline-none focus:border-primary transition-colors`}
                     placeholder="Your Email"
                   />
-                  {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+                  {errors.email && (
+                    <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                  )}
                 </div>
-                
+
                 <div>
-                  <label htmlFor="subject" className="block text-light-text mb-2">Subject</label>
+                  <label htmlFor="subject" className="block text-light-text mb-2">
+                    Subject
+                  </label>
                   <input
                     type="text"
                     id="subject"
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    className={`w-full bg-dark-bg border ${errors.subject ? 'border-red-500' : 'border-glow-effect'} rounded-md px-4 py-3 text-light-text focus:outline-none focus:border-primary transition-colors`}
+                    className={`w-full bg-dark-bg border ${
+                      errors.subject ? 'border-red-500' : 'border-glow-effect'
+                    } rounded-md px-4 py-3 text-light-text focus:outline-none focus:border-primary transition-colors`}
                     placeholder="Subject"
                   />
-                  {errors.subject && <p className="text-red-500 text-sm mt-1">{errors.subject}</p>}
+                  {errors.subject && (
+                    <p className="text-red-500 text-sm mt-1">{errors.subject}</p>
+                  )}
                 </div>
-                
+
                 <div>
-                  <label htmlFor="message" className="block text-light-text mb-2">Message</label>
+                  <label htmlFor="message" className="block text-light-text mb-2">
+                    Message
+                  </label>
                   <textarea
                     id="message"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
                     rows={5}
-                    className={`w-full bg-dark-bg border ${errors.message ? 'border-red-500' : 'border-glow-effect'} rounded-md px-4 py-3 text-light-text focus:outline-none focus:border-primary transition-colors`}
+                    className={`w-full bg-dark-bg border ${
+                      errors.message ? 'border-red-500' : 'border-glow-effect'
+                    } rounded-md px-4 py-3 text-light-text focus:outline-none focus:border-primary transition-colors`}
                     placeholder="Your Message"
                   />
-                  {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
+                  {errors.message && (
+                    <p className="text-red-500 text-sm mt-1">{errors.message}</p>
+                  )}
                 </div>
-                
+
                 {error && (
-                  <div className="bg-red-500/20 text-red-500 p-3 rounded-md">
+                  <div className="bg-red-500/20 text-red-500 p-3 rounded-md text-sm">
                     {error}
                   </div>
                 )}
-                
+
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`btn-primary w-full flex items-center justify-center ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                  className={`btn-primary w-full flex items-center justify-center ${
+                    isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+                  }`}
                 >
                   {isSubmitting ? (
                     <>
-                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      <svg
+                        className="animate-spin -ml-1 mr-2 h-4 w-4 text-current"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        />
                       </svg>
                       Sending...
                     </>
-                  ) : 'Send Message'}
+                  ) : (
+                    'Send Message'
+                  )}
                 </button>
               </form>
             )}
@@ -270,4 +351,4 @@ const Contact: React.FC = () => {
   );
 };
 
-export default Contact; 
+export default Contact;

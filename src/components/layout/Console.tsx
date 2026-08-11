@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
 interface ConsoleProps {
@@ -6,203 +6,426 @@ interface ConsoleProps {
   onClose: () => void;
 }
 
+interface HistoryEntry {
+  type: 'input' | 'output' | 'error' | 'system';
+  content: string;
+}
+
+const PROMPT = 'jay@portfolio:~$';
+
+const SECTION_MAP: Record<string, string> = {
+  home: 'hero',
+  hero: 'hero',
+  about: 'about',
+  skills: 'skills',
+  education: 'education',
+  projects: 'projects',
+  research: 'research',
+  contact: 'contact',
+};
+
+const HELP_TEXT = [
+  'Available commands:',
+  '',
+  '  help                 Show this help message',
+  '  whoami               Who am I',
+  '  about                About Jay',
+  '  skills               Technologies I work with',
+  '  education            Academic background',
+  '  projects             Freelance & personal projects',
+  '  research             Research & publications',
+  '  contact              Contact information',
+  '  ls                   List portfolio sections',
+  '  pwd                  Current location',
+  '  goto <section>       Navigate to a section',
+  '  open <section>       Alias for goto',
+  '  clear / cls          Clear the terminal',
+  '  echo <text>          Print text',
+  '  date                 Show current date/time',
+  '  exit / quit          Close the terminal',
+  '',
+  'Tip: Use ↑ / ↓ to cycle command history.',
+];
+
 const Console: React.FC<ConsoleProps> = ({ isVisible, onClose }) => {
-  const [input, setInput] = useState<string>('');
-  const [history, setHistory] = useState<{type: 'input' | 'output', content: string}[]>([
-    { type: 'output', content: 'Portfolio OS [Version 1.0.0]' },
-    { type: 'output', content: 'Type "help" for available commands.' },
-    { type: 'output', content: '> ' }
+  const [input, setInput] = useState('');
+  const [history, setHistory] = useState<HistoryEntry[]>([
+    { type: 'system', content: 'Portfolio OS [Version 1.0.0]' },
+    { type: 'system', content: 'Type "help" for available commands.' },
   ]);
+  const [commandHistory, setCommandHistory] = useState<string[]>([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
+  const [draftInput, setDraftInput] = useState('');
+
   const inputRef = useRef<HTMLInputElement>(null);
-  const consoleEndRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Scroll to bottom whenever history updates
+  const focusInput = useCallback(() => {
+    inputRef.current?.focus();
+  }, []);
+
   useEffect(() => {
-    if (consoleEndRef.current) {
-      consoleEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (isVisible) {
+      const timer = setTimeout(focusInput, 120);
+      return () => clearTimeout(timer);
     }
-  }, [history]);
+  }, [isVisible, focusInput]);
 
-  // Focus input when console becomes visible
   useEffect(() => {
-    if (isVisible && inputRef.current) {
-      setTimeout(() => {
-        inputRef.current?.focus();
-      }, 100);
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [isVisible]);
+  }, [history, input]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
+  const appendOutput = (lines: HistoryEntry[]) => {
+    setHistory((prev) => [...prev, ...lines]);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && input.trim()) {
-      processCommand(input.trim());
-      setInput('');
+  const navigateTo = (sectionKey: string): string[] => {
+    const targetId = SECTION_MAP[sectionKey];
+    if (!targetId) {
+      return [
+        `goto: ${sectionKey}: no such section`,
+        'Try: home | about | skills | education | projects | research | contact',
+      ];
     }
+
+    const element = document.getElementById(targetId);
+    if (!element) {
+      return [`goto: section "${sectionKey}" not found in DOM`];
+    }
+
+    setTimeout(() => {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }, 180);
+
+    return [`Navigating to ${sectionKey}...`];
   };
 
-  const processCommand = (cmd: string) => {
-    // Add command to history
-    setHistory(prev => [...prev, { type: 'input', content: cmd }]);
+  const runCommand = (raw: string) => {
+    const trimmed = raw.trim();
+    if (!trimmed) return;
 
-    // Process commands
-    let response: string[] = [];
+    setCommandHistory((prev) => {
+      if (prev[prev.length - 1] === trimmed) return prev;
+      return [...prev, trimmed];
+    });
+    setHistoryIndex(-1);
+    setDraftInput('');
 
-    const lowerCmd = cmd.toLowerCase();
+    appendOutput([{ type: 'input', content: trimmed }]);
 
-    switch(lowerCmd) {
+    const parts = trimmed.split(/\s+/);
+    const cmd = parts[0].toLowerCase();
+    const args = parts.slice(1);
+    const argStr = args.join(' ');
+
+    let lines: string[] = [];
+    let isError = false;
+
+    switch (cmd) {
       case 'help':
-        response = [
-          'Available commands:',
-          '  about       - Learn about me',
-          '  skills      - View my technical skills',
-          '  projects    - Browse my projects',
-          '  contact     - Get my contact info',
-          '  goto [page] - Navigate to a section',
-          '  clear       - Clear the console',
-          '  exit        - Close the console'
+      case '?':
+        lines = HELP_TEXT;
+        break;
+
+      case 'whoami':
+        lines = [
+          'Jay Jobanputra',
+          'B.Tech AI & Data Science student · developer · entrepreneur',
+          'Think it. Build it. Make it real.',
         ];
         break;
-      
+
       case 'about':
-        response = [
-          'Hi, I\'m [Your Name]!',
-          'I\'m a front-end developer passionate about creating',
-          'beautiful and functional web applications.',
-          'I specialize in React, TypeScript, and modern CSS.',
-          'Type "skills" to learn more about my technical expertise.'
-        ];
-        break;
-      
-      case 'skills':
-        response = [
-          'Technical Skills:',
-          '• Frontend: React, TypeScript, HTML5, CSS3, Tailwind CSS',
-          '• State Management: Redux, Context API',
-          '• Animation: Framer Motion',
-          '• Tools: Git, Webpack, npm/yarn',
-          '• UI/UX: Responsive Design, Accessibility'
-        ];
-        break;
-      
-      case 'projects':
-        response = [
-          'Featured Projects:',
-          '1. Portfolio Website',
-          '   - Modern React portfolio with tech theme',
-          '   - Built with React, TypeScript, Tailwind CSS',
-          '2. [Project Name]',
-          '   - [Project description]',
-          '3. [Project Name]',
-          '   - [Project description]',
+        lines = [
+          "Hi, I'm Jay.",
+          'Think it. Build it. Make it real.',
           '',
-          'Type "goto projects" to view more details.'
+          "I'm a B.Tech AI & Data Science student, developer, and entrepreneur",
+          'who builds technology that solves real-world problems.',
+          'Through freelancing and my own work, I build web apps,',
+          'Android apps, AI systems, and solutions for businesses.',
+          '',
+          'Every idea starts with a problem. Every solution starts with an idea.',
+          '',
+          'Type "goto about" to open the About section.',
         ];
         break;
-      
+
+      case 'skills':
+        lines = [
+          'What I Work With',
+          '',
+          '  Frontend     React.js · TypeScript · JavaScript · HTML/CSS · Tailwind · Vite',
+          '  Backend      Node.js · Express.js · REST APIs · Server-Sent Events',
+          '  AI / ML      Python · Scikit-learn · TensorFlow · Keras · XGBoost · Pandas · NumPy · Google ML Kit',
+          '  Mobile       Android (Java) · Flutter · Retrofit · OkHttp',
+          '  Data/Cloud   Firebase · Firestore · MySQL · MongoDB · SQLite · Railway · Netlify · Vercel',
+          '  Tools/Data   Git · GitHub · Cursor · Android Studio · VS Code · Postman · Insomnia · Matplotlib · Seaborn · Plotly · Recharts · Tableau',
+          '',
+          'Type "goto skills" to explore the full section.',
+        ];
+        break;
+
+      case 'education':
+        lines = [
+          'Education',
+          '',
+          '  [CURRENT] B.Tech — Artificial Intelligence & Data Science',
+          '            Sanjivani University, Kopargaon · 2024 – 2028',
+          '',
+          '  Senior Secondary (XII) — Science',
+          '  K. B. Rohmare Jr. College, Kopargaon · MSBSHSE · 2024 · 63%',
+          '',
+          '  Secondary (X)',
+          '  Shri Sharda English Medium School, Kopargaon · MSBSHSE · 2022 · 91.40%',
+          '',
+          'Type "goto education" to view this section.',
+        ];
+        break;
+
+      case 'projects':
+        lines = [
+          'Projects',
+          '',
+          'Freelance & Client Work:',
+          '  01  Kalpanik Task Manager',
+          '  02  Kailash Masale',
+          '  03  AromaWrap',
+          '  04  Election Survey System',
+          '',
+          'Personal Projects:',
+          '  01  KALPANIK Operations AI',
+          '  02  FaceAttend',
+          '',
+          'Type "goto projects" to open the Projects section.',
+        ];
+        break;
+
+      case 'research':
+        lines = [
+          'Research & Publications',
+          '',
+          '  Optimized Feature Selection And Machine Learning Techniques',
+          '  for Early Detection of Chronic Kidney Disease',
+          '',
+          '  Authors: Jay Nilesh Jobanputra · K. Vengatesan · V.D. Ambeth Kumar et al.',
+          '  Venue:   IEEE GITCON 2025 · Belagavi, India',
+          '  Status:  Published in IEEE Xplore · Available on Google Scholar',
+          '  DOI:     10.1109/GITCON65266.2025.11377145',
+          '',
+          '  Dataset: 400 patient records · 26 clinical features · 7+ ML algorithms',
+          '  Feature selection: RFE and Mutual Information Gain',
+          '',
+          'Type "goto research" to open this section.',
+        ];
+        break;
+
       case 'contact':
-        response = [
-          'Contact Information:',
-          '• Email: jayjobanputra007@gmail.com',
-          '• LinkedIn: linkedin.com/in/jay-jobanputra-1b442931b',
-          '• Phone: +91 9822961688',
-          '• Location: Kopargoan, Maharashtra, India'
+        lines = [
+          'Contact',
+          '',
+          '  Email:     jayjobanputra007@gmail.com',
+          '  LinkedIn:  linkedin.com/in/jay-jobanputra-1b442931b',
+          '  Phone:     +91 9822961688',
+          '  Location:  Kopargaon, Maharashtra, India',
+          '',
+          'Type "goto contact" to open the contact form.',
         ];
         break;
-      
+
+      case 'ls':
+        lines = [
+          'home/  about/  skills/  education/  projects/  research/  contact/',
+        ];
+        break;
+
+      case 'pwd':
+        lines = ['/portfolio'];
+        break;
+
+      case 'date':
+        lines = [new Date().toString()];
+        break;
+
+      case 'echo':
+        lines = [argStr || ''];
+        break;
+
       case 'clear':
-        setHistory([
-          { type: 'output', content: '> ' }
-        ]);
+      case 'cls':
+        setHistory([]);
+        setInput('');
         return;
-      
+
       case 'exit':
+      case 'quit':
+      case 'close':
         onClose();
         return;
-        
-      default:
-        // Check for goto command
-        if (lowerCmd.startsWith('goto ')) {
-          const section = lowerCmd.substring(5).trim();
-          const validSections = ['home', 'about', 'skills', 'projects', 'contact'];
-          
-          if (validSections.includes(section)) {
-            response = [`Navigating to ${section} section...`];
-            
-            // Scroll to the section
-            const element = document.getElementById(section);
-            if (element) {
-              setTimeout(() => {
-                element.scrollIntoView({ behavior: 'smooth' });
-              }, 500);
-            }
-          } else {
-            response = [`Error: Unknown section "${section}"`];
-          }
+
+      case 'goto':
+      case 'open':
+      case 'cd': {
+        if (!args[0]) {
+          isError = true;
+          lines = [`Usage: ${cmd} <section>`, 'Sections: home about skills education projects research contact'];
         } else {
-          response = [`Command not recognized: ${cmd}`, 'Type "help" for available commands.'];
+          const result = navigateTo(args[0].toLowerCase());
+          isError = result[0].startsWith('goto:');
+          lines = result;
         }
+        break;
+      }
+
+      default:
+        isError = true;
+        lines = [
+          `Command not found: ${cmd}`,
+          'Type "help" for available commands.',
+        ];
     }
 
-    // Add response to history
-    setTimeout(() => {
-      setHistory(prev => [
-        ...prev, 
-        ...response.map(line => ({ type: 'output' as const, content: line })),
-        { type: 'output', content: '> ' }
+    appendOutput(
+      lines.map((content) => ({
+        type: isError ? 'error' : 'output',
+        content,
+      }))
+    );
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      runCommand(input);
+      setInput('');
+      return;
+    }
+
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      onClose();
+      return;
+    }
+
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (commandHistory.length === 0) return;
+
+      if (historyIndex === -1) {
+        setDraftInput(input);
+        const nextIndex = commandHistory.length - 1;
+        setHistoryIndex(nextIndex);
+        setInput(commandHistory[nextIndex]);
+      } else if (historyIndex > 0) {
+        const nextIndex = historyIndex - 1;
+        setHistoryIndex(nextIndex);
+        setInput(commandHistory[nextIndex]);
+      }
+      return;
+    }
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (historyIndex === -1) return;
+
+      if (historyIndex < commandHistory.length - 1) {
+        const nextIndex = historyIndex + 1;
+        setHistoryIndex(nextIndex);
+        setInput(commandHistory[nextIndex]);
+      } else {
+        setHistoryIndex(-1);
+        setInput(draftInput);
+      }
+      return;
+    }
+
+    if (e.key === 'c' && e.ctrlKey) {
+      e.preventDefault();
+      appendOutput([
+        { type: 'input', content: input ? `${input}^C` : '^C' },
       ]);
-    }, 100);
+      setInput('');
+      setHistoryIndex(-1);
+      setDraftInput('');
+    }
   };
 
   if (!isVisible) return null;
 
   return (
     <motion.div
-      className="fixed bottom-0 left-0 right-0 z-50 mx-auto w-full md:w-3/4 lg:w-1/2 bg-dark-bg border border-primary/40 rounded-t-lg shadow-lg"
+      className="fixed bottom-0 left-0 right-0 z-50 mx-auto w-full md:w-3/4 lg:w-1/2 bg-dark-bg border border-primary/40 rounded-t-lg shadow-lg overflow-hidden"
       initial={{ y: '100%' }}
       animate={{ y: 0 }}
       exit={{ y: '100%' }}
-      transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-      style={{ maxHeight: '50vh' }}
+      transition={{ type: 'spring', damping: 22, stiffness: 280 }}
+      style={{ maxHeight: '55vh' }}
+      onClick={focusInput}
     >
-      {/* Console header */}
-      <div className="flex items-center justify-between bg-gray-900 p-2 rounded-t-lg border-b border-primary/20">
+      <div className="flex items-center justify-between bg-gray-900 px-3 py-2 rounded-t-lg border-b border-primary/20">
         <div className="text-sm font-mono text-primary">Portfolio Terminal</div>
-        <div className="flex gap-2">
-          <button 
-            onClick={onClose}
-            className="w-4 h-4 rounded-full bg-red-500 hover:bg-red-600 flex items-center justify-center"
-            aria-label="Close console"
-          >
-            <span className="text-xs text-white">&times;</span>
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onClose();
+          }}
+          className="w-4 h-4 rounded-full bg-red-500 hover:bg-red-600 flex items-center justify-center"
+          aria-label="Close console"
+        >
+          <span className="text-xs text-white leading-none">&times;</span>
+        </button>
       </div>
-      
-      {/* Console output */}
-      <div className="p-4 font-mono text-sm text-light-text overflow-y-auto" style={{ maxHeight: 'calc(50vh - 3rem)' }}>
+
+      <div
+        ref={scrollRef}
+        className="p-4 font-mono text-sm overflow-y-auto"
+        style={{ maxHeight: 'calc(55vh - 2.75rem)' }}
+      >
         {history.map((entry, index) => (
-          <div key={index} className={`mb-1 ${entry.type === 'input' ? 'pl-2 text-primary' : ''}`}>
-            {entry.type === 'input' ? `> ${entry.content}` : entry.content}
+          <div
+            key={`${index}-${entry.content.slice(0, 12)}`}
+            className={`mb-0.5 whitespace-pre-wrap break-words ${
+              entry.type === 'input'
+                ? 'text-primary'
+                : entry.type === 'error'
+                ? 'text-red-400'
+                : entry.type === 'system'
+                ? 'text-light-text/70'
+                : 'text-light-text'
+            }`}
+          >
+            {entry.type === 'input' ? (
+              <>
+                <span className="text-primary/70 select-none">{PROMPT} </span>
+                {entry.content}
+              </>
+            ) : (
+              entry.content
+            )}
           </div>
         ))}
-        <div className="flex items-center">
+
+        <div className="flex items-start gap-2 mt-0.5">
+          <span className="text-primary/70 select-none shrink-0">{PROMPT}</span>
           <input
             ref={inputRef}
             type="text"
             value={input}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyPress}
-            className="flex-grow bg-transparent outline-none text-primary caret-primary font-mono text-sm"
-            autoFocus
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            className="flex-grow min-w-0 bg-transparent outline-none text-primary caret-primary font-mono text-sm"
+            spellCheck={false}
+            autoComplete="off"
+            autoCapitalize="off"
+            aria-label="Terminal input"
           />
         </div>
-        <div ref={consoleEndRef} />
       </div>
     </motion.div>
   );
 };
 
-export default Console; 
+export default Console;

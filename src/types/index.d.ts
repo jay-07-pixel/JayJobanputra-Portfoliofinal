@@ -19,6 +19,7 @@ declare module 'react-icons/fa' {
   export const FaTimes: IconType;
   export const FaGithub: IconType;
   export const FaExternalLinkAlt: IconType;
+  export const FaPlay: IconType;
   export const FaTimesCircle: IconType;
   export const FaEnvelope: IconType;
   export const FaPhoneAlt: IconType;

@@ -9,6 +9,8 @@
 .DS_Store
 .env
 .env.*
+!env.example
+server/.env
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -41,3 +43,6 @@ Desktop.ini
 
 # Optional: ignore build cache
 .cache/
+
+# Firebase local cache
+.firebase/

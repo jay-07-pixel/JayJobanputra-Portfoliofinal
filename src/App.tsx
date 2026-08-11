@@ -6,7 +6,9 @@ import Footer from './components/layout/Footer';
 import Hero from './components/sections/Hero';
 import About from './components/sections/About';
 import Skills from './components/sections/Skills';
+import Education from './components/sections/Education';
 import Projects from './components/sections/Projects';
+import Research from './components/sections/Research';
 import Contact from './components/sections/Contact';
 import ScrollProgress from './components/layout/ScrollProgress';
 import TechBackground from './components/layout/TechBackground';
@@ -192,7 +194,9 @@ const App: React.FC = () => {
               <Hero />
               <About />
               <Skills />
+              <Education />
               <Projects />
+              <Research />
               <Contact />
             </main>
             <Footer />

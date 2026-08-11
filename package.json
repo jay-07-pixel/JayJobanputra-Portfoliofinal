@@ -18,9 +18,13 @@
     "@types/react-dom": "^18.2.17",
     "@types/react-scroll": "^1.8.10",
     "aframe": "^1.7.1",
+    "cors": "^2.8.6",
     "d3-force": "^3.0.0",
+    "dotenv": "^16.6.1",
     "emailjs-com": "^3.2.0",
+    "express": "^4.22.2",
     "framer-motion": "^10.16.5",
+    "nodemailer": "^6.10.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-force-graph": "^1.47.6",
@@ -31,8 +35,11 @@
     "typewriter-effect": "^2.21.0",
     "web-vitals": "^3.5.0"
   },
+  "proxy": "http://localhost:5000",
   "scripts": {
     "start": "react-scripts start",
+    "server": "node server/index.js",
+    "dev": "concurrently \"npm run server\" \"npm start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -60,6 +67,7 @@
     "@types/react-dom": "^18.2.17",
     "@types/react-scroll": "^1.8.10",
     "ajv": "^8.12.0",
-    "ajv-keywords": "^5.1.0"
+    "ajv-keywords": "^5.1.0",
+    "concurrently": "^9.2.4"
   }
 }
