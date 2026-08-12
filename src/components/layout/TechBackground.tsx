@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../../context/ThemeContext';
 
@@ -6,32 +6,24 @@ interface TechBackgroundProps {
   density?: number;
 }
 
-const generateBinaryString = (length: number) => {
-  return Array.from({ length }, () => Math.round(Math.random())).join('');
+/** Place decorations only near screen edges so center content stays clear. */
+const edgePosition = (index: number, total: number) => {
+  const band = index % 4;
+  const t = (Math.floor(index / 4) + 1) / (Math.ceil(total / 4) + 1);
+
+  switch (band) {
+    case 0: // left edge
+      return { x: 2 + (index % 3) * 3, y: 8 + t * 75 };
+    case 1: // right edge
+      return { x: 88 + (index % 3) * 3, y: 10 + t * 70 };
+    case 2: // top edge
+      return { x: 12 + t * 70, y: 3 + (index % 2) * 4 };
+    default: // bottom edge
+      return { x: 15 + t * 65, y: 88 + (index % 2) * 4 };
+  }
 };
 
-const codeSnippets = [
-  'const x = () => { };',
-  'import React from "react";',
-  'function app() { }',
-  '<div className="container">',
-  'export default App;',
-  'npm install react',
-  'git commit -m "fix: update"',
-  '@tailwind base;',
-  '.map(item => item.id)',
-  'useState<boolean>(false)',
-  'npm run build',
-  'git push origin main',
-  'docker-compose up -d',
-  '<Component {...props} />',
-  'const [data, setData] = useState([])',
-  'useEffect(() => { }, [])',
-  '404 Not Found',
-  '<Route path="/" element={<Home />} />',
-];
-
-const TechBackground: React.FC<TechBackgroundProps> = ({ density = 30 }) => {
+const TechBackground: React.FC<TechBackgroundProps> = ({ density = 12 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { darkMode } = useTheme();
 
@@ -51,35 +43,44 @@ const TechBackground: React.FC<TechBackgroundProps> = ({ density = 30 }) => {
     resizeCanvas();
 
     const chars = '01';
-    const columns = Math.floor(canvas.width / 30);
+    const columns = Math.floor(canvas.width / 40);
     const drops: number[] = [];
 
     for (let i = 0; i < columns; i++) {
       drops[i] = Math.random() * -canvas.height;
     }
 
-    // Theme-aware trail + glyph colors
     const fadeColor = darkMode
-      ? 'rgba(15, 15, 15, 0.05)'
-      : 'rgba(243, 246, 248, 0.12)';
+      ? 'rgba(15, 15, 15, 0.06)'
+      : 'rgba(243, 246, 248, 0.14)';
     const glyphColor = darkMode
-      ? 'rgba(0, 255, 231, 0.35)'
-      : 'rgba(0, 120, 112, 0.45)';
+      ? 'rgba(0, 255, 231, 0.22)'
+      : 'rgba(0, 120, 112, 0.28)';
 
     const matrixRain = () => {
       ctx.fillStyle = fadeColor;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       ctx.fillStyle = glyphColor;
-      ctx.font = '12px monospace';
+      ctx.font = '11px monospace';
       ctx.textAlign = 'center';
 
       for (let i = 0; i < drops.length; i++) {
         const char = chars[Math.floor(Math.random() * chars.length)];
-        const x = i * 30;
+        const x = i * 40;
         const y = drops[i];
 
-        if (y > 0 && Math.random() > (darkMode ? 0.95 : 0.9)) {
+        // Skip drawing in the center content band
+        const xRatio = x / canvas.width;
+        if (xRatio > 0.22 && xRatio < 0.78) {
+          drops[i] += Math.random() * 1.2 + 0.5;
+          if (drops[i] > canvas.height || Math.random() > 0.99) {
+            drops[i] = Math.random() * -100;
+          }
+          continue;
+        }
+
+        if (y > 0 && Math.random() > 0.92) {
           ctx.fillText(char, x, y);
         }
 
@@ -91,7 +92,7 @@ const TechBackground: React.FC<TechBackgroundProps> = ({ density = 30 }) => {
       }
     };
 
-    const interval = setInterval(matrixRain, 50);
+    const interval = setInterval(matrixRain, 60);
 
     return () => {
       clearInterval(interval);
@@ -99,182 +100,105 @@ const TechBackground: React.FC<TechBackgroundProps> = ({ density = 30 }) => {
     };
   }, [darkMode]);
 
-  const actualDensity = Math.min(density, 20);
-  const elements = Array.from({ length: actualDensity }, (_, i) => {
-    const isCode = Math.random() > 0.7;
-    const isBinary = Math.random() > 0.5;
-    const isShape = !isCode && !isBinary;
-    const baseOpacity = darkMode
-      ? Math.random() * 0.25 + 0.08
-      : Math.random() * 0.35 + 0.22;
+  const count = Math.min(density, 12);
 
-    return {
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 1.5 + 0.5,
-      opacity: baseOpacity,
-      rotateZ: Math.random() * 360,
-      animationDuration: Math.random() * 60 + 30,
-      delay: Math.random() * -30,
-      isCode,
-      isBinary,
-      isShape,
-      content: isCode
-        ? codeSnippets[Math.floor(Math.random() * codeSnippets.length)]
-        : isBinary
-        ? generateBinaryString(Math.floor(Math.random() * 10) + 5)
-        : '',
-      shape: isShape ? Math.floor(Math.random() * 3) : -1,
-    };
-  });
+  const elements = useMemo(() => {
+    return Array.from({ length: count }, (_, i) => {
+      const pos = edgePosition(i, count);
+      return {
+        id: i,
+        x: pos.x,
+        y: pos.y,
+        size: 0.55 + (i % 3) * 0.15,
+        opacity: darkMode ? 0.12 + (i % 3) * 0.04 : 0.18 + (i % 3) * 0.05,
+        animationDuration: 40 + (i % 5) * 8,
+        delay: -i * 2,
+        shape: i % 3,
+      };
+    });
+  }, [count, darkMode]);
 
   const strokeColor = darkMode ? '#00FFE7' : '#007870';
 
   return (
-    <div
-      className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none z-0"
-      style={{ position: 'fixed', willChange: 'transform' }}
-    >
+    <div className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
       <canvas
         ref={canvasRef}
         className={`fixed inset-0 w-full h-full ${
-          darkMode ? 'opacity-15' : 'opacity-40'
+          darkMode ? 'opacity-20' : 'opacity-30'
         }`}
-        style={{ willChange: 'transform' }}
       />
 
       {elements.map((element) => (
         <motion.div
-          key={`${darkMode ? 'd' : 'l'}-${element.id}`}
-          className="absolute font-mono text-primary whitespace-nowrap will-change-transform"
+          key={`shape-${element.id}`}
+          className="absolute will-change-transform"
           style={{
             left: `${element.x}%`,
             top: `${element.y}%`,
-            fontSize: `${element.size}rem`,
             opacity: element.opacity,
-            transform: `rotateZ(${element.rotateZ}deg)`,
-            willChange: 'transform, opacity',
           }}
           animate={{
-            y: ['0%', '10%', '0%'],
-            x: [
-              `${element.x}%`,
-              `${element.x + (Math.random() * 5 - 2.5)}%`,
-              `${element.x}%`,
-            ],
-            opacity: [element.opacity, element.opacity * 1.35, element.opacity],
+            y: [0, 8, 0],
+            opacity: [element.opacity, element.opacity * 1.25, element.opacity],
           }}
           transition={{
             duration: element.animationDuration,
-            ease: 'linear',
+            ease: 'easeInOut',
             repeat: Infinity,
             delay: element.delay,
           }}
         >
-          {element.isCode && (
-            <span className="text-primary/70 dark:text-primary/40">
-              {element.content}
-            </span>
+          {element.shape === 0 && (
+            <div
+              className="rounded-full border border-primary/40 dark:border-primary/25"
+              style={{
+                width: `${element.size * 1.4}rem`,
+                height: `${element.size * 1.4}rem`,
+              }}
+            />
           )}
-
-          {element.isBinary && (
-            <span className="text-primary/60 dark:text-primary/30">
-              {element.content}
-            </span>
+          {element.shape === 1 && (
+            <div
+              className="border border-primary/40 dark:border-primary/25"
+              style={{
+                width: `${element.size * 1.2}rem`,
+                height: `${element.size * 1.2}rem`,
+              }}
+            />
           )}
-
-          {element.isShape && (
-            <>
-              {element.shape === 0 && (
-                <div
-                  className={`w-${Math.floor(element.size * 4)}
-                   h-${Math.floor(element.size * 4)} rounded-full border border-primary/50 dark:border-primary/25`}
-                />
-              )}
-              {element.shape === 1 && (
-                <div
-                  className={`w-${Math.floor(element.size * 4)} 
-                  h-${Math.floor(element.size * 4)} border border-primary/50 dark:border-primary/25`}
-                />
-              )}
-              {element.shape === 2 && (
-                <div
-                  className="border-solid border-t-primary/50 dark:border-t-primary/25 border-t-4 
-                  border-x-transparent border-x-4 border-b-0 w-0 h-0"
-                  style={{
-                    borderWidth: `${Math.floor(element.size * 8)}px ${Math.floor(
-                      element.size * 4
-                    )}px 0 ${Math.floor(element.size * 4)}px`,
-                  }}
-                />
-              )}
-            </>
+          {element.shape === 2 && (
+            <div
+              className="w-1.5 h-1.5 rounded-full bg-primary/50 dark:bg-primary/30"
+            />
           )}
         </motion.div>
       ))}
 
       <div
         className={`absolute inset-0 bg-grid-pattern ${
-          darkMode ? 'opacity-10' : 'opacity-35'
+          darkMode ? 'opacity-10' : 'opacity-20'
         }`}
       />
 
       <svg
         className={`absolute inset-0 w-full h-full ${
-          darkMode ? 'opacity-10' : 'opacity-30'
+          darkMode ? 'opacity-10' : 'opacity-20'
         }`}
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="none"
-        style={{ position: 'absolute' }}
       >
-        <g stroke={strokeColor} strokeWidth="0.7">
-          {Array.from({ length: 5 }, (_, i) => {
-            const y = (i + 1) * 20;
-            const randomHeight = Math.floor(Math.random() * 20 + 5);
-            const randomWidth = Math.floor(Math.random() * 100 + 50);
-            const randomOffset = Math.floor(Math.random() * 30 - 15);
-            return (
-              <path
-                key={`h-${i}`}
-                d={`M0,${y} v${randomHeight} h${randomWidth} v${randomOffset}`}
-                fill="none"
-              />
-            );
-          })}
-
-          {Array.from({ length: 5 }, (_, i) => {
-            const x = (i + 1) * 20;
-            const randomWidth = Math.floor(Math.random() * 30 - 15);
-            const randomHeight = Math.floor(Math.random() * 100 + 50);
-            const randomOffset = Math.floor(Math.random() * 30 - 15);
-            return (
-              <path
-                key={`v-${i}`}
-                d={`M${x},0 h${randomWidth} v${randomHeight} h${randomOffset}`}
-                fill="none"
-              />
-            );
-          })}
+        <g stroke={strokeColor} strokeWidth="0.6" fill="none">
+          <path d="M0,18 v12 h28 v-6" />
+          <path d="M100,22 h-24 v16 h8" />
+          <path d="M0,78 v-10 h22" />
+          <path d="M100,82 h-30 v-14" />
         </g>
-
-        <g>
-          {Array.from({ length: 8 }, (_, i) => {
-            const x = Math.floor(Math.random() * 100);
-            const y = Math.floor(Math.random() * 100);
-            const size = Math.floor(Math.random() * 2 + 1);
-
-            return (
-              <circle
-                key={`node-${i}`}
-                cx={`${x}%`}
-                cy={`${y}%`}
-                r={size}
-                fill={strokeColor}
-                fillOpacity={darkMode ? 0.25 : 0.45}
-              />
-            );
-          })}
+        <g fill={strokeColor}>
+          <circle cx="8%" cy="22%" r="1.5" fillOpacity={darkMode ? 0.25 : 0.35} />
+          <circle cx="92%" cy="28%" r="1.5" fillOpacity={darkMode ? 0.25 : 0.35} />
+          <circle cx="10%" cy="76%" r="1.5" fillOpacity={darkMode ? 0.25 : 0.35} />
+          <circle cx="90%" cy="80%" r="1.5" fillOpacity={darkMode ? 0.25 : 0.35} />
         </g>
       </svg>
     </div>

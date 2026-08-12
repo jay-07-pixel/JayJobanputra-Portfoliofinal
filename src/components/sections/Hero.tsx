@@ -9,61 +9,68 @@ import ParallaxEffect from '../layout/ParallaxEffect';
 const Hero: React.FC = () => {
   return (
     <section id="hero" className="h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Tech-themed background elements */}
-      <div className="absolute w-full h-full">
-        <FloatingAnimation x={15} y={20} duration={10} className="absolute top-40 left-20 opacity-30 dark:opacity-10">
-          <div className="p-4 border border-primary/40 dark:border-primary/30 rounded bg-surface/70 dark:bg-dark-bg/50 font-mono text-xs md:text-sm">
-            <pre className="text-primary">
-              {`function init() {
-  return {
-    name: "dev",
-    skills: ["react", "typescript"]
-  };
-}`}
-            </pre>
+      {/* Subtle corner decorations only — keep clear of center content */}
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+        <FloatingAnimation
+          x={6}
+          y={8}
+          duration={14}
+          className="absolute top-24 left-4 md:left-8 opacity-20 dark:opacity-12 hidden sm:block"
+        >
+          <div className="p-3 border border-primary/30 rounded bg-surface/40 dark:bg-dark-bg/30 font-mono text-[10px] md:text-xs max-w-[160px]">
+            <pre className="text-primary/80 dark:text-primary/50">{`init() {
+  return true;
+}`}</pre>
           </div>
         </FloatingAnimation>
-        
-        <FloatingAnimation x={20} y={15} duration={12} delay={1} className="absolute top-40 right-20 opacity-30 dark:opacity-10">
-          <div className="p-4 border border-primary/40 dark:border-primary/30 rounded bg-surface/70 dark:bg-dark-bg/50 font-mono text-xs md:text-sm">
-            <pre className="text-primary">
-              {`import React from 'react';
-const App = () => {
-  return <Component />;
-};`}
-            </pre>
+
+        <FloatingAnimation
+          x={6}
+          y={8}
+          duration={16}
+          delay={1}
+          className="absolute top-24 right-4 md:right-8 opacity-20 dark:opacity-12 hidden sm:block"
+        >
+          <div className="p-3 border border-primary/30 rounded bg-surface/40 dark:bg-dark-bg/30 font-mono text-[10px] md:text-xs max-w-[160px]">
+            <pre className="text-primary/80 dark:text-primary/50">{`export default App;`}</pre>
           </div>
         </FloatingAnimation>
-        
-        {/* Tech grid patterns */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-35 dark:opacity-20"></div>
-        
-        {/* Tech decorative elements */}
-        <FloatingAnimation x={8} y={8} rotate={10} duration={6} className="absolute top-32 left-32 hidden md:block opacity-70 dark:opacity-100">
-          <div className="w-12 h-12 border-2 border-primary/50 dark:border-primary/30 rounded-sm grid grid-cols-2 grid-rows-2">
-            <div className="border-r border-b border-primary/40 dark:border-primary/30"></div>
-            <div className="border-b border-primary/40 dark:border-primary/30"></div>
-            <div className="border-r border-primary/40 dark:border-primary/30"></div>
-            <div></div>
+
+        <div className="absolute inset-0 bg-grid-pattern opacity-15 dark:opacity-10" />
+
+        <FloatingAnimation
+          x={5}
+          y={5}
+          rotate={8}
+          duration={10}
+          className="absolute bottom-28 left-8 hidden lg:block opacity-40 dark:opacity-30"
+        >
+          <div className="w-10 h-10 border border-primary/35 rounded-sm grid grid-cols-2 grid-rows-2">
+            <div className="border-r border-b border-primary/30" />
+            <div className="border-b border-primary/30" />
+            <div className="border-r border-primary/30" />
+            <div />
           </div>
         </FloatingAnimation>
-        
-        <FloatingAnimation x={10} y={10} rotate={15} duration={7} delay={0.3} className="absolute bottom-32 right-32 hidden md:block opacity-70 dark:opacity-100">
-          <div className="w-16 h-16 border-2 border-primary/50 dark:border-primary/30">
-            <div className="w-full h-full relative">
-              <div className="absolute top-2 left-2 w-3 h-3 bg-primary/50 dark:bg-primary/40"></div>
-              <div className="absolute bottom-2 right-2 w-5 h-1 bg-primary/50 dark:bg-primary/40"></div>
+
+        <FloatingAnimation
+          x={5}
+          y={5}
+          rotate={10}
+          duration={12}
+          delay={0.4}
+          className="absolute bottom-28 right-8 hidden lg:block opacity-40 dark:opacity-30"
+        >
+          <div className="w-12 h-12 border border-primary/35">
+            <div className="relative w-full h-full">
+              <div className="absolute top-2 left-2 w-2 h-2 bg-primary/40" />
+              <div className="absolute bottom-2 right-2 w-4 h-0.5 bg-primary/40" />
             </div>
           </div>
         </FloatingAnimation>
-        
-        {/* Binary code */}
-        <div className="absolute bottom-10 left-10 opacity-25 dark:opacity-10 font-mono text-xs whitespace-nowrap overflow-hidden text-primary/60 dark:text-primary/30">
-          01001100 01101111 01110010 01100101 01101101 00100000 01001001 01110000 01110011 01110101 01101101
-        </div>
       </div>
 
-      <div className="container mx-auto px-4 z-10 text-center">
+      <div className="container mx-auto px-4 z-10 text-center relative">
         <ParallaxEffect direction="up" offset={50} className="space-y-6">
           <TextReveal 
             text="Welcome to my portfolio" 

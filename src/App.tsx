@@ -172,7 +172,7 @@ const App: React.FC = () => {
             transition={{ duration: 0.8, ease: "easeInOut" }}
           >
             {/* Tech-themed background elements */}
-            <TechBackground density={35} />
+            <TechBackground density={12} />
             <CircuitPattern />
             
             {/* Scanner line effect that appears briefly after loading */}
