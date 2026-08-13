@@ -12,18 +12,27 @@ const edgePosition = (index: number, total: number) => {
   const t = (Math.floor(index / 4) + 1) / (Math.ceil(total / 4) + 1);
 
   switch (band) {
-    case 0: // left edge
-      return { x: 2 + (index % 3) * 3, y: 8 + t * 75 };
-    case 1: // right edge
-      return { x: 88 + (index % 3) * 3, y: 10 + t * 70 };
-    case 2: // top edge
-      return { x: 12 + t * 70, y: 3 + (index % 2) * 4 };
-    default: // bottom edge
-      return { x: 15 + t * 65, y: 88 + (index % 2) * 4 };
+    case 0:
+      return { x: 1.5 + (index % 3) * 3.5, y: 10 + t * 72 };
+    case 1:
+      return { x: 87 + (index % 3) * 3.5, y: 12 + t * 68 };
+    case 2:
+      return { x: 14 + t * 68, y: 2 + (index % 2) * 5 };
+    default:
+      return { x: 16 + t * 64, y: 86 + (index % 2) * 5 };
   }
 };
 
-const TechBackground: React.FC<TechBackgroundProps> = ({ density = 12 }) => {
+const EDGE_LABELS = [
+  { text: '01001101', x: 3, y: 30 },
+  { text: 'useState()', x: 88, y: 36 },
+  { text: 'npm start', x: 3, y: 58 },
+  { text: '01100001', x: 89, y: 62 },
+  { text: 'git push', x: 4, y: 82 },
+  { text: 'React', x: 90, y: 18 },
+];
+
+const TechBackground: React.FC<TechBackgroundProps> = ({ density = 16 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { darkMode } = useTheme();
 
@@ -43,7 +52,7 @@ const TechBackground: React.FC<TechBackgroundProps> = ({ density = 12 }) => {
     resizeCanvas();
 
     const chars = '01';
-    const columns = Math.floor(canvas.width / 40);
+    const columns = Math.floor(canvas.width / 36);
     const drops: number[] = [];
 
     for (let i = 0; i < columns; i++) {
@@ -51,40 +60,40 @@ const TechBackground: React.FC<TechBackgroundProps> = ({ density = 12 }) => {
     }
 
     const fadeColor = darkMode
-      ? 'rgba(15, 15, 15, 0.06)'
-      : 'rgba(243, 246, 248, 0.14)';
+      ? 'rgba(15, 15, 15, 0.05)'
+      : 'rgba(243, 246, 248, 0.12)';
     const glyphColor = darkMode
-      ? 'rgba(0, 255, 231, 0.22)'
-      : 'rgba(0, 120, 112, 0.28)';
+      ? 'rgba(0, 255, 231, 0.4)'
+      : 'rgba(0, 120, 112, 0.42)';
 
     const matrixRain = () => {
       ctx.fillStyle = fadeColor;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       ctx.fillStyle = glyphColor;
-      ctx.font = '11px monospace';
+      ctx.font = '12px monospace';
       ctx.textAlign = 'center';
 
       for (let i = 0; i < drops.length; i++) {
         const char = chars[Math.floor(Math.random() * chars.length)];
-        const x = i * 40;
+        const x = i * 36;
         const y = drops[i];
-
-        // Skip drawing in the center content band
         const xRatio = x / canvas.width;
-        if (xRatio > 0.22 && xRatio < 0.78) {
-          drops[i] += Math.random() * 1.2 + 0.5;
+
+        // Keep matrix rain on side columns only
+        if (xRatio > 0.18 && xRatio < 0.82) {
+          drops[i] += Math.random() * 1.3 + 0.5;
           if (drops[i] > canvas.height || Math.random() > 0.99) {
             drops[i] = Math.random() * -100;
           }
           continue;
         }
 
-        if (y > 0 && Math.random() > 0.92) {
+        if (y > 0 && Math.random() > 0.85) {
           ctx.fillText(char, x, y);
         }
 
-        drops[i] += Math.random() * 1.2 + 0.5;
+        drops[i] += Math.random() * 1.3 + 0.5;
 
         if (drops[i] > canvas.height || Math.random() > 0.99) {
           drops[i] = Math.random() * -100;
@@ -92,7 +101,7 @@ const TechBackground: React.FC<TechBackgroundProps> = ({ density = 12 }) => {
       }
     };
 
-    const interval = setInterval(matrixRain, 60);
+    const interval = setInterval(matrixRain, 55);
 
     return () => {
       clearInterval(interval);
@@ -100,7 +109,7 @@ const TechBackground: React.FC<TechBackgroundProps> = ({ density = 12 }) => {
     };
   }, [darkMode]);
 
-  const count = Math.min(density, 12);
+  const count = Math.min(density, 16);
 
   const elements = useMemo(() => {
     return Array.from({ length: count }, (_, i) => {
@@ -109,25 +118,50 @@ const TechBackground: React.FC<TechBackgroundProps> = ({ density = 12 }) => {
         id: i,
         x: pos.x,
         y: pos.y,
-        size: 0.55 + (i % 3) * 0.15,
-        opacity: darkMode ? 0.12 + (i % 3) * 0.04 : 0.18 + (i % 3) * 0.05,
-        animationDuration: 40 + (i % 5) * 8,
-        delay: -i * 2,
+        size: 0.7 + (i % 3) * 0.2,
+        opacity: darkMode ? 0.28 + (i % 3) * 0.08 : 0.32 + (i % 3) * 0.08,
+        animationDuration: 36 + (i % 5) * 7,
+        delay: -i * 1.5,
         shape: i % 3,
       };
     });
   }, [count, darkMode]);
 
   const strokeColor = darkMode ? '#00FFE7' : '#007870';
+  const labelOpacity = darkMode ? 0.35 : 0.4;
 
   return (
     <div className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
       <canvas
         ref={canvasRef}
         className={`fixed inset-0 w-full h-full ${
-          darkMode ? 'opacity-20' : 'opacity-30'
+          darkMode ? 'opacity-35' : 'opacity-45'
         }`}
       />
+
+      {EDGE_LABELS.map((label, i) => (
+        <motion.span
+          key={label.text}
+          className="absolute font-mono text-[11px] md:text-xs text-primary whitespace-nowrap"
+          style={{
+            left: `${label.x}%`,
+            top: `${label.y}%`,
+            opacity: labelOpacity,
+          }}
+          animate={{
+            y: [0, 6, 0],
+            opacity: [labelOpacity, labelOpacity * 1.35, labelOpacity],
+          }}
+          transition={{
+            duration: 10 + i * 1.5,
+            ease: 'easeInOut',
+            repeat: Infinity,
+            delay: i * 0.4,
+          }}
+        >
+          {label.text}
+        </motion.span>
+      ))}
 
       {elements.map((element) => (
         <motion.div
@@ -139,8 +173,8 @@ const TechBackground: React.FC<TechBackgroundProps> = ({ density = 12 }) => {
             opacity: element.opacity,
           }}
           animate={{
-            y: [0, 8, 0],
-            opacity: [element.opacity, element.opacity * 1.25, element.opacity],
+            y: [0, 10, 0],
+            opacity: [element.opacity, element.opacity * 1.3, element.opacity],
           }}
           transition={{
             duration: element.animationDuration,
@@ -151,54 +185,56 @@ const TechBackground: React.FC<TechBackgroundProps> = ({ density = 12 }) => {
         >
           {element.shape === 0 && (
             <div
-              className="rounded-full border border-primary/40 dark:border-primary/25"
+              className="rounded-full border-2 border-primary/60 dark:border-primary/50"
+              style={{
+                width: `${element.size * 1.6}rem`,
+                height: `${element.size * 1.6}rem`,
+              }}
+            />
+          )}
+          {element.shape === 1 && (
+            <div
+              className="border-2 border-primary/60 dark:border-primary/50"
               style={{
                 width: `${element.size * 1.4}rem`,
                 height: `${element.size * 1.4}rem`,
               }}
             />
           )}
-          {element.shape === 1 && (
-            <div
-              className="border border-primary/40 dark:border-primary/25"
-              style={{
-                width: `${element.size * 1.2}rem`,
-                height: `${element.size * 1.2}rem`,
-              }}
-            />
-          )}
           {element.shape === 2 && (
-            <div
-              className="w-1.5 h-1.5 rounded-full bg-primary/50 dark:bg-primary/30"
-            />
+            <div className="w-2 h-2 rounded-full bg-primary/70 dark:bg-primary/55" />
           )}
         </motion.div>
       ))}
 
       <div
         className={`absolute inset-0 bg-grid-pattern ${
-          darkMode ? 'opacity-10' : 'opacity-20'
+          darkMode ? 'opacity-20' : 'opacity-30'
         }`}
       />
 
       <svg
         className={`absolute inset-0 w-full h-full ${
-          darkMode ? 'opacity-10' : 'opacity-20'
+          darkMode ? 'opacity-25' : 'opacity-30'
         }`}
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="none"
       >
-        <g stroke={strokeColor} strokeWidth="0.6" fill="none">
-          <path d="M0,18 v12 h28 v-6" />
-          <path d="M100,22 h-24 v16 h8" />
-          <path d="M0,78 v-10 h22" />
-          <path d="M100,82 h-30 v-14" />
+        <g stroke={strokeColor} strokeWidth="1" fill="none">
+          <path d="M0,18 v14 h32 v-8" />
+          <path d="M100,22 h-28 v18 h10" />
+          <path d="M0,78 v-12 h26" />
+          <path d="M100,82 h-34 v-16" />
+          <path d="M0,48 h18 v10" />
+          <path d="M100,55 h-16 v-12" />
         </g>
         <g fill={strokeColor}>
-          <circle cx="8%" cy="22%" r="1.5" fillOpacity={darkMode ? 0.25 : 0.35} />
-          <circle cx="92%" cy="28%" r="1.5" fillOpacity={darkMode ? 0.25 : 0.35} />
-          <circle cx="10%" cy="76%" r="1.5" fillOpacity={darkMode ? 0.25 : 0.35} />
-          <circle cx="90%" cy="80%" r="1.5" fillOpacity={darkMode ? 0.25 : 0.35} />
+          <circle cx="8%" cy="22%" r="2.2" fillOpacity={darkMode ? 0.45 : 0.5} />
+          <circle cx="92%" cy="28%" r="2.2" fillOpacity={darkMode ? 0.45 : 0.5} />
+          <circle cx="10%" cy="76%" r="2.2" fillOpacity={darkMode ? 0.45 : 0.5} />
+          <circle cx="90%" cy="80%" r="2.2" fillOpacity={darkMode ? 0.45 : 0.5} />
+          <circle cx="6%" cy="50%" r="1.8" fillOpacity={darkMode ? 0.4 : 0.45} />
+          <circle cx="94%" cy="52%" r="1.8" fillOpacity={darkMode ? 0.4 : 0.45} />
         </g>
       </svg>
     </div>

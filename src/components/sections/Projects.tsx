@@ -6,12 +6,20 @@ import TextReveal from '../layout/TextReveal';
 
 type ProjectCategory = 'Freelance / Client Work' | 'Personal Project';
 
+interface ProjectCaseStudy {
+  problem: string;
+  solution: string;
+  how: string[];
+  whyBetter: string[];
+}
+
 interface Project {
   id: string;
   number: string;
   title: string;
   category: ProjectCategory;
   description: string;
+  caseStudy: ProjectCaseStudy;
   features: string[];
   technologies: string[];
   image: string | null;
@@ -28,6 +36,23 @@ const freelanceProjects: Project[] = [
     category: 'Freelance / Client Work',
     description:
       'Full-stack task management platform for business owners and field employees, with a web admin dashboard and companion Android application.',
+    caseStudy: {
+      problem:
+        'Business owners were managing field work through chats, calls, and scattered notes. Tasks got lost, priority was unclear, employees had no reliable daily list, and there was no clean way to verify completed work or track performance.',
+      solution:
+        'A shared task platform with a web admin dashboard for owners and an Android app for field employees — one backend powering assignment, ordering, chat, reminders, proof submission, and KPI visibility.',
+      how: [
+        'Built a React admin dashboard for creating tasks, assigning employees, and monitoring KPIs.',
+        'Developed a companion Android app so field staff can see daily tasks, submit proof, and stay in sync.',
+        'Used a shared Node.js + Express + Prisma + MySQL backend for both web and mobile.',
+        'Added drag-and-drop task ordering, real-time team chat via Server-Sent Events, and FCM reminders/alarms.',
+      ],
+      whyBetter: [
+        'Better than chat-only workflows because tasks, ownership, and proof live in one structured system.',
+        'Better than separate web/mobile tools because one backend keeps data consistent across platforms.',
+        'Better than generic to-do apps because it is built around field operations: assignment, daily lists, reminders, and verification.',
+      ],
+    },
     features: [
       'KPI dashboard',
       'Task management',
@@ -63,6 +88,23 @@ const freelanceProjects: Project[] = [
     category: 'Freelance / Client Work',
     description:
       'Business management dashboard and Android field application built around a shared real-time Firebase backend.',
+    caseStudy: {
+      problem:
+        'The business needed a practical way to track attendance, distributor orders, and operational KPIs while field teams worked away from the office — without waiting on delayed manual reports.',
+      solution:
+        'A React business dashboard paired with an Android field app, both connected to the same Firebase backend for real-time sync of attendance, orders, and analytics.',
+      how: [
+        'Built a Vite + React dashboard with Recharts for KPI and analytics views.',
+        'Created an Android field application for on-ground attendance and order workflows.',
+        'Used Firebase as the shared real-time backend so web and mobile stay synchronized.',
+        'Designed the UI around day-to-day business operations instead of generic CRM complexity.',
+      ],
+      whyBetter: [
+        'Better than spreadsheet tracking because updates sync in real time across office and field.',
+        'Better than building two disconnected systems because one Firebase backend reduces duplication and sync bugs.',
+        'Better than heavy enterprise software because it focuses on the exact workflows this business actually uses.',
+      ],
+    },
     features: [
       'KPI dashboard',
       'Recharts-based analytics',
@@ -91,6 +133,23 @@ const freelanceProjects: Project[] = [
     category: 'Freelance / Client Work',
     description:
       'Full-featured e-commerce platform with product browsing, cart, wishlist, orders and an admin payment management workflow.',
+    caseStudy: {
+      problem:
+        'The store needed an online shopping experience with cart, wishlist, and orders — plus a practical payment flow that fits UPI usage in India, without forcing a complex payment gateway setup from day one.',
+      solution:
+        'A modern e-commerce web app with Firebase Auth/Firestore/Storage, product browsing, cart/wishlist/orders, and an admin workflow to confirm or reject UPI QR payments.',
+      how: [
+        'Built the storefront with React 18, TypeScript, Vite, and Tailwind CSS.',
+        'Used Firebase Auth, Firestore, and Storage for users, catalog, and media.',
+        'Implemented cart, wishlist, and order flows with TanStack Query for data handling.',
+        'Added a UPI QR payment flow where admins can confirm or reject payments.',
+      ],
+      whyBetter: [
+        'Better than a static catalog site because customers can actually buy through cart and orders.',
+        'Better than jumping straight into heavy gateway integrations when a UPI QR + admin confirmation flow fits the business need.',
+        'Better than a no-code storefront when custom UX, animations, and admin control matter.',
+      ],
+    },
     features: [
       'Product catalog',
       'Shopping cart',
@@ -124,6 +183,23 @@ const freelanceProjects: Project[] = [
     category: 'Freelance / Client Work',
     description:
       'End-to-end election field data platform for location-aware survey collection and ward-level reporting.',
+    caseStudy: {
+      problem:
+        'Field survey data was hard to collect accurately across wards. Paper forms and disconnected apps made it difficult to know where responses came from and to aggregate results quickly.',
+      solution:
+        'An Android field survey app connected to REST APIs and MySQL, with location-aware ward/area collection and ward-level aggregated reporting.',
+      how: [
+        'Built an Android survey app for text, single-choice, and multiple-choice questions.',
+        'Captured location-aware area/ward context during collection.',
+        'Created Node.js + Express REST APIs backed by MySQL for storage and reporting.',
+        'Aggregated responses into ward-level reports for faster analysis.',
+      ],
+      whyBetter: [
+        'Better than paper surveys because data is structured, searchable, and report-ready.',
+        'Better than generic form tools because ward/location context is built into the workflow.',
+        'Better than offline-only collection because a central API + database enables aggregation across teams.',
+      ],
+    },
     features: [
       'Android field survey application',
       'Location-aware area/ward collection',
@@ -156,6 +232,23 @@ const personalProjects: Project[] = [
     category: 'Personal Project',
     description:
       'Multi-agent AI platform for MSME operations covering order management, workforce scheduling, inventory tracking and delay-risk prediction.',
+    caseStudy: {
+      problem:
+        'Many MSMEs still receive orders through WhatsApp in natural language. Manually converting those messages into structured orders, schedules, and inventory updates is slow and error-prone.',
+      solution:
+        'A multi-agent AI operations platform that parses WhatsApp-style orders with LLMs, manages workforce/inventory workflows, predicts delay risk with ML, and exposes a terminal-style dashboard.',
+      how: [
+        'Designed a multi-agent workflow for order intake, parsing, scheduling, and tracking.',
+        'Used LLM/NLP agents to extract product, quantity, deadline, and priority from natural language.',
+        'Added Python + scikit-learn for ML-based delay-risk prediction.',
+        'Built a Node/Express + vanilla JS terminal-style dashboard and deployed it on Railway.',
+      ],
+      whyBetter: [
+        'Better than manual chat handling because orders become structured operational data.',
+        'Better than a single chatbot demo because it connects parsing to scheduling, inventory, and risk prediction.',
+        'Better than spreadsheet ops tools when the input is messy natural language from WhatsApp.',
+      ],
+    },
     features: [
       'Multi-agent AI workflow',
       'WhatsApp order processing',
@@ -188,6 +281,23 @@ const personalProjects: Project[] = [
     category: 'Personal Project',
     description:
       'Smart attendance platform combining facial recognition, GPS geofencing and time-limited QR verification for location-aware attendance.',
+    caseStudy: {
+      problem:
+        'Traditional attendance systems are easy to misuse through proxy marking. A single check (face, QR, or location alone) is usually not enough for trustworthy attendance.',
+      solution:
+        'A multi-factor Android attendance platform combining face recognition, GPS geofencing, and time-limited QR verification, with reporting and automated email distribution.',
+      how: [
+        'Used Google ML Kit for on-device face recognition.',
+        'Added GPS geofencing so attendance only works within allowed locations.',
+        'Implemented time-limited QR scanning with ZXing as an extra verification layer.',
+        'Stored data with Firebase Auth/Firestore/Storage and supported Excel export plus automated email distribution.',
+      ],
+      whyBetter: [
+        'Better than punch-card or single QR systems because proxy attendance is much harder.',
+        'Better than face-only solutions because location and time-bound QR add stronger verification.',
+        'Better than manual registers because late detection, exports, and email distribution are automated.',
+      ],
+    },
     features: [
       'Face recognition',
       'GPS geofencing',
@@ -230,6 +340,20 @@ const getEmbedVideoUrl = (url: string): string => {
 
   return url;
 };
+
+const CaseStudySection: React.FC<{
+  label: string;
+  children: React.ReactNode;
+}> = ({ label, children }) => (
+  <div className="rounded-lg border border-primary/15 bg-dark-bg/40 p-4 md:p-5">
+    <h4 className="text-xs font-semibold tracking-wider uppercase text-primary mb-2">
+      {label}
+    </h4>
+    <div className="text-sm md:text-[15px] text-light-text/80 leading-relaxed">
+      {children}
+    </div>
+  </div>
+);
 
 const ProjectCard: React.FC<{
   project: Project;
@@ -286,7 +410,7 @@ const ProjectCard: React.FC<{
           onClick={() => onOpenDetails(project)}
           className="text-primary text-sm font-medium hover:text-primary/80 transition-colors"
         >
-          View Details →
+          View Case Study →
         </button>
 
         <div className="flex flex-wrap items-center gap-2 ml-auto">
@@ -379,7 +503,6 @@ const Projects: React.FC = () => {
           </p>
         </ScrollAnimationWrapper>
 
-        {/* Freelance & Client Work */}
         <div className="mb-16 md:mb-20">
           <ScrollAnimationWrapper animation="fadeIn">
             <div className="mb-8">
@@ -408,7 +531,6 @@ const Projects: React.FC = () => {
           </div>
         </div>
 
-        {/* Personal Projects */}
         <div>
           <ScrollAnimationWrapper animation="fadeIn">
             <div className="mb-8">
@@ -438,7 +560,6 @@ const Projects: React.FC = () => {
         </div>
       </div>
 
-      {/* Standalone video modal */}
       <AnimatePresence>
         {showVideo && selectedProject?.demoVideo && (
           <motion.div
@@ -477,7 +598,6 @@ const Projects: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Project details modal */}
       <AnimatePresence>
         {selectedProject && !showVideo && (
           <motion.div
@@ -503,6 +623,9 @@ const Projects: React.FC = () => {
                       {selectedProject.number}
                     </span>
                     <span className="inline-flex items-center px-2.5 py-1 text-[10px] font-semibold tracking-wider uppercase text-primary bg-glow-effect border border-primary/25 rounded-md">
+                      Project Brief
+                    </span>
+                    <span className="inline-flex items-center px-2.5 py-1 text-[10px] font-semibold tracking-wider uppercase text-light-text/70 bg-glow-effect border border-primary/15 rounded-md">
                       {selectedProject.category}
                     </span>
                   </div>
@@ -520,7 +643,7 @@ const Projects: React.FC = () => {
                 </button>
               </div>
 
-              <p className="text-light-text/80 mb-6 leading-relaxed">
+              <p className="text-light-text/75 mb-6 leading-relaxed text-sm md:text-base">
                 {selectedProject.description}
               </p>
 
@@ -545,6 +668,38 @@ const Projects: React.FC = () => {
                   />
                 </div>
               )}
+
+              <div className="mb-6 space-y-3">
+                <CaseStudySection label="Problem">
+                  <p>{selectedProject.caseStudy.problem}</p>
+                </CaseStudySection>
+
+                <CaseStudySection label="Solution">
+                  <p>{selectedProject.caseStudy.solution}</p>
+                </CaseStudySection>
+
+                <CaseStudySection label="How we built it">
+                  <ul className="space-y-2">
+                    {selectedProject.caseStudy.how.map((item) => (
+                      <li key={item} className="flex items-start gap-2">
+                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary/70 shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CaseStudySection>
+
+                <CaseStudySection label="Why this approach is better">
+                  <ul className="space-y-2">
+                    {selectedProject.caseStudy.whyBetter.map((item) => (
+                      <li key={item} className="flex items-start gap-2">
+                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary/70 shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CaseStudySection>
+              </div>
 
               <div className="mb-6">
                 <h4 className="text-primary font-semibold mb-3">Key Features</h4>

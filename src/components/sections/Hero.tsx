@@ -9,16 +9,16 @@ import ParallaxEffect from '../layout/ParallaxEffect';
 const Hero: React.FC = () => {
   return (
     <section id="hero" className="h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Subtle corner decorations only — keep clear of center content */}
+      {/* Corner decorations — stronger, still clear of center text */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
         <FloatingAnimation
           x={6}
           y={8}
           duration={14}
-          className="absolute top-24 left-4 md:left-8 opacity-20 dark:opacity-12 hidden sm:block"
+          className="absolute top-24 left-4 md:left-8 opacity-45 dark:opacity-40 hidden sm:block"
         >
-          <div className="p-3 border border-primary/30 rounded bg-surface/40 dark:bg-dark-bg/30 font-mono text-[10px] md:text-xs max-w-[160px]">
-            <pre className="text-primary/80 dark:text-primary/50">{`init() {
+          <div className="p-3 border border-primary/45 rounded bg-surface/50 dark:bg-dark-bg/40 font-mono text-[10px] md:text-xs max-w-[160px]">
+            <pre className="text-primary">{`init() {
   return true;
 }`}</pre>
           </div>
@@ -29,26 +29,26 @@ const Hero: React.FC = () => {
           y={8}
           duration={16}
           delay={1}
-          className="absolute top-24 right-4 md:right-8 opacity-20 dark:opacity-12 hidden sm:block"
+          className="absolute top-24 right-4 md:right-8 opacity-45 dark:opacity-40 hidden sm:block"
         >
-          <div className="p-3 border border-primary/30 rounded bg-surface/40 dark:bg-dark-bg/30 font-mono text-[10px] md:text-xs max-w-[160px]">
-            <pre className="text-primary/80 dark:text-primary/50">{`export default App;`}</pre>
+          <div className="p-3 border border-primary/45 rounded bg-surface/50 dark:bg-dark-bg/40 font-mono text-[10px] md:text-xs max-w-[160px]">
+            <pre className="text-primary">{`export default App;`}</pre>
           </div>
         </FloatingAnimation>
 
-        <div className="absolute inset-0 bg-grid-pattern opacity-15 dark:opacity-10" />
+        <div className="absolute inset-0 bg-grid-pattern opacity-25 dark:opacity-20" />
 
         <FloatingAnimation
           x={5}
           y={5}
           rotate={8}
           duration={10}
-          className="absolute bottom-28 left-8 hidden lg:block opacity-40 dark:opacity-30"
+          className="absolute bottom-28 left-8 hidden lg:block opacity-70 dark:opacity-60"
         >
-          <div className="w-10 h-10 border border-primary/35 rounded-sm grid grid-cols-2 grid-rows-2">
-            <div className="border-r border-b border-primary/30" />
-            <div className="border-b border-primary/30" />
-            <div className="border-r border-primary/30" />
+          <div className="w-10 h-10 border-2 border-primary/50 rounded-sm grid grid-cols-2 grid-rows-2">
+            <div className="border-r border-b border-primary/40" />
+            <div className="border-b border-primary/40" />
+            <div className="border-r border-primary/40" />
             <div />
           </div>
         </FloatingAnimation>
@@ -59,12 +59,12 @@ const Hero: React.FC = () => {
           rotate={10}
           duration={12}
           delay={0.4}
-          className="absolute bottom-28 right-8 hidden lg:block opacity-40 dark:opacity-30"
+          className="absolute bottom-28 right-8 hidden lg:block opacity-70 dark:opacity-60"
         >
-          <div className="w-12 h-12 border border-primary/35">
+          <div className="w-12 h-12 border-2 border-primary/50">
             <div className="relative w-full h-full">
-              <div className="absolute top-2 left-2 w-2 h-2 bg-primary/40" />
-              <div className="absolute bottom-2 right-2 w-4 h-0.5 bg-primary/40" />
+              <div className="absolute top-2 left-2 w-2.5 h-2.5 bg-primary/55" />
+              <div className="absolute bottom-2 right-2 w-5 h-1 bg-primary/55" />
             </div>
           </div>
         </FloatingAnimation>

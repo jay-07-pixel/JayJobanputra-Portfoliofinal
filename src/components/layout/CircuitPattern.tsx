@@ -34,7 +34,7 @@ const CircuitPattern: React.FC<CircuitPatternProps> = ({
 }) => {
   const { darkMode } = useTheme();
   const patternColor = color || (darkMode ? '#00FFE7' : '#007870');
-  const patternOpacity = opacity ?? (darkMode ? 0.12 : 0.2);
+  const patternOpacity = opacity ?? (darkMode ? 0.28 : 0.34);
 
   const connections = useMemo(
     () =>
@@ -67,8 +67,8 @@ const CircuitPattern: React.FC<CircuitPatternProps> = ({
               x2={`${conn.endX}%`}
               y2={`${conn.endY}%`}
               stroke={patternColor}
-              strokeWidth={darkMode ? 0.5 : 0.7}
-              strokeOpacity={darkMode ? 0.35 : 0.45}
+              strokeWidth={darkMode ? 0.8 : 1}
+              strokeOpacity={darkMode ? 0.55 : 0.6}
             />
             <motion.circle
               cx="0"
@@ -100,8 +100,8 @@ const CircuitPattern: React.FC<CircuitPatternProps> = ({
               r={node.size}
               fill="none"
               stroke={patternColor}
-              strokeWidth={darkMode ? 0.5 : 0.8}
-              strokeOpacity={darkMode ? 0.35 : 0.45}
+              strokeWidth={darkMode ? 0.8 : 1}
+              strokeOpacity={darkMode ? 0.55 : 0.6}
             />
             <motion.circle
               cx={`${node.x}%`}
@@ -110,7 +110,7 @@ const CircuitPattern: React.FC<CircuitPatternProps> = ({
               fill={patternColor}
               animate={{
                 r: [node.size, node.size * 1.35, node.size],
-                opacity: darkMode ? [0.08, 0.22, 0.08] : [0.12, 0.28, 0.12],
+                opacity: darkMode ? [0.15, 0.4, 0.15] : [0.2, 0.45, 0.2],
               }}
               transition={{
                 duration: 5,
