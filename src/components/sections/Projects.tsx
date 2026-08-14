@@ -37,18 +37,19 @@ const freelanceProjects: Project[] = [
     title: 'Kalpanik Task Manager',
     category: 'Freelance / Client Work',
     description:
-      'Workforce operations platform for owners, admins, and employees — web Task Manager plus Android Kalpanik Reminder. Isolated multi-tenant deployments (domain, database, uploads) with tasks, proof, chat, live GPS attendance, geofenced check-in, and plan renewal on kalpanik.in. Live instance: Kailash Masale.',
+      'Workforce operations platform for owners, admins, and employees — web Task Manager plus Android Kalpanik Reminder. Isolated multi-tenant deployments (domain, database, uploads) with tasks, proof, chat, live GPS attendance, geofenced check-in, and plan renewal on kalpanik.in. Public UI demo (frontend preview) so visitors can click through the product themselves.',
     caseStudy: {
       problem:
         'Companies were running field work through chats, calls, and scattered notes. Tasks got lost, ownership was unclear, proof was hard to verify, attendance was manual, and web vs mobile often meant disconnected tools. Each customer also needed isolated data — not one shared database for every company.',
       solution:
-        'Kalpanik Task Manager (web PWA) and Kalpanik Reminder (Android) share one REST API and session auth. One GitHub codebase powers every customer site; each company gets its own VPS folder, PM2 process, MySQL database, uploads, and trial. Core workflow: employee submits proof → Submitted → owner Mark as reviewed → recurring series spawns the next due card. Critical work 6+ days overdue is gated until submit or postpone — same rules on web and Android.',
+        'Kalpanik Task Manager (web PWA) and Kalpanik Reminder (Android) share one REST API and session auth. One GitHub codebase powers every customer site; each company gets its own VPS folder, PM2 process, MySQL database, uploads, and trial. Core workflow: employee submits proof → Submitted → owner Mark as reviewed → recurring series spawns the next due card. Critical work 6+ days overdue is gated until submit or postpone — same rules on web and Android. A Netlify UI demo lets people explore the interface without production credentials.',
       how: [
         'Built the web app with Vite, Bootstrap, and a Node.js + Express + Prisma + MySQL API (session cookies, gzip, multi-tenant env per site).',
         'Shipped Kalpanik Reminder (native Android) against the same API: tasks, mixed proof uploads, chat SSE, FCM + on-device alarms, attendance gates.',
         'Implemented lists, All Tasks, recurrence spawn-per-occurrence, mixed proof files, team chat (DM/groups), deadline extensions, and owner/admin KPIs.',
         'Added live GPS attendance and geofenced daily check-in/out, plus commercial flow: 30-day trial, in-app plans (₹299 / ₹349), renew on kalpanik.in with bill + UPI QR.',
-        'Deployed multi-tenant production (e.g. Kailash Masale and other company sites) — one repo, isolated DB/files/sessions per company.',
+        'Deployed multi-tenant production (e.g. sugandhshoppee.kalpanik.in and other company sites) — one repo, isolated DB/files/sessions per company.',
+        'Published a frontend UI demo on Netlify so visitors can experience the product themselves instead of only watching a video.',
       ],
       whyBetter: [
         'Better than WhatsApp/spreadsheet ops because tasks, proof, chat, and attendance live in one structured system with clear owner review.',
@@ -70,6 +71,7 @@ const freelanceProjects: Project[] = [
       'Web Push + FCM reminders / alarms',
       'EN / HI / MR / TA + PWA install',
       'Trial + renew plans on kalpanik.in',
+      'Public UI demo on Netlify',
     ],
     technologies: [
       'Vite',
@@ -86,11 +88,12 @@ const freelanceProjects: Project[] = [
       'Google Maps',
       'Chart.js',
       'nginx / PM2',
+      'Netlify',
     ],
     image: null,
     demoVideo: null,
     githubUrl: 'https://github.com/jay-07-pixel/Task_manager',
-    liveUrl: 'https://geek-prototype-precious-determined.trycloudflare.com/',
+    liveUrl: 'https://kalpanik-task-manager-demo.netlify.app/',
     liveLabel: 'Try UI Demo',
   },
   {
