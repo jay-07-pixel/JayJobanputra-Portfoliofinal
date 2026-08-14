@@ -37,7 +37,7 @@ const freelanceProjects: Project[] = [
     title: 'Kalpanik Task Manager',
     category: 'Freelance / Client Work',
     description:
-      'Workforce operations platform for owners, admins, and employees — web Task Manager plus Android Kalpanik Reminder. Isolated multi-tenant deployments (domain, database, uploads) with tasks, proof, chat, live GPS attendance, geofenced check-in, and plan renewal on kalpanik.in.',
+      'Workforce operations platform for owners, admins, and employees — web Task Manager plus Android Kalpanik Reminder. Isolated multi-tenant deployments (domain, database, uploads) with tasks, proof, chat, live GPS attendance, geofenced check-in, and plan renewal on kalpanik.in. Live instance: Kailash Masale.',
     caseStudy: {
       problem:
         'Companies were running field work through chats, calls, and scattered notes. Tasks got lost, ownership was unclear, proof was hard to verify, attendance was manual, and web vs mobile often meant disconnected tools. Each customer also needed isolated data — not one shared database for every company.',
@@ -48,7 +48,7 @@ const freelanceProjects: Project[] = [
         'Shipped Kalpanik Reminder (native Android) against the same API: tasks, mixed proof uploads, chat SSE, FCM + on-device alarms, attendance gates.',
         'Implemented lists, All Tasks, recurrence spawn-per-occurrence, mixed proof files, team chat (DM/groups), deadline extensions, and owner/admin KPIs.',
         'Added live GPS attendance and geofenced daily check-in/out, plus commercial flow: 30-day trial, in-app plans (₹299 / ₹349), renew on kalpanik.in with bill + UPI QR.',
-        'Deployed multi-tenant production (e.g. sugandhshoppee.kalpanik.in and other *.kalpanik.in sites) — one repo, isolated DB/files/sessions per company.',
+        'Deployed multi-tenant production (e.g. Kailash Masale and other company sites) — one repo, isolated DB/files/sessions per company.',
       ],
       whyBetter: [
         'Better than WhatsApp/spreadsheet ops because tasks, proof, chat, and attendance live in one structured system with clear owner review.',
@@ -90,7 +90,8 @@ const freelanceProjects: Project[] = [
     image: null,
     demoVideo: null,
     githubUrl: 'https://github.com/jay-07-pixel/Task_manager',
-    liveUrl: 'https://sugandhshoppee.kalpanik.in',
+    liveUrl: 'https://geek-prototype-precious-determined.trycloudflare.com/',
+    liveLabel: 'Kailash Masale',
   },
   {
     id: 'kailash-masale',
@@ -213,6 +214,7 @@ const freelanceProjects: Project[] = [
     demoVideo: null,
     githubUrl: 'https://github.com/jay-07-pixel/AROMAWRAP.git',
     liveUrl: 'https://aromawrap.co.in',
+    liveLabel: 'Visit Website',
   },
   {
     id: 'election-survey-system',
