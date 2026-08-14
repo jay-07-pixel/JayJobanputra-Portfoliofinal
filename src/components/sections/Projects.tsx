@@ -91,7 +91,7 @@ const freelanceProjects: Project[] = [
     demoVideo: null,
     githubUrl: 'https://github.com/jay-07-pixel/Task_manager',
     liveUrl: 'https://geek-prototype-precious-determined.trycloudflare.com/',
-    liveLabel: 'Kailash Masale',
+    liveLabel: 'Try UI Demo',
   },
   {
     id: 'kailash-masale',
