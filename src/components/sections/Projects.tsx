@@ -26,6 +26,8 @@ interface Project {
   demoVideo: string | null;
   githubUrl: string | null;
   liveUrl: string | null;
+  /** Button label for liveUrl (default: Live Demo) */
+  liveLabel?: string;
 }
 
 const freelanceProjects: Project[] = [
@@ -96,44 +98,60 @@ const freelanceProjects: Project[] = [
     title: 'Kailash Masale',
     category: 'Freelance / Client Work',
     description:
-      'Business management dashboard and Android field application built around a shared real-time Firebase backend.',
+      'Field sales operations system for Kailash Masale — React admin dashboard plus Android field app on one Firebase project. Managers track attendance, orders, targets, leaves, TA/DA expenditure, and tasks; field staff check in/out, capture orders, and get FCM when tasks are assigned. Public UI demo (frontend only, no live backend) so visitors can click through the dashboard themselves.',
     caseStudy: {
       problem:
-        'The business needed a practical way to track attendance, distributor orders, and operational KPIs while field teams worked away from the office — without waiting on delayed manual reports.',
+        'Field sales ran on paper, calls, and delayed reports. Managers could not see live check-ins, orders, or targets, and assigning work to the phone meant chasing people manually. Attendance, leaves, weekly plans, and TA/DA all lived in different places.',
       solution:
-        'A React business dashboard paired with an Android field app, both connected to the same Firebase backend for real-time sync of attendance, orders, and analytics.',
+        'One Firestore-backed system: a React/Vite operations dashboard for admins and a Java Android app for employees/managers. Real-time onSnapshot sync. When an admin writes a pending task, Cloud Function notifyTaskAssigned sends FCM to the employee’s tokens — the website never calls FCM itself. A Netlify UI demo lets recruiters explore the dashboard without needing production credentials.',
       how: [
-        'Built a Vite + React dashboard with Recharts for KPI and analytics views.',
-        'Created an Android field application for on-ground attendance and order workflows.',
-        'Used Firebase as the shared real-time backend so web and mobile stay synchronized.',
-        'Designed the UI around day-to-day business operations instead of generic CRM complexity.',
+        'Built the web control plane with React 19, Vite 7, React Router, and Recharts for live KPIs, orders, attendance, approvals, and expenditure.',
+        'Shipped the Android companion (Java 11): GPS check-in/out, weekly/monthly plans, orders, leave, DA/TA, performance, and a notification permission wizard for reliable FCM.',
+        'Used Firebase Auth (web), Firestore, Storage, and Cloud Functions; Android stores fcmTokens on employees/{id} at login.',
+        'Implemented Master Sheet geofences/routes, disbursement (salary, TA, DA, night halt, incentives), leave/Sunday approvals, stock sheets, and distributor targets.',
+        'Wired task assign/edit/complete on the dashboard to Firestore tasks/{id} so notifyTaskAssigned pushes title + description to the phone.',
+        'Published a frontend-only Netlify preview so people can experience the UI themselves instead of watching a video.',
       ],
       whyBetter: [
-        'Better than spreadsheet tracking because updates sync in real time across office and field.',
-        'Better than building two disconnected systems because one Firebase backend reduces duplication and sync bugs.',
-        'Better than heavy enterprise software because it focuses on the exact workflows this business actually uses.',
+        'Better than spreadsheets and WhatsApp because attendance, orders, and tasks sync live between office dashboard and field phones.',
+        'Better than two separate backends because one Firebase project keeps web and Android on the same source of truth.',
+        'Better than in-app-only alerts because Cloud Functions + FCM reach employees even when the app is closed.',
+        'Better than generic CRM because workflows match this business: geofenced locations, TA/DA rules, weekly plans, and stock sheets.',
       ],
     },
     features: [
-      'KPI dashboard',
-      'Recharts-based analytics',
-      'Attendance management',
-      'Distributor order management',
-      'Android field application',
-      'Real-time data synchronization',
+      'Admin dashboard: live KPIs & charts',
+      'Check-in / check-out with GPS & maps',
+      'Orders, SKUs, volume tracking',
+      'Pending tasks → FCM to Android',
+      'My Team, Master Sheet, geofences',
+      'Leaves & Sunday work approvals',
+      'Weekly plans & monthly targets',
+      'Expenditure: salary, TA, DA, NH',
+      'Stock sheets (Storage upload)',
+      'Android: employee + manager modes',
+      'Distributor assignment & targets',
+      'Real-time Firestore sync',
+      'Public UI demo on Netlify',
     ],
     technologies: [
-      'React.js',
-      'Vite',
+      'React 19',
+      'Vite 7',
       'Recharts',
       'Java (Android)',
-      'Firebase',
+      'Firebase Auth',
+      'Cloud Firestore',
+      'Firebase Storage',
+      'Cloud Functions',
+      'Firebase Cloud Messaging',
       'Material Components',
+      'Netlify',
     ],
     image: null,
     demoVideo: null,
     githubUrl: null,
-    liveUrl: null,
+    liveUrl: 'https://unrivaled-moxie-86f523.netlify.app/',
+    liveLabel: 'Try UI Demo',
   },
   {
     id: 'aromawrap',
@@ -297,45 +315,52 @@ const personalProjects: Project[] = [
   {
     id: 'faceattend',
     number: '02',
-    title: 'FaceAttend',
+    title: 'Attendify',
     category: 'Personal Project',
     description:
-      'Smart attendance platform combining facial recognition, GPS geofencing and time-limited QR verification for location-aware attendance.',
+      'Native Android (Java) smart attendance for offices — face verification, GPS geofencing, and optional time-limited QR. Admins manage users, offices, QR codes, and CSV email reports. UI in English, Hindi, and Marathi (branded Sugandh Shoppee, Nagpur).',
     caseStudy: {
       problem:
-        'Traditional attendance systems are easy to misuse through proxy marking. A single check (face, QR, or location alone) is usually not enough for trustworthy attendance.',
+        'Manual registers and simple punch apps are easy to abuse: buddy punching, marking from the wrong site, weak late flags, and no reliable audit trail for owners or HR.',
       solution:
-        'A multi-factor Android attendance platform combining face recognition, GPS geofencing, and time-limited QR verification, with reporting and automated email distribution.',
+        'Attendify accepts a punch only after defense-in-depth checks: Firebase login + role, office assignment, GPS inside the office radius, then face match against faces/{uid}.jpg (ML Kit + weighted similarity) or a valid same-day QR — plus per-user late detection, history, and CSV email reports.',
       how: [
-        'Used Google ML Kit for on-device face recognition.',
-        'Added GPS geofencing so attendance only works within allowed locations.',
-        'Implemented time-limited QR scanning with ZXing as an extra verification layer.',
-        'Stored data with Firebase Auth/Firestore/Storage and supported Excel export plus automated email distribution.',
+        'Built a full Android client (Java 17) with Firebase Auth, Firestore, and Storage — no separate REST API.',
+        'Implemented on-device face pipeline with CameraX + ML Kit: enroll to Storage, live capture, quality gates (pose, eyes, size), lighting-adaptive match thresholds (0.85–0.95).',
+        'Added fused-location geofencing (default 100 m) so only assigned in-range offices can be selected.',
+        'Shipped time-limited QR (ZXing) as backup when lighting is poor — expiry in payload and Firestore, same-day rule, still location-aware.',
+        'Delivered admin CRUD for users/offices, daily & user reports with CSV share, and runtime EN / HI / MR including localized names and place names.',
       ],
       whyBetter: [
-        'Better than punch-card or single QR systems because proxy attendance is much harder.',
-        'Better than face-only solutions because location and time-bound QR add stronger verification.',
-        'Better than manual registers because late detection, exports, and email distribution are automated.',
+        'Better than punch-card or single-QR apps because login, assignment, geo, and face/QR must all pass.',
+        'Better than face-only systems because location and late rules block remote or late punches.',
+        'Better than paper registers because history, late flags, and emailable CSV reports are built in.',
+        'Better than English-only HR tools for this market — full UI and name/place display in Hindi and Marathi.',
       ],
     },
     features: [
-      'Face recognition',
-      'GPS geofencing',
-      'Time-limited QR scanning',
-      'Multi-factor attendance verification',
-      'User management',
-      'Late arrival detection',
-      'Excel export',
-      'Automated email distribution',
+      'Employee check-in / check-out',
+      'On-device face verification (ML Kit)',
+      'GPS geofencing per assigned office',
+      'Time-limited QR backup punch',
+      'Per-user late detection',
+      'Attendance history + stats',
+      'Admin: users, offices, QR generator',
+      'Daily & user reports → email CSV',
+      'EN / HI / MR language switch',
+      'Forgot password (Firebase)',
+      'Role-based User vs Admin login',
     ],
     technologies: [
-      'Java (Android)',
+      'Java 17 (Android)',
       'Firebase Auth',
-      'Firestore',
-      'Storage',
-      'Google ML Kit',
+      'Cloud Firestore',
+      'Firebase Storage',
+      'Google ML Kit Face Detection',
+      'CameraX',
+      'Play Services Location',
       'ZXing',
-      'MPAndroidChart',
+      'Material Components',
     ],
     image: null,
     demoVideo:
@@ -361,19 +386,373 @@ const getEmbedVideoUrl = (url: string): string => {
   return url;
 };
 
-const CaseStudySection: React.FC<{
-  label: string;
-  children: React.ReactNode;
-}> = ({ label, children }) => (
-  <div className="rounded-lg border border-primary/15 bg-dark-bg/40 p-4 md:p-5">
-    <h4 className="text-xs font-semibold tracking-wider uppercase text-primary mb-2">
-      {label}
-    </h4>
-    <div className="text-sm md:text-[15px] text-light-text/80 leading-relaxed">
-      {children}
-    </div>
-  </div>
-);
+type DetailTab = 'overview' | 'story' | 'approach' | 'details';
+
+const DETAIL_TABS: { id: DetailTab; label: string }[] = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'story', label: 'Problem → Solution' },
+  { id: 'approach', label: 'How & Why' },
+  { id: 'details', label: 'Features & Stack' },
+];
+
+const ProjectLinks: React.FC<{
+  project: Project;
+  onWatchDemo?: () => void;
+  compact?: boolean;
+}> = ({ project, onWatchDemo, compact }) => {
+  const btn = compact
+    ? 'inline-flex items-center gap-1.5 px-3 py-1.5 text-xs border border-primary/30 rounded-md text-light-text hover:border-primary hover:text-primary transition-colors'
+    : 'btn-primary flex items-center gap-2';
+
+  return (
+    <>
+      {project.liveUrl && (
+        <a
+          href={project.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={btn}
+        >
+          <FaExternalLinkAlt size={compact ? 10 : 12} />
+          {project.liveLabel || 'Live Demo'}
+        </a>
+      )}
+      {project.githubUrl && (
+        <a
+          href={project.githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={btn}
+        >
+          <FaGithub size={compact ? 12 : undefined} />
+          View Code
+        </a>
+      )}
+      {project.demoVideo && onWatchDemo && (
+        <button type="button" onClick={onWatchDemo} className={btn}>
+          <FaPlay size={compact ? 9 : 11} />
+          Watch Demo
+        </button>
+      )}
+    </>
+  );
+};
+
+const ProjectDetailsModal: React.FC<{
+  project: Project;
+  onClose: () => void;
+  onWatchDemo: () => void;
+}> = ({ project, onClose, onWatchDemo }) => {
+  const [activeTab, setActiveTab] = useState<DetailTab>('overview');
+
+  useEffect(() => {
+    setActiveTab('overview');
+  }, [project.id]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4"
+      onClick={onClose}
+    >
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-[2px]" />
+
+      <motion.div
+        initial={{ opacity: 0, y: 28 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 20 }}
+        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="project-detail-title"
+        className="relative z-10 flex flex-col w-full sm:max-w-4xl h-[92vh] sm:h-auto sm:max-h-[88vh] bg-surface border border-primary/20 sm:rounded-xl shadow-2xl shadow-black/40 overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Sticky header */}
+        <div className="shrink-0 border-b border-primary/15 bg-surface/95 backdrop-blur-sm px-4 pt-4 pb-0 md:px-6 md:pt-5">
+          <div className="flex justify-between items-start gap-3 mb-4">
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <span className="text-xs font-mono text-primary/80">{project.number}</span>
+                <span className="px-2 py-0.5 text-[10px] font-semibold tracking-wider uppercase text-primary bg-glow-effect border border-primary/25 rounded">
+                  {project.category === 'Freelance / Client Work' ? 'Client Work' : 'Personal'}
+                </span>
+              </div>
+              <h3
+                id="project-detail-title"
+                className="text-xl md:text-2xl font-bold text-light-text leading-tight truncate sm:whitespace-normal"
+              >
+                {project.title}
+              </h3>
+            </div>
+            <button
+              type="button"
+              onClick={onClose}
+              className="text-light-text/60 hover:text-primary transition-colors shrink-0 p-1"
+              aria-label="Close"
+            >
+              <FaTimesCircle size={22} />
+            </button>
+          </div>
+
+          {/* Tabs */}
+          <div
+            className="flex gap-1 overflow-x-auto pb-px -mx-1 px-1 scrollbar-thin"
+            role="tablist"
+            aria-label="Project sections"
+          >
+            {DETAIL_TABS.map((tab) => {
+              const active = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`relative shrink-0 px-3 py-2.5 text-xs md:text-sm font-medium transition-colors whitespace-nowrap ${
+                    active
+                      ? 'text-primary'
+                      : 'text-light-text/55 hover:text-light-text/85'
+                  }`}
+                >
+                  {tab.label}
+                  {active && (
+                    <motion.span
+                      layoutId="project-detail-tab"
+                      className="absolute left-2 right-2 bottom-0 h-0.5 bg-primary rounded-full"
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Tab panels — only this area scrolls */}
+        <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-4 py-5 md:px-6 md:py-6">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.18 }}
+            >
+              {activeTab === 'overview' && (
+                <div className="space-y-5">
+                  <p className="text-light-text/80 text-sm md:text-[15px] leading-relaxed">
+                    {project.description}
+                  </p>
+
+                  {project.demoVideo && (
+                    <div className="rounded-lg overflow-hidden border border-primary/15 aspect-video bg-black/40">
+                      <iframe
+                        src={getEmbedVideoUrl(project.demoVideo)}
+                        title={`${project.title} demo`}
+                        className="w-full h-full"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
+                  )}
+
+                  {project.image && !project.demoVideo && (
+                    <div className="rounded-lg overflow-hidden border border-primary/15">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-auto object-cover"
+                      />
+                    </div>
+                  )}
+
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    {[
+                      {
+                        label: 'Type',
+                        value:
+                          project.category === 'Freelance / Client Work' ? 'Client' : 'Personal',
+                      },
+                      { label: 'Features', value: String(project.features.length) },
+                      { label: 'Technologies', value: String(project.technologies.length) },
+                    ].map((stat) => (
+                      <div
+                        key={stat.label}
+                        className="rounded-lg border border-primary/12 bg-dark-bg/35 px-3 py-3 text-center"
+                      >
+                        <div className="text-lg font-semibold text-primary tabular-nums">
+                          {stat.value}
+                        </div>
+                        <div className="text-[10px] uppercase tracking-wider text-light-text/50 mt-0.5">
+                          {stat.label}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div>
+                    <p className="text-xs uppercase tracking-wider text-light-text/45 mb-2">
+                      Stack preview
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {project.technologies.slice(0, 8).map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-2.5 py-1 text-xs text-light-text/80 bg-glow-effect border border-primary/15 rounded-md"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      {project.technologies.length > 8 && (
+                        <button
+                          type="button"
+                          onClick={() => setActiveTab('details')}
+                          className="px-2.5 py-1 text-xs text-primary border border-primary/25 rounded-md hover:bg-glow-effect"
+                        >
+                          +{project.technologies.length - 8} more
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'story' && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="rounded-xl border border-secondary/25 bg-dark-bg/40 p-4 md:p-5">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-secondary/15 text-secondary text-xs font-bold">
+                        01
+                      </span>
+                      <h4 className="text-xs font-semibold tracking-wider uppercase text-secondary">
+                        The problem
+                      </h4>
+                    </div>
+                    <p className="text-sm md:text-[15px] text-light-text/80 leading-relaxed">
+                      {project.caseStudy.problem}
+                    </p>
+                  </div>
+
+                  <div className="rounded-xl border border-primary/25 bg-dark-bg/40 p-4 md:p-5">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-primary text-xs font-bold">
+                        02
+                      </span>
+                      <h4 className="text-xs font-semibold tracking-wider uppercase text-primary">
+                        The solution
+                      </h4>
+                    </div>
+                    <p className="text-sm md:text-[15px] text-light-text/80 leading-relaxed">
+                      {project.caseStudy.solution}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'approach' && (
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-xs font-semibold tracking-wider uppercase text-primary mb-4">
+                      How it was built
+                    </h4>
+                    <ol className="space-y-0 relative">
+                      {project.caseStudy.how.map((item, index) => (
+                        <li key={item} className="relative flex gap-3 pb-5 last:pb-0">
+                          {index < project.caseStudy.how.length - 1 && (
+                            <span className="absolute left-[13px] top-7 bottom-0 w-px bg-primary/20" />
+                          )}
+                          <span className="relative z-[1] flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/40 bg-surface text-[11px] font-bold text-primary">
+                            {index + 1}
+                          </span>
+                          <p className="text-sm text-light-text/80 leading-relaxed pt-1">
+                            {item}
+                          </p>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+
+                  <div>
+                    <h4 className="text-xs font-semibold tracking-wider uppercase text-primary mb-3">
+                      Why this approach wins
+                    </h4>
+                    <ul className="space-y-3">
+                      {project.caseStudy.whyBetter.map((item) => (
+                        <li
+                          key={item}
+                          className="rounded-lg border border-primary/12 bg-dark-bg/35 px-4 py-3 text-sm text-light-text/80 leading-relaxed"
+                        >
+                          <span className="text-primary font-medium mr-1.5">→</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'details' && (
+                <div className="space-y-7">
+                  <div>
+                    <h4 className="text-xs font-semibold tracking-wider uppercase text-primary mb-3">
+                      Key features
+                    </h4>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {project.features.map((feature) => (
+                        <li
+                          key={feature}
+                          className="flex items-start gap-2.5 rounded-lg border border-primary/12 bg-dark-bg/30 px-3 py-2.5 text-sm text-light-text/80"
+                        >
+                          <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="text-xs font-semibold tracking-wider uppercase text-primary mb-3">
+                      Full tech stack
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {project.technologies.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-3 py-1.5 text-xs md:text-sm text-light-text/85 bg-glow-effect border border-primary/15 rounded-md"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Sticky footer actions */}
+        {(project.liveUrl || project.githubUrl || project.demoVideo) && (
+          <div className="shrink-0 border-t border-primary/15 bg-surface/95 backdrop-blur-sm px-4 py-3 md:px-6 flex flex-wrap gap-2">
+            <ProjectLinks project={project} onWatchDemo={onWatchDemo} compact />
+          </div>
+        )}
+      </motion.div>
+    </motion.div>
+  );
+};
 
 const ProjectCard: React.FC<{
   project: Project;
@@ -442,7 +821,7 @@ const ProjectCard: React.FC<{
               className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs text-light-text border border-primary/25 rounded-md hover:border-primary/50 hover:text-primary transition-colors"
             >
               <FaExternalLinkAlt size={10} />
-              Live Demo
+              {project.liveLabel || 'Live Demo'}
             </a>
           )}
           {project.githubUrl && (
@@ -620,176 +999,11 @@ const Projects: React.FC = () => {
 
       <AnimatePresence>
         {selectedProject && !showVideo && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 bg-black/85 flex items-center justify-center z-50 p-4"
-            onClick={closeModals}
-          >
-            <motion.div
-              initial={{ scale: 0.95, y: 16 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 16 }}
-              transition={{ duration: 0.25 }}
-              className="bg-surface border border-glow-effect rounded-lg p-5 md:p-7 max-w-3xl w-full max-h-[90vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex justify-between items-start gap-4 mb-5">
-                <div>
-                  <div className="flex flex-wrap items-center gap-2 mb-2">
-                    <span className="text-sm font-mono text-primary/80">
-                      {selectedProject.number}
-                    </span>
-                    <span className="inline-flex items-center px-2.5 py-1 text-[10px] font-semibold tracking-wider uppercase text-primary bg-glow-effect border border-primary/25 rounded-md">
-                      Project Brief
-                    </span>
-                    <span className="inline-flex items-center px-2.5 py-1 text-[10px] font-semibold tracking-wider uppercase text-light-text/70 bg-glow-effect border border-primary/15 rounded-md">
-                      {selectedProject.category}
-                    </span>
-                  </div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-light-text">
-                    {selectedProject.title}
-                  </h3>
-                </div>
-                <button
-                  type="button"
-                  onClick={closeModals}
-                  className="text-light-text/70 hover:text-primary transition-colors shrink-0 mt-1"
-                  aria-label="Close modal"
-                >
-                  <FaTimesCircle size={20} />
-                </button>
-              </div>
-
-              <p className="text-light-text/75 mb-6 leading-relaxed text-sm md:text-base">
-                {selectedProject.description}
-              </p>
-
-              {selectedProject.demoVideo && (
-                <div className="mb-6 rounded-lg overflow-hidden border border-glow-effect aspect-video bg-black/40">
-                  <iframe
-                    src={getEmbedVideoUrl(selectedProject.demoVideo)}
-                    title={`${selectedProject.title} demo`}
-                    className="w-full h-full"
-                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </div>
-              )}
-
-              {selectedProject.image && !selectedProject.demoVideo && (
-                <div className="mb-6 rounded-lg overflow-hidden border border-glow-effect">
-                  <img
-                    src={selectedProject.image}
-                    alt={selectedProject.title}
-                    className="w-full h-auto object-cover"
-                  />
-                </div>
-              )}
-
-              <div className="mb-6 space-y-3">
-                <CaseStudySection label="Problem">
-                  <p>{selectedProject.caseStudy.problem}</p>
-                </CaseStudySection>
-
-                <CaseStudySection label="Solution">
-                  <p>{selectedProject.caseStudy.solution}</p>
-                </CaseStudySection>
-
-                <CaseStudySection label="How we built it">
-                  <ul className="space-y-2">
-                    {selectedProject.caseStudy.how.map((item) => (
-                      <li key={item} className="flex items-start gap-2">
-                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary/70 shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CaseStudySection>
-
-                <CaseStudySection label="Why this approach is better">
-                  <ul className="space-y-2">
-                    {selectedProject.caseStudy.whyBetter.map((item) => (
-                      <li key={item} className="flex items-start gap-2">
-                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary/70 shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CaseStudySection>
-              </div>
-
-              <div className="mb-6">
-                <h4 className="text-primary font-semibold mb-3">Key Features</h4>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {selectedProject.features.map((feature) => (
-                    <li
-                      key={feature}
-                      className="flex items-start gap-2 text-sm text-light-text/75"
-                    >
-                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary/70 shrink-0" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="mb-7">
-                <h4 className="text-primary font-semibold mb-3">Tech Stack</h4>
-                <div className="flex flex-wrap gap-2">
-                  {selectedProject.technologies.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1.5 text-xs md:text-sm text-light-text/85 bg-glow-effect border border-primary/15 rounded-md"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {(selectedProject.liveUrl ||
-                selectedProject.githubUrl ||
-                selectedProject.demoVideo) && (
-                <div className="flex flex-wrap gap-3">
-                  {selectedProject.liveUrl && (
-                    <a
-                      href={selectedProject.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-primary flex items-center gap-2"
-                    >
-                      <FaExternalLinkAlt size={12} />
-                      Live Demo
-                    </a>
-                  )}
-                  {selectedProject.githubUrl && (
-                    <a
-                      href={selectedProject.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-primary flex items-center gap-2"
-                    >
-                      <FaGithub />
-                      View Code
-                    </a>
-                  )}
-                  {selectedProject.demoVideo && (
-                    <button
-                      type="button"
-                      onClick={() => setShowVideo(true)}
-                      className="btn-primary flex items-center gap-2"
-                    >
-                      <FaPlay size={11} />
-                      Watch Demo
-                    </button>
-                  )}
-                </div>
-              )}
-            </motion.div>
-          </motion.div>
+          <ProjectDetailsModal
+            project={selectedProject}
+            onClose={closeModals}
+            onWatchDemo={() => setShowVideo(true)}
+          />
         )}
       </AnimatePresence>
     </section>

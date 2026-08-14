@@ -120,10 +120,14 @@ const Contact: React.FC = () => {
         message: '',
       });
     } catch (err) {
-      const message =
+      const raw =
         err instanceof Error
           ? err.message
           : 'Failed to send message. Please try again later.';
+      const message =
+        /failed to fetch|networkerror|aborted/i.test(raw)
+          ? 'Contact server is not running. Start it with npm run server (and add GMAIL_APP_PASSWORD in server/.env).'
+          : raw;
       setError(
         `${message} You can also email me directly at ${CONTACT_EMAIL}.`
       );

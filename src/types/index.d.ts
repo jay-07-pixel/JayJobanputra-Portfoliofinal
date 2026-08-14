@@ -67,6 +67,7 @@ declare module 'framer-motion' {
   export const AnimatePresence: React.FC<{
     children?: React.ReactNode;
     exitBeforeEnter?: boolean;
+    mode?: 'sync' | 'popLayout' | 'wait';
     initial?: boolean;
     onExitComplete?: () => void;
   }>;
