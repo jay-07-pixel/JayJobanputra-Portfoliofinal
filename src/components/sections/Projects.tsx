@@ -154,7 +154,7 @@ const freelanceProjects: Project[] = [
     image: null,
     demoVideo: null,
     githubUrl: null,
-    liveUrl: 'https://unrivaled-moxie-86f523.netlify.app/',
+    liveUrl: 'https://tranquil-blancmange-33b597.netlify.app/check-in-out',
     liveLabel: 'Try UI Demo',
   },
   {
