@@ -102,19 +102,19 @@ const freelanceProjects: Project[] = [
     title: 'Kailash Masale',
     category: 'Freelance / Client Work',
     description:
-      'Field sales operations system for Kailash Masale — React admin dashboard plus Android field app on one Firebase project. Managers track attendance, orders, targets, leaves, TA/DA expenditure, and tasks; field staff check in/out, capture orders, and get FCM when tasks are assigned. Public UI demo (frontend only, no live backend) so visitors can click through the dashboard themselves.',
+      'Field sales operations system for Kailash Masale — React admin dashboard plus Android field app on one Firebase project. Managers track attendance, orders, targets, leaves, TA/DA expenditure, and tasks; field staff check in/out, capture orders, and get FCM when tasks are assigned. Public UI demo (frontend only, no live backend) — desktop view only, not built for mobile phones.',
     caseStudy: {
       problem:
         'Field sales ran on paper, calls, and delayed reports. Managers could not see live check-ins, orders, or targets, and assigning work to the phone meant chasing people manually. Attendance, leaves, weekly plans, and TA/DA all lived in different places.',
       solution:
-        'One Firestore-backed system: a React/Vite operations dashboard for admins and a Java Android app for employees/managers. Real-time onSnapshot sync. When an admin writes a pending task, Cloud Function notifyTaskAssigned sends FCM to the employee’s tokens — the website never calls FCM itself. A Netlify UI demo lets recruiters explore the dashboard without needing production credentials.',
+        'One Firestore-backed system: a React/Vite operations dashboard for admins and a Java Android app for employees/managers. Real-time onSnapshot sync. When an admin writes a pending task, Cloud Function notifyTaskAssigned sends FCM to the employee’s tokens — the website never calls FCM itself. A Netlify UI demo lets recruiters explore the dashboard without production credentials; that preview is desktop-only and is not intended for mobile phones.',
       how: [
         'Built the web control plane with React 19, Vite 7, React Router, and Recharts for live KPIs, orders, attendance, approvals, and expenditure.',
         'Shipped the Android companion (Java 11): GPS check-in/out, weekly/monthly plans, orders, leave, DA/TA, performance, and a notification permission wizard for reliable FCM.',
         'Used Firebase Auth (web), Firestore, Storage, and Cloud Functions; Android stores fcmTokens on employees/{id} at login.',
         'Implemented Master Sheet geofences/routes, disbursement (salary, TA, DA, night halt, incentives), leave/Sunday approvals, stock sheets, and distributor targets.',
         'Wired task assign/edit/complete on the dashboard to Firestore tasks/{id} so notifyTaskAssigned pushes title + description to the phone.',
-        'Published a frontend-only Netlify preview so people can experience the UI themselves instead of watching a video.',
+        'Published a frontend-only Netlify preview for desktop browsers so people can click through the UI (not optimized for mobile phones).',
       ],
       whyBetter: [
         'Better than spreadsheets and WhatsApp because attendance, orders, and tasks sync live between office dashboard and field phones.',
@@ -136,7 +136,7 @@ const freelanceProjects: Project[] = [
       'Android: employee + manager modes',
       'Distributor assignment & targets',
       'Real-time Firestore sync',
-      'Public UI demo on Netlify',
+      'Public UI demo on Netlify (desktop only)',
     ],
     technologies: [
       'React 19',
@@ -155,7 +155,7 @@ const freelanceProjects: Project[] = [
     demoVideo: null,
     githubUrl: null,
     liveUrl: 'https://tranquil-blancmange-33b597.netlify.app/check-in-out',
-    liveLabel: 'Try UI Demo',
+    liveLabel: 'Try UI Demo (Desktop)',
   },
   {
     id: 'aromawrap',
