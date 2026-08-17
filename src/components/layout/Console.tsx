@@ -198,6 +198,8 @@ const Console: React.FC<ConsoleProps> = ({ isVisible, onClose }) => {
           'Personal Projects:',
           '  01  Kalpanik Operations AI',
           '  02  Attendify',
+          '  03  Smart Trip Planner India',
+          '  04  Remind Me',
           '',
           'Type "goto projects" to open the Projects section.',
         ];
