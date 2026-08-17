@@ -378,8 +378,7 @@ const personalProjects: Project[] = [
       'Material Components',
     ],
     image: null,
-    demoVideo:
-      'https://drive.google.com/file/d/1K26cBzgWWWqtkoj3sV_yshhWkGXbVgE7/view?usp=sharing',
+    demoVideo: '/videos/attendify.mp4',
     githubUrl: 'https://github.com/jay-07-pixel/FACEATTEND--FINAL-PUSH.git',
     liveUrl: null,
   },
@@ -496,7 +495,14 @@ const personalProjects: Project[] = [
   },
 ];
 
+const isDirectVideoFile = (url: string): boolean =>
+  /\.(mp4|webm|ogg)(\?.*)?$/i.test(url) || url.startsWith('/videos/');
+
 const getEmbedVideoUrl = (url: string): string => {
+  if (isDirectVideoFile(url)) {
+    return url;
+  }
+
   const driveMatch = url.match(/\/file\/d\/([^/]+)/);
   if (driveMatch) {
     return `https://drive.google.com/file/d/${driveMatch[1]}/preview`;
@@ -510,6 +516,38 @@ const getEmbedVideoUrl = (url: string): string => {
   }
 
   return url;
+};
+
+const DemoVideoPlayer: React.FC<{ src: string; title: string; autoPlay?: boolean }> = ({
+  src,
+  title,
+  autoPlay = false,
+}) => {
+  if (isDirectVideoFile(src)) {
+    return (
+      <video
+        src={src}
+        title={title}
+        className="w-full h-full object-contain bg-black"
+        controls
+        playsInline
+        preload="metadata"
+        autoPlay={autoPlay}
+      >
+        Your browser does not support this video.
+      </video>
+    );
+  }
+
+  return (
+    <iframe
+      src={getEmbedVideoUrl(src)}
+      title={title}
+      className="w-full h-full"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+    />
+  );
 };
 
 type DetailTab = 'overview' | 'story' | 'approach' | 'details';
@@ -684,12 +722,9 @@ const ProjectDetailsModal: React.FC<{
 
                   {project.demoVideo && (
                     <div className="rounded-lg overflow-hidden border border-primary/15 aspect-video bg-black/40">
-                      <iframe
-                        src={getEmbedVideoUrl(project.demoVideo)}
+                      <DemoVideoPlayer
+                        src={project.demoVideo}
                         title={`${project.title} demo`}
-                        className="w-full h-full"
-                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
                       />
                     </div>
                   )}
@@ -1100,7 +1135,7 @@ const Projects: React.FC = () => {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 16 }}
               transition={{ duration: 0.25 }}
-              className="bg-surface border border-glow-effect rounded-lg overflow-hidden max-w-4xl w-full aspect-video relative"
+              className="bg-black border border-glow-effect rounded-lg overflow-hidden w-full max-w-6xl aspect-video relative shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <button
@@ -1111,12 +1146,10 @@ const Projects: React.FC = () => {
               >
                 <FaTimesCircle size={22} />
               </button>
-              <iframe
-                src={getEmbedVideoUrl(selectedProject.demoVideo)}
+              <DemoVideoPlayer
+                src={selectedProject.demoVideo}
                 title={`${selectedProject.title} demo`}
-                className="w-full h-full"
-                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
+                autoPlay
               />
             </motion.div>
           </motion.div>

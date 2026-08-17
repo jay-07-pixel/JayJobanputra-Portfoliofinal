@@ -2,7 +2,7 @@
 % Compile: pdflatex Jay_Jobanputra_Resume.tex
 \documentclass[10pt,a4paper]{article}
 
-\usepackage[margin=0.55in]{geometry}
+\usepackage[margin=0.52in]{geometry}
 \usepackage{titlesec}
 \usepackage{enumitem}
 \usepackage{hyperref}
@@ -10,161 +10,172 @@
 \usepackage{tabularx}
 \usepackage{array}
 \usepackage{setspace}
-\usepackage{fontawesome5}
+\usepackage{ragged2e}
 
 \definecolor{accent}{HTML}{0B5C55}
-\definecolor{muted}{HTML}{444444}
+\definecolor{muted}{HTML}{555555}
 
-\hypersetup{
-  colorlinks=true,
-  urlcolor=accent,
-  linkcolor=accent
-}
+\hypersetup{colorlinks=true, urlcolor=accent, linkcolor=accent}
 
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt}
-\setlist[itemize]{leftmargin=1.15em, itemsep=0.18em, topsep=0.15em, parsep=0pt}
+\setlist[itemize]{leftmargin=1.1em, itemsep=0.12em, topsep=0.12em, parsep=0pt}
 
-\titleformat{\section}{\large\bfseries\color{accent}}{}{0em}{}[\vspace{-0.35em}\color{accent}\titlerule\vspace{0.35em}]
-\titlespacing*{\section}{0pt}{0.7em}{0.35em}
+\titleformat{\section}
+  {\large\bfseries\color{accent}}
+  {}{0em}{}
+  [\vspace{-0.32em}{\color{accent}\titlerule}\vspace{0.28em}]
+\titlespacing*{\section}{0pt}{0.55em}{0.28em}
 
+% Role header: title | date (no overlap)
 \newcommand{\role}[3]{%
-  \textbf{#1} \hfill \textit{\small #3}\\
-  \textcolor{muted}{\small #2}\par\vspace{0.15em}%
+  \noindent
+  \begin{tabularx}{\textwidth}{@{}X r@{}}
+    \textbf{#1} & \textit{\footnotesize #3} \\
+    \multicolumn{2}{@{}l@{}}{\textcolor{muted}{\footnotesize #2}}
+  \end{tabularx}\par\vspace{0.12em}%
 }
 
 \begin{document}
-\setstretch{1.05}
+\setstretch{1.02}
+\RaggedRight
 
 % ---------- Header ----------
 \begin{center}
-  {\LARGE\bfseries Jay Jobanputra}\\[0.35em]
-  {\small
-    \faPhone*\ +91-9822961688
-    \;|\;
+  {\LARGE\bfseries Jay Jobanputra}\\[0.28em]
+  {\footnotesize
+    +91-9822961688
+    $\;\cdot\;$
     \href{mailto:jayjobanputra007@gmail.com}{jayjobanputra007@gmail.com}
-    \;|\;
+    $\;\cdot\;$
     \href{https://www.linkedin.com/in/jay-jobanputra-1b442931b}{LinkedIn}
-    \;|\;
+    $\;\cdot\;$
     \href{https://github.com/jay-07-pixel}{GitHub}
-  }\\[0.15em]
-  {\small Kopargaon, Maharashtra}
+  }\\[0.12em]
+  {\footnotesize Kopargaon, Maharashtra}
 \end{center}
 
-\vspace{0.2em}
+\vspace{0.15em}
 
-% ---------- Objective ----------
-\section*{Career Objective}
-Curious builder, published undergraduate researcher, and aspiring entrepreneur with hands-on experience shipping full-stack web apps, native Android products, and AI-driven systems. I enjoy turning messy real-world workflows into reliable software---and I want to keep building, learning, and shipping with ambitious teams.
+% ---------- Summary ----------
+\section*{Professional Summary}
+B.Tech AI \& Data Science undergraduate, IEEE-published researcher, and hands-on builder. Ships production web apps, native Android products, Flutter apps, and agentic AI prototypes for real businesses---from multi-tenant workforce tools to e-commerce and field attendance systems.
 
 % ---------- Education ----------
 \section*{Education}
 \role{B.Tech --- Artificial Intelligence \& Data Science}{Sanjivani University, Kopargaon}{2024 -- 2028}
 
-\vspace{0.25em}
+\vspace{0.18em}
 \role{Senior Secondary (XII) --- Science (MSBSHSE)}{K.\ B.\ Rohmare Jr.\ College, Kopargaon \quad 63\%}{2024}
 
-\vspace{0.25em}
+\vspace{0.18em}
 \role{Secondary (X) --- MSBSHSE}{Shri Sharda English Medium School, Kopargaon \quad 91.40\%}{2022}
 
 % ---------- Research ----------
 \section*{Research Publication}
-\textbf{Optimized Feature Selection and Machine Learning Techniques for Early Detection of Chronic Kidney Disease}\\
-{\small Jay Nilesh Jobanputra, K.\ Vengatesan, V.D.\ Ambeth Kumar et al.\ --- IEEE GITCON 2025, Belagavi, India.}\\
-{\small Published in IEEE Xplore $\cdot$ Google Scholar $\cdot$ DOI: \href{https://doi.org/10.1109/GITCON65266.2025.11377145}{10.1109/GITCON65266.2025.11377145}}
+\textbf{Optimized Feature Selection and Machine Learning Techniques for Early Detection of Chronic Kidney Disease}\\[0.1em]
+{\footnotesize Jay Nilesh Jobanputra, K.\ Vengatesan, V.D.\ Ambeth Kumar et al.\ --- IEEE GITCON 2025, Belagavi, India.}\\
+{\footnotesize IEEE Xplore $\cdot$ Google Scholar $\cdot$ DOI: \href{https://doi.org/10.1109/GITCON65266.2025.11377145}{10.1109/GITCON65266.2025.11377145}}
 \begin{itemize}
-  \item Built an ML pipeline for early CKD detection using Recursive Feature Elimination (RFE) and Mutual Information Gain on 400 patient records with 26 clinical features.
-  \item Benchmarked 7+ models (Random Forest, XGBoost, SVM, Naive Bayes, and ensembles) with strong cross-validation performance.
-  \item Presented as a first-year undergraduate at IEEE GITCON 2025; paper indexed in IEEE Xplore and Google Scholar.
+  \item Built an ML pipeline for early CKD detection using RFE and Mutual Information Gain on 400 patient records (26 clinical features).
+  \item Benchmarked 7+ models (Random Forest, XGBoost, SVM, Naive Bayes, ensembles) with strong cross-validation results.
+  \item Presented as a first-year undergraduate; paper indexed in IEEE Xplore and Google Scholar.
 \end{itemize}
 
 % ---------- Freelance ----------
-\section*{Freelancing Experience}
+\section*{Freelance \& Client Work}
 
-\role{Kalpanik Task Manager --- Web \& Android}{Vite + Bootstrap + Node.js/Express + Prisma/MySQL + Java (Android)}{Jun 2026 -- Present}
+\role{Kalpanik Task Manager --- Web PWA \& Android}{Vite, Bootstrap, Node.js, Express, Prisma, MySQL, Java (Android)}{Jun 2026 -- Present}
 \begin{itemize}
-  \item Built a multi-tenant workforce platform (web PWA + Android \textit{Kalpanik Reminder}) for owners, admins, and field employees: lists, All Tasks, mixed proof uploads, team chat (SSE), live GPS attendance, geofenced check-in, deadline extensions, and owner review workflows.
-  \item One codebase powers isolated customer deployments (domain, MySQL, uploads, trial); Android shares the same session API with FCM reminders and overdue gates.
-  \item \textbf{Stack:} Vite, Bootstrap, Node.js, Express, Prisma, MySQL, Java (Android), Retrofit/OkHttp, FCM, SSE, Web Push, nginx/PM2
+  \item Designed a multi-tenant workforce platform (web + Android \textit{Kalpanik Reminder}) for owners, admins, and field staff: task lists, mixed proof uploads, team chat (SSE), live GPS attendance, geofenced check-in, deadline extensions, and owner review.
+  \item One codebase powers isolated customer instances (domain, MySQL, uploads, trial); Android uses the same session API with FCM reminders and overdue gates.
 \end{itemize}
 
-\vspace{0.35em}
-\role{Kailash Masale --- Operations Dashboard \& Field App}{React + Vite + Firebase + Java (Android)}{Sep 2025 -- Jan 2026}
+\vspace{0.28em}
+\role{Kailash Masale --- Ops Dashboard \& Field App}{React, Vite, Firebase, Java (Android)}{Sep 2025 -- Jan 2026}
 \begin{itemize}
-  \item Shipped a React admin console for attendance, orders, targets, leaves, TA/DA expenditure, and task assignment, paired with a Java Android field app on the same Firebase project.
-  \item Real-time Firestore sync; Cloud Function sends FCM when admins assign/update/complete tasks (tokens stored by the Android app).
-  \item \textbf{Stack:} React 19, Vite, Recharts, Java (Android), Firebase Auth/Firestore/Storage, Cloud Functions, FCM, Material Components
+  \item Built a React admin console for attendance, orders, targets, leaves, TA/DA, and task assignment with a Java Android field app on one Firebase project.
+  \item Real-time Firestore sync; Cloud Function notifies employees over FCM when tasks are assigned or updated.
 \end{itemize}
 
-\vspace{0.35em}
-\role{AromaWrap --- E-Commerce Platform}{React + TypeScript + Express + Prisma/MySQL}{Sep 2025 -- Dec 2025}
+\vspace{0.28em}
+\role{AromaWrap --- E-Commerce}{React, TypeScript, Express, Prisma, MySQL}{Sep 2025 -- Dec 2025}
 \begin{itemize}
-  \item Built a full storefront for incense/fragrance products: catalog, search, slug product URLs for packaging QR codes, server-side cart/wishlist, COD + dynamic UPI QR checkout with admin payment verify, and reviews.
-  \item Admin dashboard for products, inventory, orders, and multi-image uploads to server disk (\texttt{/uploads}).
-  \item Live: \href{https://aromawrap.co.in}{aromawrap.co.in}. \textbf{Stack:} React 18, TypeScript, Vite, Tailwind, Express, Prisma, MySQL, TanStack Query, Framer Motion
+  \item Shipped a live incense storefront: catalog, search, packaging QR slug URLs, cart and wishlist, COD + UPI QR checkout with admin payment verification, and reviews.
+  \item Live: \href{https://aromawrap.co.in}{aromawrap.co.in}. Admin CRUD, inventory, and multi-image uploads to server disk.
 \end{itemize}
 
-\vspace{0.35em}
-\role{Election Survey System}{Android + Node.js + MySQL}{Nov 2025}
+\vspace{0.28em}
+\role{Election Survey System}{Java (Android), Node.js, Express, MySQL}{Nov 2025}
 \begin{itemize}
-  \item End-to-end field survey platform: Android app for location-aware ward/area collection (text, single/multi-choice) with Node.js/Express REST APIs and MySQL ward-level reporting.
-  \item \textbf{Stack:} Java (Android), Node.js, Express, MySQL, OkHttp, Material Design
+  \item Delivered a field survey stack: Android (Material Design 3) + Express REST API + MySQL for login, area/ward selection, dynamic questions (text / single / multi), and batch response submission.
 \end{itemize}
 
 % ---------- Projects ----------
-\section*{Projects}
+\section*{Selected Projects}
 
-\role{Kalpanik Operations AI --- Agentic Ops Platform}{Personal $\cdot$ Hackathon}{Jan 2026}
+\role{Kalpanik Operations AI}{Hackathon $\cdot$ Node.js, Express, Python, scikit-learn}{Jan 2026}
 \begin{itemize}
-  \item Multi-agent system for MSME operations: orders, workforce scheduling, inventory, and ML delay-risk prediction trained on Kaggle Olist e-commerce data.
-  \item WhatsApp-style natural-language order intake (LLM parses product, qty, deadline, priority) with a terminal-style web dashboard for the full pipeline.
-  \item \textbf{Stack:} Node.js, Express, Vanilla JS, Python, scikit-learn, LLM/NLP agents
+  \item Multi-agent MSME ops pipeline: shop + WhatsApp order intake, inventory reservation, workforce tasks, and ML delay-risk labels (logistic regression).
+  \item Optional Groq LLM parsing for natural-language WhatsApp orders; in-memory ops state for fast demo loops.
 \end{itemize}
 
-\vspace{0.35em}
-\role{Attendify --- Smart Attendance Management System}{Personal $\cdot$ Android}{May 2025}
+\vspace{0.28em}
+\role{Attendify --- Smart Attendance}{Android $\cdot$ Firebase, ML Kit, CameraX, ZXing}{May 2025}
 \begin{itemize}
-  \item Native Android attendance app with defense-in-depth check-in/out: Firebase Auth + role, assigned office, GPS geofence, then on-device face verification (ML Kit + weighted similarity) or a time-limited QR backup.
-  \item Admin tools for users, offices, QR generation, late detection, history/stats, and CSV email reports; UI in English, Hindi, and Marathi (branded for Sugandh Shoppee, Nagpur).
-  \item \textbf{Stack:} Java 17 (Android), Firebase Auth/Firestore/Storage, ML Kit Face Detection, CameraX, Play Services Location, ZXing, Material Components
+  \item Defense-in-depth check-in/out: auth + role, assigned office, GPS geofence, then face verification (ML Kit) or time-limited QR.
+  \item Admin tools for users, offices, QR, late flags, history, and CSV email reports; UI in English, Hindi, and Marathi.
+\end{itemize}
+
+\vspace{0.28em}
+\role{Smart Trip Planner India}{HTML, Tailwind, JavaScript $\cdot$ Google Places, OpenWeatherMap}{2025}
+\begin{itemize}
+  \item Personalized India itineraries with live hotels, restaurants, attractions, weather, optional traffic analysis, and budget sliders.
+  \item Live: \href{https://smart-tripplanner.netlify.app/}{smart-tripplanner.netlify.app}. Core planner uses APIs + rule-based logic (not a third-party LLM).
+\end{itemize}
+
+\vspace{0.28em}
+\role{Remind Me}{Flutter $\cdot$ Contacts, Local Notifications, WhatsApp Share}{2025 -- 2026}
+\begin{itemize}
+  \item On-device birthday/anniversary reminders from contacts with full-screen daily alarms, wish tracking, greeting cards, and WhatsApp share.
+  \item Built for family milestones and business owners who want to wish clients on time---no server or cloud accounts.
 \end{itemize}
 
 % ---------- Skills ----------
 \section*{Technical Skills}
-\begin{tabularx}{\textwidth}{@{}>{\bfseries}l@{\hspace{0.6em}}X@{}}
-Languages & Python, Java (Android), JavaScript, TypeScript, SQL, C++, HTML/CSS \\[0.15em]
-AI / ML & Scikit-learn, TensorFlow, Keras, XGBoost, Random Forest, RFE, Google ML Kit, Pandas, NumPy \\[0.15em]
-Web \& Mobile & React.js, Vite, Node.js, Express.js, Android (Java), REST APIs, Bootstrap, Tailwind, Streamlit \\[0.15em]
-Agentic / LLM & Multi-agent pipelines, LLM-based NLP parsing \\[0.15em]
-Database \& Cloud & Firebase (Auth, Firestore, Storage, FCM, Functions), MySQL, Prisma, MongoDB, SQLite, Railway \\[0.15em]
-Data \& Viz & Matplotlib, Seaborn, Plotly, Recharts, Tableau \\[0.15em]
-Tools & Git \& GitHub, Android Studio, nginx/PM2, Insomnia, Cursor, Netlify, Agile, Design Thinking
+\begin{tabularx}{\textwidth}{@{}>{\bfseries\raggedright\arraybackslash}p{1.55in} >{\raggedright\arraybackslash}X@{}}
+Languages & Python, Java (Android), Dart (Flutter), JavaScript, TypeScript, SQL, C++, HTML/CSS \\[0.1em]
+AI / ML & Scikit-learn, TensorFlow, Keras, XGBoost, Random Forest, RFE, Google ML Kit, Pandas, NumPy \\[0.1em]
+Web \& Mobile & React, Vite, Node.js, Express, Flutter, Android (Java), REST APIs, Bootstrap, Tailwind \\[0.1em]
+Agentic / LLM & Multi-agent pipelines, Groq / LLM text parsing (optional) \\[0.1em]
+Data \& Cloud & Firebase (Auth, Firestore, Storage, FCM, Functions), MySQL, Prisma, MongoDB, SQLite \\[0.1em]
+Tools & Git \& GitHub, Android Studio, nginx/PM2, Netlify, Insomnia, Cursor, Agile
 \end{tabularx}
 
 % ---------- Certifications ----------
 \section*{Certifications}
 \begin{itemize}
-  \item Basics of Python --- Infosys Springboard \hfill {\small Nov 2024}
-  \item Illuminate Entrepreneurship Bootcamp --- E-Cell, IIT Bombay \hfill {\small Jan 2025}
-  \item Data Visualisation --- IBM Career Education Program \hfill {\small Apr 2025}
-  \item Business Intelligence --- IBM Career Education Program \hfill {\small Apr 2026}
-  \item DevOps, Agile \& Design Thinking --- IBM Career Education Program \hfill {\small Apr 2026}
+  \item Basics of Python --- Infosys Springboard \hfill {\footnotesize Nov 2024}
+  \item Illuminate Entrepreneurship Bootcamp --- E-Cell, IIT Bombay \hfill {\footnotesize Jan 2025}
+  \item Data Visualisation --- IBM Career Education Program \hfill {\footnotesize Apr 2025}
+  \item Business Intelligence --- IBM Career Education Program \hfill {\footnotesize Apr 2026}
+  \item DevOps, Agile \& Design Thinking --- IBM Career Education Program \hfill {\footnotesize Apr 2026}
 \end{itemize}
 
 % ---------- POR ----------
-\section*{Positions of Responsibility \& Achievements}
+\section*{Leadership \& Achievements}
 \begin{itemize}
-  \item \textbf{President, Sanjivani E-Cell} --- organized startup events; connected 100+ students with industry mentors and investors.
-  \item \textbf{President, Institution's Innovation Council (IIC), Sanjivani University} --- incubation activities; mentored student innovators from ideation to prototype.
+  \item \textbf{President, Sanjivani E-Cell} --- organized startup events; connected 100+ students with mentors and investors.
+  \item \textbf{President, IIC, Sanjivani University} --- incubation activities; mentored innovators from idea to prototype.
   \item \textbf{Campus Ambassador} --- E-Cell, IIT Bombay (Upstox $\times$ EducationVibes), Jun 2025.
-  \item \textbf{Top 20} --- National Entrepreneurship Challenge (NEC) by IIT Bombay, among 1000+ teams.
-  \item \textbf{Winner} --- Eureka Startup Pitching Competition \& Web Development Competition, Sanjivani University.
-  \item \textbf{Special Appreciation Prize} --- Industry Hackathon, Sanjivani University.
+  \item \textbf{Top 20} --- National Entrepreneurship Challenge (NEC), IIT Bombay (1000+ teams).
+  \item \textbf{Winner} --- Eureka Startup Pitching \& Web Development Competition, Sanjivani University.
+  \item \textbf{Special Appreciation} --- Industry Hackathon, Sanjivani University.
 \end{itemize}
 
 % ---------- Languages ----------
-\section*{Languages Known}
-English (Professional) \;|\; Hindi (Fluent) \;|\; Marathi (Fluent) \;|\; Gujarati (Native)
+\section*{Languages}
+English (Professional) $\;\cdot\;$ Hindi (Fluent) $\;\cdot\;$ Marathi (Fluent) $\;\cdot\;$ Gujarati (Native)
 
 \end{document}

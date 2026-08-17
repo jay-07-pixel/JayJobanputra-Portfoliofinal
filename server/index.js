@@ -123,6 +123,27 @@ function escapeHtml(value) {
     .replace(/'/g, '&#39;');
 }
 
+const clientDir = path.join(__dirname, 'client');
+const clientIndex = path.join(clientDir, 'index.html');
+
+app.use(express.static(clientDir));
+
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    return next();
+  }
+  res.sendFile(clientIndex, (err) => {
+    if (err) {
+      res
+        .status(503)
+        .type('text')
+        .send(
+          'Portfolio frontend not deployed yet. Upload the React build to server/client.'
+        );
+    }
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Contact API running on http://localhost:${PORT}`);
 });

@@ -37,6 +37,7 @@ Desktop.ini
 
 # Optional: ignore videos and large media files
 *.mp4
+!public/videos/attendify.mp4
 *.avi
 *.mov
 *.mkv
