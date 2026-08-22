@@ -7,7 +7,7 @@ import FloatingAnimation from '../layout/FloatingAnimation';
 
 const About: React.FC = () => {
   return (
-    <section id="about" className="py-20 bg-dark-bg relative overflow-hidden">
+    <section id="about" className="py-10 md:py-12 bg-dark-bg relative overflow-hidden">
       {/* Background decorative elements */}
       <FloatingAnimation 
         x={30} 
@@ -35,7 +35,7 @@ const About: React.FC = () => {
           <h2 className="section-title">About Me</h2>
         </ScrollAnimationWrapper>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mt-6">
           {/* Image column */}
           <ParallaxEffect direction="left" offset={30}>
             <ScrollAnimationWrapper 

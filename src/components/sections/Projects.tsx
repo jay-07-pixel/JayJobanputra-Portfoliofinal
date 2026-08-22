@@ -438,59 +438,59 @@ const personalProjects: Project[] = [
     liveLabel: 'Visit Website',
   },
   {
-    id: 'remind-me',
+    id: 'plant-disease-ai',
     number: '04',
-    title: 'Remind Me',
+    title: 'PlantDiseaseAI',
     category: 'Personal Project',
     description:
-      'Kalpanik Remind Me — a Flutter app for families and business owners alike. Sync birthdays and anniversaries from contacts, get a daily full-screen reminder, and send a WhatsApp wish with a greeting card — so personal bonds and client relationships stay warm. Data stays on the device; no server or accounts.',
+      'Production-grade offline plant leaf disease detection for Grape and Tomato, with Grad-CAM explainability and optional Groq-powered farmer guidance. Runs as a Windows .exe, Python desktop app, and on Raspberry Pi; Android companion uses exported ONNX models from the same repo.',
     caseStudy: {
       problem:
-        'From a family view, people miss birthdays and anniversaries even when the dates already sit unused in their contact book — and sending a card on WhatsApp still takes extra steps. From a business view, owners and relationship managers forget to wish clients and partners on personal milestones, so goodwill fades and the bond weakens over time.',
+        'Farmers and field workers need fast disease ID without reliable internet, visual proof of what the model focused on, and practical care advice in local languages — not a cloud-only notebook demo.',
       solution:
-        'Remind Me turns contact birthdays and anniversaries into a daily action list for both home and work: today’s celebrations, upcoming dates, wish tracking, editable templates (formal to warm), and greeting cards shared to WhatsApp. Families stay thoughtful; business owners can wish clients on time and keep the relationship personal — fully offline on the device.',
+        'PlantDiseaseAI runs offline multi-crop inference with EfficientNet-B0: Grape (4 classes) and Tomato (10 classes), top-3 predictions with confidence, Grad-CAM heatmaps (Windows + Pi low-RAM path), multilingual UI (EN/HI/MR), and Prevention / Remedies / Tips (offline + optional Groq). Same product ships as Windows desktop, Python app, Raspberry Pi camera flow, and Android via ONNX (+ Eigen-CAM feature maps).',
       how: [
-        'Built the app in Flutter with go_router navigation and Provider for state.',
-        'Used flutter_contacts for sync, flutter_local_notifications + timezone for daily exact/full-screen alarms, and permission_handler for contacts/notifications/alarms.',
-        'Designed templates and cards for both personal tones (family/friends) and more formal client-facing wishes.',
-        'Stored profile, reminder time, templates, and wish status in shared_preferences (no backend) so client and family data never leave the phone.',
-        'Shipped onboarding, registration, permissions, contact sync, home, contact details, alarm screen, and message templates.',
+        'Trained production EfficientNet-B0 models — Grape 224×224 (Black Rot, Esca, Leaf Blight, Healthy) and Tomato 256×256 (10 diseases including Early/Late Blight, Leaf Mold, Mosaic Virus, etc.) — with bundled weights and class mappings.',
+        'Built a PySide6 desktop UI for image upload, webcam / Pi camera, live preview on Pi, and Grad-CAM overlays.',
+        'Packaged a Windows .exe with PyInstaller (full folder distribute) plus Raspberry Pi CPU mode, camera capture, and optional boot autostart.',
+        'Exported ONNX and feature-map ONNX for a separate Android companion (Eigen-CAM style explainability on mobile).',
+        'Shipped training/eval/export scripts, user manual, and optional GROQ_API_KEY so tips enrich when online while prediction stays offline.',
       ],
       whyBetter: [
-        'Better for families than relying on memory — contact dates become today’s list and a full-screen alarm you can’t ignore.',
-        'Better for business owners than a generic CRM birthday field — one tap to WhatsApp with a card keeps the client bond human.',
-        'Better than copy-paste messages because templates cover formal, funny, emotional, short, and romantic styles.',
-        'Better for privacy than cloud social apps because contacts, clients, and wish history stay only on the device.',
+        'Better than cloud-only plant apps — prediction and Grad-CAM work fully offline on PC or Pi.',
+        'Better than black-box classifiers — Grad-CAM shows where the model looked on the leaf.',
+        'Better for real deployment — Windows .exe, Python, Raspberry Pi, and Android ONNX paths, not only a training notebook.',
+        'Better for local farmers — UI and care tips in English, Hindi, and Marathi.',
       ],
     },
     features: [
-      'Contact sync (birthdays & anniversaries)',
-      'Home: today, upcoming, search, filters',
-      'Daily full-screen alarm (custom time)',
-      'Today’s celebrations popup',
-      'Wish tracking for the year',
-      'Greeting cards + gallery photo',
-      'Templates for family & clients',
-      'Share card & message to WhatsApp',
-      'On-device storage only',
-      'Settings: time, permissions, profile',
+      'Multi-crop: Grape (4) + Tomato (10)',
+      'EfficientNet-B0 — top-3 + confidence',
+      'Grad-CAM heatmaps (Windows + Pi)',
+      'PySide6 desktop UI (upload / camera)',
+      'Multilingual UI — EN / HI / MR',
+      'Care advice: Prevention / Remedies / Tips',
+      'Offline core + optional Groq tips',
+      'Windows .exe (PyInstaller)',
+      'Raspberry Pi camera + autostart',
+      'ONNX export for Android companion',
     ],
     technologies: [
-      'Flutter',
-      'Dart',
-      'go_router',
-      'Provider',
-      'flutter_contacts',
-      'flutter_local_notifications',
-      'permission_handler',
-      'shared_preferences',
-      'share_plus / url_launcher',
-      'google_fonts',
-      'timezone',
+      'Python 3.10+',
+      'PyTorch 2.1+',
+      'EfficientNet-B0',
+      'Grad-CAM',
+      'PySide6',
+      'ONNX',
+      'OpenCV / PiCamera2',
+      'PyInstaller',
+      'Raspberry Pi',
+      'Android (ONNX companion)',
+      'Groq (optional)',
     ],
     image: null,
     demoVideo: null,
-    githubUrl: 'https://github.com/jay-07-pixel/Remind_Me.git',
+    githubUrl: 'https://github.com/jay-07-pixel/Plant_DiseaseAI',
     liveUrl: null,
   },
 ];
@@ -1044,7 +1044,7 @@ const Projects: React.FC = () => {
   };
 
   return (
-    <section id="projects" className="py-20 bg-dark-bg relative">
+    <section id="projects" className="py-10 md:py-12 bg-dark-bg relative">
       <div className="absolute inset-0 bg-gradient-to-b from-dark-bg/0 via-glow-effect/5 to-dark-bg/0 opacity-50" />
 
       <div className="container-section relative z-10">
@@ -1058,12 +1058,12 @@ const Projects: React.FC = () => {
         </ScrollAnimationWrapper>
 
         <ScrollAnimationWrapper animation="fadeIn" delay={0.12}>
-          <p className="text-center text-light-text/70 max-w-2xl mx-auto -mt-4 mb-14 text-sm md:text-base">
+          <p className="text-center text-light-text/70 max-w-2xl mx-auto -mt-2 mb-8 text-sm md:text-base">
             Things I've built — for clients, for myself, and to explore ideas.
           </p>
         </ScrollAnimationWrapper>
 
-        <div className="mb-16 md:mb-20">
+        <div className="mb-10 md:mb-12">
           <ScrollAnimationWrapper animation="fadeIn">
             <div className="mb-8">
               <div className="flex items-center gap-3 mb-2">

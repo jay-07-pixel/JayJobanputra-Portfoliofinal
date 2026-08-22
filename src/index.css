@@ -47,7 +47,7 @@ html.dark {
 
 @layer components {
   .container-section {
-    @apply max-w-[1200px] mx-auto px-4 py-16;
+    @apply max-w-[1200px] mx-auto px-4 py-6 md:py-8;
   }
   
   .btn-primary {
@@ -55,7 +55,7 @@ html.dark {
   }
   
   .section-title {
-    @apply text-3xl md:text-4xl font-bold mb-10 text-center relative text-light-text;
+    @apply text-3xl md:text-4xl font-bold mb-6 text-center relative text-light-text;
   }
   
   .section-title::after {

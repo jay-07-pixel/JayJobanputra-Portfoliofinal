@@ -31,7 +31,7 @@ const Education: React.FC = () => {
   };
 
   return (
-    <section id="education" className="py-20 bg-dark-bg relative">
+    <section id="education" className="py-10 md:py-12 bg-dark-bg relative">
       <div className="absolute inset-0 bg-gradient-to-b from-dark-bg/0 via-glow-effect/5 to-dark-bg/0 opacity-50" />
 
       <div ref={sectionRef} className="container-section relative z-10">

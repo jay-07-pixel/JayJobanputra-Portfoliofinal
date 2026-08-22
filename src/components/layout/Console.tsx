@@ -160,7 +160,7 @@ const Console: React.FC<ConsoleProps> = ({ isVisible, onClose }) => {
           '  Frontend     React.js · TypeScript · JavaScript · HTML/CSS · Tailwind · Vite',
           '  Backend      Node.js · Express.js · REST APIs · Server-Sent Events',
           '  AI / ML      Python · Scikit-learn · TensorFlow · Keras · XGBoost · Pandas · NumPy · Google ML Kit',
-          '  Mobile       Android (Java) · Flutter · Retrofit · OkHttp',
+          '  Mobile       Android (Java) · ONNX · Retrofit · OkHttp',
           '  Data/Cloud   Firebase · Firestore · MySQL · MongoDB · SQLite · Railway · Netlify · Vercel',
           '  Tools/Data   Git · GitHub · Cursor · Android Studio · VS Code · Postman · Insomnia · Matplotlib · Seaborn · Plotly · Recharts · Tableau',
           '',
@@ -199,7 +199,7 @@ const Console: React.FC<ConsoleProps> = ({ isVisible, onClose }) => {
           '  01  Kalpanik Operations AI',
           '  02  Attendify',
           '  03  Smart Trip Planner India',
-          '  04  Remind Me',
+          '  04  PlantDiseaseAI',
           '',
           'Type "goto projects" to open the Projects section.',
         ];

@@ -137,11 +137,11 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-dark-bg/50">
+    <section id="contact" className="py-10 md:py-12 bg-dark-bg/50">
       <div className="container-section">
         <h2 className="section-title">Contact Me</h2>
 
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-10">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}

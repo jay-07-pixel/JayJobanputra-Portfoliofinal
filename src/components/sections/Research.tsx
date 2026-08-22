@@ -67,7 +67,7 @@ const Research: React.FC = () => {
   };
 
   return (
-    <section id="research" className="py-12 md:py-14 bg-dark-bg/50 relative">
+    <section id="research" className="py-8 md:py-10 bg-dark-bg/50 relative">
       <div className="absolute inset-0 bg-gradient-to-b from-dark-bg/0 via-glow-effect/10 to-dark-bg/0 opacity-50" />
 
       <div ref={sectionRef} className="max-w-[1200px] mx-auto px-4 relative z-10">

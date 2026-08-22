@@ -21,6 +21,10 @@ const skillCategories: SkillCategory[] = [
     title: 'AI / Machine Learning',
     technologies: [
       'Python',
+      'PyTorch',
+      'EfficientNet',
+      'Grad-CAM',
+      'ONNX',
       'Scikit-learn',
       'TensorFlow',
       'Keras',
@@ -32,7 +36,7 @@ const skillCategories: SkillCategory[] = [
   },
   {
     title: 'Mobile Development',
-    technologies: ['Android (Java)', 'Flutter', 'Retrofit', 'OkHttp'],
+    technologies: ['Android (Java)', 'ONNX mobile', 'Retrofit', 'OkHttp'],
   },
   {
     title: 'Database & Cloud',
@@ -94,7 +98,7 @@ const Skills: React.FC = () => {
   };
 
   return (
-    <section id="skills" className="py-20 bg-dark-bg/50 relative">
+    <section id="skills" className="py-10 md:py-12 bg-dark-bg/50 relative">
       <div className="absolute inset-0 bg-gradient-to-b from-dark-bg/0 via-glow-effect/10 to-dark-bg/0 opacity-50" />
 
       <div ref={skillsRef} className="container-section relative z-10">
