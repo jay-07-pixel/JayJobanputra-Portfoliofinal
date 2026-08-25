@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import ScrollAnimationWrapper from '../layout/ScrollAnimationWrapper';
-import TextReveal from '../layout/TextReveal';
 
 interface Publication {
   title: string;
@@ -72,17 +71,14 @@ const Research: React.FC = () => {
 
       <div ref={sectionRef} className="max-w-[1200px] mx-auto px-4 relative z-10">
         <ScrollAnimationWrapper animation="fadeIn">
-          <TextReveal
-            text="Research & Publications"
-            tag="h2"
-            className="text-3xl md:text-4xl font-bold mb-3 text-center relative after:content-[''] after:absolute after:w-16 after:h-1 after:bg-primary after:left-1/2 after:-translate-x-1/2 after:bottom-[-8px]"
-            staggerChildren={0.06}
-          />
+          <h2 className="text-3xl md:text-4xl font-bold mb-3 text-center relative after:content-[''] after:absolute after:w-16 after:h-1 after:bg-primary after:left-1/2 after:-translate-x-1/2 after:bottom-[-8px]">
+            Research &amp; Publications
+          </h2>
         </ScrollAnimationWrapper>
 
         <ScrollAnimationWrapper animation="fadeIn" delay={0.08}>
           <p className="text-center text-light-text/70 max-w-2xl mx-auto mt-5 mb-7 text-sm md:text-base">
-            Exploring machine learning through research and real-world problems.
+            Machine learning research by Jay Jobanputra — exploring real-world problems through published work.
           </p>
         </ScrollAnimationWrapper>
 

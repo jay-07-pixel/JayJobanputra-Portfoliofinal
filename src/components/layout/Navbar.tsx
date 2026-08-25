@@ -34,20 +34,22 @@ const Navbar: React.FC = () => {
     : 'fixed w-full z-50 bg-transparent';
 
   return (
-    <nav className={navbarClass}>
+    <nav className={navbarClass} aria-label="Primary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0 flex items-center">
             <Link
               to="hero"
+              href="#hero"
               spy={true}
               smooth={true}
               duration={500}
               className="cursor-pointer"
+              aria-label="Jay Jobanputra portfolio home"
             >
               <GlitchText
                 text="Portfolio"
-                tag="h1"
+                tag="span"
                 className="text-xl font-bold text-primary"
                 intensity="low"
                 glitchOnHover={true}
@@ -61,6 +63,7 @@ const Navbar: React.FC = () => {
                 <Link
                   key={link.name}
                   to={link.to}
+                  href={`#${link.to}`}
                   spy={true}
                   smooth={true}
                   offset={-70}
@@ -118,6 +121,7 @@ const Navbar: React.FC = () => {
                 <Link
                   key={link.name}
                   to={link.to}
+                  href={`#${link.to}`}
                   spy={true}
                   smooth={true}
                   offset={-70}

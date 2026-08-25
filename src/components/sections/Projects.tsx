@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt, FaPlay, FaTimesCircle } from 'react-icons/fa';
 import ScrollAnimationWrapper from '../layout/ScrollAnimationWrapper';
-import TextReveal from '../layout/TextReveal';
 
 type ProjectCategory = 'Freelance / Client Work' | 'Personal Project';
 
@@ -733,7 +732,7 @@ const ProjectDetailsModal: React.FC<{
                     <div className="rounded-lg overflow-hidden border border-primary/15">
                       <img
                         src={project.image}
-                        alt={project.title}
+                        alt={`${project.title} — project by Jay Jobanputra`}
                         className="w-full h-auto object-cover"
                       />
                     </div>
@@ -1049,17 +1048,13 @@ const Projects: React.FC = () => {
 
       <div className="container-section relative z-10">
         <ScrollAnimationWrapper animation="fadeIn">
-          <TextReveal
-            text="Projects"
-            tag="h2"
-            className="section-title"
-            staggerChildren={0.08}
-          />
+          <h2 className="section-title">Projects by Jay Jobanputra</h2>
         </ScrollAnimationWrapper>
 
         <ScrollAnimationWrapper animation="fadeIn" delay={0.12}>
           <p className="text-center text-light-text/70 max-w-2xl mx-auto -mt-2 mb-8 text-sm md:text-base">
-            Things I've built — for clients, for myself, and to explore ideas.
+            Software, AI, and machine learning projects Jay Jobanputra has built — for clients, for
+            himself, and to explore ideas.
           </p>
         </ScrollAnimationWrapper>
 

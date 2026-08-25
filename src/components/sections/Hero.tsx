@@ -2,15 +2,18 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Typewriter from 'typewriter-effect';
 import { Link } from 'react-scroll';
-import TextReveal from '../layout/TextReveal';
 import FloatingAnimation from '../layout/FloatingAnimation';
 import ParallaxEffect from '../layout/ParallaxEffect';
 
 const Hero: React.FC = () => {
   return (
-    <section id="hero" className="h-screen flex items-center justify-center relative overflow-hidden">
+    <section
+      id="hero"
+      aria-label="Jay Jobanputra — portfolio introduction"
+      className="h-screen flex items-center justify-center relative overflow-hidden"
+    >
       {/* Corner decorations — stronger, still clear of center text */}
-      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
         <FloatingAnimation
           x={6}
           y={8}
@@ -72,23 +75,35 @@ const Hero: React.FC = () => {
 
       <div className="container mx-auto px-4 z-10 text-center relative">
         <ParallaxEffect direction="up" offset={50} className="space-y-6">
-          <TextReveal 
-            text="Welcome to my portfolio" 
-            tag="h2" 
-            className="text-xl md:text-2xl font-medium text-primary" 
-            staggerChildren={0.05}
-          />
-          
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-xl md:text-2xl font-medium text-primary"
+          >
+            Welcome to my portfolio
+          </motion.p>
+
           <div>
-            <TextReveal 
-              text={`I'm Jay Jobanputra,`} 
-              tag="h2" 
-              className="text-4xl md:text-6xl lg:text-7xl font-bold" 
-              staggerChildren={0.08}
-              delay={0.5}
-            />
-            
-            <div className="h-14 md:h-20 flex items-center justify-center mt-2">
+            <motion.h1
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.15 }}
+              className="text-4xl md:text-6xl lg:text-7xl font-bold text-light-text"
+            >
+              Jay Jobanputra
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.35 }}
+              className="text-xl md:text-2xl lg:text-3xl font-semibold text-primary mt-3"
+            >
+              AI &amp; Data Science Developer
+            </motion.p>
+
+            <div className="h-14 md:h-20 flex items-center justify-center mt-2" aria-hidden="true">
               <Typewriter
                 options={{
                   strings: [
@@ -96,7 +111,7 @@ const Hero: React.FC = () => {
                     'A Frontend Developer.',
                     'A Backend Developer.',
                     'A App Developer.',
-                    'A Startup Enthusiast.'
+                    'A Startup Enthusiast.',
                   ],
                   autoStart: true,
                   loop: true,
@@ -104,8 +119,8 @@ const Hero: React.FC = () => {
               />
             </div>
           </div>
-          
-          <motion.p 
+
+          <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2, duration: 0.8 }}
@@ -113,30 +128,29 @@ const Hero: React.FC = () => {
           >
             Creating what you see. Calculating what you don’t.
           </motion.p>
-          
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.5, duration: 0.8 }}
             className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6 pt-6"
           >
-            <Link 
+            <Link
               to="projects"
+              href="#projects"
               spy={true}
               smooth={true}
               duration={500}
               offset={-70}
               className="btn-primary"
             >
-              <motion.span
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
+              <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 View My Work
               </motion.span>
             </Link>
             <Link
               to="contact"
+              href="#contact"
               spy={true}
               smooth={true}
               duration={500}
@@ -149,28 +163,28 @@ const Hero: React.FC = () => {
         </ParallaxEffect>
       </div>
 
-      {/* Scroll down indicator */}
-      <motion.div 
+      <motion.div
         className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 0.8 }}
+        aria-hidden="true"
       >
         <span className="text-light-text/80 text-sm mb-2">Scroll Down</span>
-        <motion.div 
-          animate={{ y: [0, 10, 0] }} 
-          transition={{ 
-            repeat: Infinity, 
-            duration: 1.5 
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{
+            repeat: Infinity,
+            duration: 1.5,
           }}
           className="w-6 h-10 border-2 border-primary rounded-full flex justify-center"
         >
-          <motion.div 
+          <motion.div
             animate={{ y: [0, 15] }}
             transition={{
               repeat: Infinity,
-              repeatType: "reverse",
-              duration: 1
+              repeatType: 'reverse',
+              duration: 1,
             }}
             className="w-1.5 h-3 bg-primary rounded-full mt-2"
           />
@@ -180,4 +194,4 @@ const Hero: React.FC = () => {
   );
 };
 
-export default Hero; 
+export default Hero;

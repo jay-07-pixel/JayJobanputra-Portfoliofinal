@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Jay Jobanputra",
+  "name": "Jay Jobanputra | AI & Data Science Developer Portfolio",
+  "description": "Official portfolio of Jay Jobanputra — AI & Data Science developer.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,8 +19,8 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#0F0F0F",
+  "background_color": "#0F0F0F"
 }

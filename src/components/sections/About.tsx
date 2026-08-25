@@ -32,7 +32,7 @@ const About: React.FC = () => {
       
       <div className="container-section relative z-10">
         <ScrollAnimationWrapper animation="bounce">
-          <h2 className="section-title">About Me</h2>
+          <h2 className="section-title">About Jay Jobanputra</h2>
         </ScrollAnimationWrapper>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mt-6">
@@ -45,11 +45,14 @@ const About: React.FC = () => {
               className="flex justify-center"
             >
               <div className="w-48 h-60 xs:w-56 xs:h-72 sm:w-64 sm:h-80 md:w-72 md:h-96 rounded-lg bg-gray-800 overflow-hidden mx-auto border border-white/10">
-                <img 
-                  src="/profile-photo.jpg" 
-                  alt="Jay Jobanputra" 
-                  className="w-full h-full object-cover object-[center_20%]" 
-                  loading="lazy"
+                <img
+                  src="/profile-photo.jpg"
+                  alt="Jay Jobanputra, AI and Data Science developer"
+                  width={288}
+                  height={384}
+                  className="w-full h-full object-cover object-[center_20%]"
+                  loading="eager"
+                  decoding="async"
                 />
               </div>
             </ScrollAnimationWrapper>
@@ -88,12 +91,13 @@ const About: React.FC = () => {
                 viewport={{ once: false, threshold: 0.3 }}
               >
                 <p>
-                  I'm a <span className="font-semibold text-light-text">B.Tech AI &amp; Data Science student</span>,{' '}
+                  Jay Jobanputra is a <span className="font-semibold text-light-text">B.Tech AI &amp; Data Science student</span>,{' '}
                   <span className="font-semibold text-light-text">developer</span>, and{' '}
                   <span className="font-semibold text-light-text">entrepreneur</span> who enjoys building
                   technology that solves real-world problems. Through{' '}
                   <span className="font-semibold text-light-text">freelancing and my own work</span>, I've built
-                  web applications, Android apps, AI-powered systems, and solutions for businesses.
+                  web applications, Android apps, AI-powered systems, and solutions for businesses across
+                  artificial intelligence, machine learning, data science, and software development.
                 </p>
                 
                 <p>

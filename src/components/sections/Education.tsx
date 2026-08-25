@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import ScrollAnimationWrapper from '../layout/ScrollAnimationWrapper';
-import TextReveal from '../layout/TextReveal';
 
 const Education: React.FC = () => {
   const sectionRef = useRef(null);
@@ -36,17 +35,12 @@ const Education: React.FC = () => {
 
       <div ref={sectionRef} className="container-section relative z-10">
         <ScrollAnimationWrapper animation="fadeIn">
-          <TextReveal
-            text="Education"
-            tag="h2"
-            className="section-title"
-            staggerChildren={0.08}
-          />
+          <h2 className="section-title">Education</h2>
         </ScrollAnimationWrapper>
 
         <ScrollAnimationWrapper animation="fadeIn" delay={0.15}>
           <p className="text-center text-light-text/70 max-w-2xl mx-auto -mt-4 mb-12 text-sm md:text-base">
-            My academic journey so far.
+            Academic background of Jay Jobanputra in Artificial Intelligence and Data Science.
           </p>
         </ScrollAnimationWrapper>
 

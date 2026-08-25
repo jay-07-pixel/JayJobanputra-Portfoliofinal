@@ -189,8 +189,10 @@ const App: React.FC = () => {
             
             <ScrollProgress />
             <CustomCursor />
-            <Navbar />
-            <main>
+            <header>
+              <Navbar />
+            </header>
+            <main id="main-content">
               <Hero />
               <About />
               <Skills />

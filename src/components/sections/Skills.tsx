@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import ScrollAnimationWrapper from '../layout/ScrollAnimationWrapper';
-import TextReveal from '../layout/TextReveal';
 
 interface SkillCategory {
   title: string;
@@ -103,17 +102,13 @@ const Skills: React.FC = () => {
 
       <div ref={skillsRef} className="container-section relative z-10">
         <ScrollAnimationWrapper animation="fadeIn">
-          <TextReveal
-            text="What I Work With"
-            tag="h2"
-            className="section-title"
-            staggerChildren={0.08}
-          />
+          <h2 className="section-title">Skills</h2>
         </ScrollAnimationWrapper>
 
         <ScrollAnimationWrapper animation="fadeIn" delay={0.15}>
           <p className="text-center text-light-text/70 max-w-2xl mx-auto -mt-4 mb-12 text-sm md:text-base">
-            Tools and technologies I use to turn ideas into working products.
+            Tools and technologies Jay Jobanputra uses to turn ideas into working products across AI,
+            machine learning, and software development.
           </p>
         </ScrollAnimationWrapper>
 

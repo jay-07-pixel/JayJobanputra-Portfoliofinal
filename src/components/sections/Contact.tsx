@@ -139,7 +139,7 @@ const Contact: React.FC = () => {
   return (
     <section id="contact" className="py-10 md:py-12 bg-dark-bg/50">
       <div className="container-section">
-        <h2 className="section-title">Contact Me</h2>
+        <h2 className="section-title">Contact Jay Jobanputra</h2>
 
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-10">
           <motion.div
