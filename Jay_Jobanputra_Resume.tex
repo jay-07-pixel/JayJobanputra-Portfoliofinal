@@ -1,8 +1,8 @@
-% Jay Jobanputra — Resume
+﻿% Jay Jobanputra â€” Resume
 % Compile: pdflatex Jay_Jobanputra_Resume.tex
 \documentclass[9pt,a4paper]{extarticle}
 
-\usepackage[margin=0.45in]{geometry}
+\usepackage[margin=0.42in]{geometry}
 \usepackage{titlesec}
 \usepackage{enumitem}
 \usepackage{hyperref}
@@ -20,30 +20,28 @@
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt}
-\setlist[itemize]{leftmargin=1.1em, itemsep=0.06em, topsep=0.06em, parsep=0pt}
+\setlist[itemize]{leftmargin=1.05em, itemsep=0.05em, topsep=0.05em, parsep=0pt}
 
 \titleformat{\section}
   {\large\bfseries\color{accent}}
   {}{0em}{}
-  [\vspace{-0.32em}{\color{accent}\titlerule}\vspace{0.22em}]
-\titlespacing*{\section}{0pt}{0.42em}{0.2em}
+  [\vspace{-0.32em}{\color{accent}\titlerule}\vspace{0.18em}]
+\titlespacing*{\section}{0pt}{0.38em}{0.18em}
 
-% Role header: title | date (no overlap)
 \newcommand{\role}[3]{%
   \noindent
   \begin{tabularx}{\textwidth}{@{}X r@{}}
     \textbf{#1} & \textit{\footnotesize #3} \\
     \multicolumn{2}{@{}l@{}}{\textcolor{muted}{\footnotesize #2}}
-  \end{tabularx}\par\vspace{0.12em}%
+  \end{tabularx}\par\vspace{0.08em}%
 }
 
 \begin{document}
-\setstretch{0.98}
+\setstretch{0.97}
 \RaggedRight
 
-% ---------- Header ----------
 \begin{center}
-  {\LARGE\bfseries Jay Jobanputra}\\[0.28em]
+  {\LARGE\bfseries Jay Jobanputra}\\[0.22em]
   {\footnotesize
     +91-9822961688
     $\;\cdot\;$
@@ -53,85 +51,78 @@
     $\;\cdot\;$
     \href{https://github.com/jay-07-pixel}{GitHub}
     $\;\cdot\;$
-    \href{https://jay-jobanputra-portfolio.web.app}{Portfolio}
-  }\\[0.12em]
+    \href{https://jay.portfolio.kalpanik.in/}{Portfolio}
+  }\\[0.1em]
   {\footnotesize Kopargaon, Maharashtra}
 \end{center}
 
-\vspace{0.15em}
+\vspace{0.1em}
 
-% ---------- Summary ----------
 \section*{Professional Summary}
-B.Tech AI \& Data Science undergraduate, IEEE-published researcher, and hands-on builder. Ships production web apps, native Android products, offline ML/edge AI tools, and agentic prototypes for real businesses---from multi-tenant workforce systems to plant disease detection and field attendance.
+B.Tech AI \& Data Science undergraduate, IEEE-published researcher, and hands-on builder. Turns real operational problems into production web apps, Android products, offline ML tools, and agentic systems---from multi-tenant workforce platforms to plant-disease detection and field attendance.
 
-% ---------- Education ----------
 \section*{Education}
 \role{B.Tech --- Artificial Intelligence \& Data Science}{Sanjivani University, Kopargaon}{2024 -- 2028}
-
-\vspace{0.1em}
+\vspace{0.06em}
 \role{Senior Secondary (XII) --- Science (MSBSHSE)}{K.\ B.\ Rohmare Jr.\ College, Kopargaon \quad 63\%}{2024}
-\vspace{0.08em}
+\vspace{0.05em}
 \role{Secondary (X) --- MSBSHSE}{Shri Sharda English Medium School, Kopargaon \quad 91.40\%}{2022}
 
-% ---------- Research ----------
 \section*{Research Publication}
-\textbf{Optimized Feature Selection and Machine Learning Techniques for Early Detection of Chronic Kidney Disease}\\[0.05em]
-{\footnotesize Jay Nilesh Jobanputra, K.\ Vengatesan, V.D.\ Ambeth Kumar et al.\ --- IEEE GITCON 2025, Belagavi $\cdot$ DOI: \href{https://doi.org/10.1109/GITCON65266.2025.11377145}{10.1109/GITCON65266.2025.11377145}}
+\textbf{Optimized Feature Selection and Machine Learning Techniques for Early Detection of Chronic Kidney Disease}\\[0.04em]
+{\footnotesize Jay Nilesh Jobanputra, K.\ Vengatesan, V.D.\ Ambeth Kumar et al.\ --- IEEE GITCON 2025 $\cdot$ DOI: \href{https://doi.org/10.1109/GITCON65266.2025.11377145}{10.1109/GITCON65266.2025.11377145}}
 \begin{itemize}
-  \item ML pipeline for early CKD detection (RFE + Mutual Information on 400 records / 26 features); benchmarked 7+ models including Random Forest and XGBoost; IEEE Xplore / Google Scholar indexed.
+  \item \textbf{Problem:} Late CKD detection from sparse clinical signals. \textbf{Solution:} RFE + Mutual Information pipeline on 400 records / 26 features; benchmarked 7+ models (RF, XGBoost, SVM); IEEE Xplore / Scholar indexed.
 \end{itemize}
 
-% ---------- Freelance ----------
 \section*{Freelance \& Client Work}
 
 \role{Kalpanik Task Manager --- Web PWA \& Android}{Vite, Bootstrap, Node.js, Express, Prisma, MySQL, Java (Android)}{Jun 2026 -- Present}
 \begin{itemize}
-  \item Multi-tenant workforce platform (web + Android \textit{Kalpanik Reminder}): task lists, mixed proof, SSE chat, live GPS attendance, geofenced check-in, owner review; isolated customer instances (domain, MySQL, uploads) with shared session API and FCM.
-\end{itemize}
-
-\vspace{0.12em}
-\role{Kailash Masale --- Ops Dashboard \& Field App}{React, Vite, Firebase, Java (Android)}{Sep 2025 -- Jan 2026}
-\begin{itemize}
-  \item Built a React admin console for attendance, orders, targets, leaves, TA/DA, and task assignment with a Java Android field app on one Firebase project; real-time Firestore sync and FCM task alerts via Cloud Functions.
-\end{itemize}
-
-\vspace{0.14em}
-\role{AromaWrap --- E-Commerce}{React, TypeScript, Express, Prisma, MySQL}{Sep 2025 -- Dec 2025}
-\begin{itemize}
-  \item Shipped a live incense storefront (\href{https://aromawrap.co.in}{aromawrap.co.in}): catalog, packaging QR URLs, cart/wishlist, COD + UPI QR checkout with admin verification, and reviews.
-\end{itemize}
-
-\vspace{0.14em}
-\role{Election Survey System}{Java (Android), Node.js, Express, MySQL}{Nov 2025}
-\begin{itemize}
-  \item Field survey stack: Android (Material Design 3) + Express REST API + MySQL for login, area/ward selection, dynamic questions, and batch response submission.
-\end{itemize}
-
-% ---------- Projects ----------
-\section*{Selected Projects}
-
-\vspace{0.14em}
-\role{Kalpanik Operations AI}{Hackathon $\cdot$ Node.js, Express, Python, scikit-learn}{Jan 2026}
-\begin{itemize}
-  \item Multi-agent MSME ops pipeline: shop + WhatsApp order intake, inventory reservation, workforce tasks, and ML delay-risk labels; optional Groq LLM parsing for natural-language orders.
+  \item \textbf{Problem:} Field work lived in chats/spreadsheets---lost tasks, weak proof, no live attendance, and every company needed isolated data. \textbf{Solution:} Multi-tenant web + Android (\textit{Kalpanik Reminder}) with lists, mixed proof, SSE chat, GPS/geofenced check-in, owner review, FCM, and per-customer DB/uploads.
 \end{itemize}
 
 \vspace{0.1em}
+\role{Kailash Masale --- Ops Dashboard \& Field App}{React, Vite, Firebase, Java (Android)}{Sep 2025 -- Jan 2026}
+\begin{itemize}
+  \item \textbf{Problem:} Managers could not see live check-ins, orders, or targets; assigning field work meant chasing people on calls. \textbf{Solution:} React ops dashboard + Android field app on one Firebase project---attendance, orders, leaves, TA/DA, tasks; Firestore sync + FCM when work is assigned.
+\end{itemize}
+
+\vspace{0.1em}
+\role{AromaWrap --- E-Commerce}{React, TypeScript, Express, Prisma, MySQL}{Sep 2025 -- Dec 2025}
+\begin{itemize}
+  \item \textbf{Problem:} Fragrance brand needed a real store (not a static catalog) with Indian UPI-friendly checkout and packaging QR product links. \textbf{Solution:} Live storefront (\href{https://aromawrap.co.in}{aromawrap.co.in}) with catalog, cart/wishlist, COD + UPI QR, admin payment verification, reviews, and inventory.
+\end{itemize}
+
+\vspace{0.1em}
+\role{Election Survey System}{Java (Android), Node.js, Express, MySQL}{Nov 2025}
+\begin{itemize}
+  \item \textbf{Problem:} Paper/offline survey collection was slow, error-prone, and hard to aggregate by area/ward. \textbf{Solution:} Android field app + Express/MySQL API for login, area selection, dynamic questions, and batch response upload.
+\end{itemize}
+
+\section*{Selected Projects}
+
+\role{PlantDiseaseAI}{Python, PyTorch, PySide6, ONNX, Android}{2025 -- 2026}
+\begin{itemize}
+  \item \textbf{Problem:} Farmers need fast leaf-disease ID without reliable internet, plus visual trust and local-language advice. \textbf{Solution:} Offline EfficientNet-B0 for Grape/Tomato with Grad-CAM, EN/HI/MR tips (optional Groq), Windows \texttt{.exe}/Pi desktop, and Android ONNX --- \href{https://github.com/jay-07-pixel/Plant_DiseaseAI}{Plant\_DiseaseAI}.
+\end{itemize}
+
+\vspace{0.08em}
 \role{Attendify --- Smart Attendance}{Android $\cdot$ Firebase, ML Kit, CameraX, ZXing}{May 2025}
 \begin{itemize}
-  \item Defense-in-depth check-in/out: auth + role, geofence, face (ML Kit) or QR; admin tools, late flags, CSV reports; EN / HI / MR.
+  \item \textbf{Problem:} Buddy punching, remote punches, and weak audit trails broke simple attendance apps. \textbf{Solution:} Check-in only after auth, office assignment, GPS geofence, then face (ML Kit) or time-limited QR; admin reports + EN/HI/MR.
+\end{itemize}
+
+\vspace{0.08em}
+\role{Kalpanik Operations AI}{Hackathon $\cdot$ Node.js, Express, Python, scikit-learn}{Jan 2026}
+\begin{itemize}
+  \item \textbf{Problem:} MSMEs juggle shop/WhatsApp orders, stock, and staff with no single ops loop. \textbf{Solution:} Multi-agent pipeline for order intake, inventory reservation, workforce tasks, and ML delay-risk labels (optional Groq parsing).
 \end{itemize}
 
 \vspace{0.08em}
 \role{Smart Trip Planner India}{HTML, Tailwind, JS $\cdot$ Google Places, OpenWeatherMap}{2025}
 \begin{itemize}
-  \item Live itineraries with hotels, food, attractions, weather, traffic, and budget --- \href{https://smart-tripplanner.netlify.app/}{smart-tripplanner.netlify.app}.
-\end{itemize}
-
-\vspace{0.08em}
-\role{PlantDiseaseAI}{Python, PyTorch, PySide6, ONNX, Android}{2025 -- 2026}
-\begin{itemize}
-  \item Offline Grape/Tomato leaf-disease detection (EfficientNet-B0 + Grad-CAM, optional Groq tips, EN/HI/MR); ships Windows \texttt{.exe}, Python/Pi desktop, and Android ONNX companion --- \href{https://github.com/jay-07-pixel/Plant_DiseaseAI}{Plant\_DiseaseAI}.
+  \item \textbf{Problem:} India trip planning meant juggling hotels, weather, maps, and generic blogs. \textbf{Solution:} Personalized itineraries with live Places + weather, traffic/budget controls --- \href{https://smart-tripplanner.netlify.app/}{smart-tripplanner.netlify.app}.
 \end{itemize}
 
 \section*{Technical Skills}
@@ -141,10 +132,10 @@ B.Tech AI \& Data Science undergraduate, IEEE-published researcher, and hands-on
   >{\bfseries\raggedright\arraybackslash}p{1.05in}
   >{\raggedright\arraybackslash}X
   @{}}
-Languages & Python, Java (Android), JS/TS, SQL, C++, HTML/CSS \\[0.12em]
-AI / ML & PyTorch, EfficientNet, Grad-CAM, ONNX, Scikit-learn, TensorFlow, Keras, XGBoost, ML Kit, Pandas \\[0.12em]
-Web \& Mobile & React, Vite, Node.js, Express, Android, REST APIs, Bootstrap, Tailwind \\[0.12em]
-Data \& Cloud & Firebase, MySQL, Prisma, MongoDB, SQLite $\;\cdot\;$ \textbf{Agentic:} multi-agent pipelines, Groq (optional) \\[0.12em]
+Languages & Python, Java (Android), JS/TS, SQL, C++, HTML/CSS \\[0.1em]
+AI / ML & PyTorch, EfficientNet, Grad-CAM, ONNX, Scikit-learn, TensorFlow, Keras, XGBoost, ML Kit, Pandas \\[0.1em]
+Web \& Mobile & React, Vite, Node.js, Express, Android, REST APIs, Bootstrap, Tailwind \\[0.1em]
+Data \& Cloud & Firebase, MySQL, Prisma, MongoDB, SQLite $\;\cdot\;$ \textbf{Agentic:} multi-agent pipelines, Groq (optional) \\[0.1em]
 Tools & Git, Android Studio, PyInstaller, nginx/PM2, Netlify, Insomnia, Cursor, Agile
 \end{tabularx}
 }
@@ -153,7 +144,7 @@ Tools & Git, Android Studio, PyInstaller, nginx/PM2, Netlify, Insomnia, Cursor, 
 {\footnotesize Infosys Springboard Python (Nov 2024) $\;\cdot\;$ IIT Bombay E-Cell Illuminate (Jan 2025) $\;\cdot\;$ IBM Data Visualisation (Apr 2025) $\;\cdot\;$ IBM BI (Apr 2026) $\;\cdot\;$ IBM DevOps/Agile/DT (Apr 2026) $\;\cdot\;$ English $\;\cdot\;$ Hindi $\;\cdot\;$ Marathi $\;\cdot\;$ Gujarati}
 
 \section*{Leadership \& Achievements}
-\enlargethispage{5\baselineskip}
+\enlargethispage{8\baselineskip}
 \begin{itemize}
   \item \textbf{Best Project Award} --- Finessefleet Foundation $\times$ Sanjivani University for \textit{Smart Attendance Management Using QR Code Technology} (mentors: Dr.\ Kiran Wakchaure, Vengatesan Krishnasamy).
   \item \textbf{President} --- Sanjivani E-Cell and IIC; Campus Ambassador, E-Cell IIT Bombay (Jun 2025).
